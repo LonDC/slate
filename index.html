@@ -230,6 +230,55 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <p><code class="prettyprint">GET http://example.com/api/1.0/databases</code></p>
 
+<h2 id="delete-entire-database">Delete Entire Database</h2>
+
+<p>Use this method to delete a database. You must be a super user to perform this operation, otherwise you will receive a 401 error.</p>
+<pre><code class="highlight java"><span class="c1">//TODO: We need a sample here</span>
+</code></pre>
+<pre><code class="highlight javascript"><span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+  <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
+  <span class="na">type</span><span class="p">:</span> <span class="s1">'DELETE'</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span> <span class="s1">'apikey'</span><span class="p">:</span> <span class="nx">apikey</span> <span class="p">},</span>
+  <span class="na">url</span><span class="p">:</span> <span class="s1">'/1.0/databases/'</span> <span class="o">+</span> <span class="nx">database</span><span class="p">,</span>
+  <span class="na">success</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">){</span>
+    <span class="c1">//do something</span>
+  <span class="p">},</span>
+  <span class="nx">error</span><span class="err">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">xhr</span><span class="p">,</span> <span class="nx">status</span><span class="p">,</span> <span class="nx">error</span><span class="p">){</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">status</span> <span class="o">==</span> <span class="mi">401</span><span class="p">){</span>
+      <span class="nx">alert</span><span class="p">(</span><span class="s2">"You do not have the rights to delete the database"</span><span class="p">);</span>
+    <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+      <span class="nx">alert</span><span class="p">(</span><span class="nx">status</span> <span class="o">+</span> <span class="s1">'\n'</span> <span class="o">+</span> <span class="nx">error</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</code></pre>
+
+<blockquote>
+<p>If you can delete the database you will see:</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p>`DELETE https://example.com/1.0/collections/:database/:collectionname</p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>:database</td>
+<td>This is the unique name of the database which can be accessed using the API 1.0 databases method.</td>
+</tr>
+</tbody></table>
+
 <h1 id="collections">Collections</h1>
 
 <h2 id="get-all-collections-in-a-database">Get All Collections in a Database</h2>
@@ -340,14 +389,63 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 <h2 id="get-all-documents-in-a-collection">Get All Documents In a Collection</h2>
 
 <p>Description</p>
-<pre><code class="highlight java">
+<pre><code class="highlight java"><span class="cm">/**
+ * Get a list of documents from a collection
+ * Document level security applies
+ * @param dbname
+ * @param collection
+ * @param position
+ * @return
+ * @throws ClientProtocolException
+ * @throws IOException
+ * @throws JsonException
+ */</span>
+<span class="kd">public</span> <span class="n">JsonJavaArray</span> <span class="nf">getDocuments</span><span class="p">(</span><span class="n">String</span> <span class="n">dbname</span><span class="o">,</span> <span class="n">String</span> <span class="n">collection</span><span class="o">,</span> <span class="kt">int</span> <span class="n">position</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ClientProtocolException</span><span class="o">,</span> <span class="n">IOException</span><span class="o">,</span> <span class="n">JsonException</span><span class="o">{</span>
+    <span class="n">String</span> <span class="n">responseBody</span> <span class="o">=</span> <span class="n">loadURL</span><span class="o">(</span><span class="s">"/1.0/collections/"</span> <span class="o">+</span> <span class="n">dbname</span> <span class="o">+</span> <span class="s">"/"</span> <span class="o">+</span> <span class="n">collection</span> <span class="o">+</span> <span class="s">"?start="</span> <span class="o">+</span> <span class="n">position</span><span class="o">);</span>
+
+    <span class="n">JsonJavaFactory</span> <span class="n">factory</span> <span class="o">=</span> <span class="n">JsonJavaFactory</span><span class="o">.</span><span class="na">instanceEx</span><span class="o">;</span>
+    <span class="n">JsonJavaObject</span> <span class="n">json</span> <span class="o">=</span> <span class="o">(</span><span class="n">JsonJavaObject</span><span class="o">)</span> <span class="n">JsonParser</span><span class="o">.</span><span class="na">fromJson</span><span class="o">(</span><span class="n">factory</span><span class="o">,</span> <span class="n">responseBody</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="na">getAsArray</span><span class="o">(</span><span class="s">"data"</span><span class="o">);</span>
+<span class="o">}</span>
 </code></pre>
-<pre><code class="highlight javascript"></code></pre>
+<pre><code class="highlight javascript"><span class="kd">var</span> <span class="nx">root</span> <span class="o">=</span> <span class="s1">'https://example.com'</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">apikey</span> <span class="o">=</span> <span class="s1">'MYSECRETAPIKEY'</span><span class="p">;</span>
+<span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+  <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
+  <span class="na">type</span><span class="p">:</span> <span class="s1">'GET'</span><span class="p">,</span>
+  <span class="na">url</span><span class="p">:</span> <span class="nx">root</span> <span class="o">+</span> <span class="s1">'/1.0/collections/'</span> <span class="o">+</span> <span class="nx">dbname</span> <span class="o">+</span> <span class="s1">'/'</span> <span class="o">+</span> <span class="nx">collectionname</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s1">'apikey'</span><span class="p">:</span> <span class="nx">apikey</span>
+  <span class="p">},</span>
+  <span class="na">success</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</code></pre>
 
 <blockquote>
 <p>The above returns JSON structured like this:</p>
 </blockquote>
-<pre><code class="highlight json"></code></pre>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"count"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"data"</span><span class="p">:[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"_id"</span><span class="p">:</span><span class="s2">"53c8cf7983217c4dd0a5580b"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"Title"</span><span class="p">:</span><span class="s2">"This is the title"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"Body"</span><span class="p">:</span><span class="s2">"LDC Via frees your Domino data to be used in other applications or to\r\nallow the sunsetting of your Domino infrastructure without losing the data\r\nand security that you have grown used to.\r\n\r\n(See attached file: API.xlsx)"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"Body__parsed"</span><span class="p">:</span><span class="s2">"LDC Via frees your Domino data to be used in other applications or to\r\nallow the sunsetting of your Domino infrastructure without losing the data\r\nand security that you have grown used to.\r\n\r\n(See attached file: API.xlsx)"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"readers"</span><span class="p">:[</span><span class="w"> </span><span class="s2">"CN=Matt White/O=Exhilarate"</span><span class="p">,</span><span class="w"> </span><span class="s2">"CN=Fred Bloggs/O=FCL"</span><span class="w"> </span><span class="p">],</span><span class="w">
+      </span><span class="s2">"__unid"</span><span class="p">:</span><span class="s2">"C56DB3F14258431380257D190026303A"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"__noteid"</span><span class="p">:</span><span class="s2">"10F2"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"__created"</span><span class="p">:</span><span class="s2">"2014-07-18T06:57:07Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"__modified"</span><span class="p">:</span><span class="s2">"2014-07-18T07:21:31Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"__authors"</span><span class="p">:</span><span class="s2">"CN=Matt White/O=Exhilarate"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"__form"</span><span class="p">:</span><span class="s2">"MainTopic"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"_files"</span><span class="p">:[</span><span class="w"> </span><span class="s2">"API.xlsx"</span><span class="w"> </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 
 <h3 id="http-request">HTTP Request</h3>
 
@@ -364,6 +462,10 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 <tr>
 <td>:database</td>
 <td>This is the unique name of the database which can be accessed using the API 1.0 databases method.</td>
+</tr>
+<tr>
+<td>:collectionname</td>
+<td>The name of the collection to get documents from</td>
 </tr>
 </tbody></table>
 
@@ -388,23 +490,95 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 </tr>
 </tbody></table>
 
-<h2 id="delete-a-collection">Delete a Collection</h2>
+<h3 id="response-json">Response JSON</h3>
 
-<h1 id="documents">Documents</h1>
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>count</td>
+<td>the total count of documents in the collection that the current user can see</td>
+</tr>
+<tr>
+<td>data</td>
+<td>an array of document objects. the size of this array will not exceed the count URL parameter even if there are more documents in the collection. You will need to page through the data to get it all.</td>
+</tr>
+<tr>
+<td>_id</td>
+<td>internal unique reference id</td>
+</tr>
+<tr>
+<td>rich text fields</td>
+<td>when accessed via a collection all formatting is removed and a plain text representation of the content is returned. For full access to the rich text load the relevant document. Rich Text fields always have a second &ldquo;__parsed&rdquo; version of the field that can be used for searching purposes, this allows binary data to be stored in the primary rich text field</td>
+</tr>
+<tr>
+<td>system fields</td>
+<td>fields prefixed with __ are system fields that relate to your original Domino data. If the document has file attachments associated with it, the names of the files can be found in the field _files</td>
+</tr>
+</tbody></table>
 
-<h2 id="get-a-document">Get a document</h2>
+<h2 id="delete-entire-collection">Delete entire collection</h2>
 
-<h2 id="insert-a-document">Insert a document</h2>
+<p>To delete a collection, use this method. You must be a super user to perform this operation, or you will receive a 401 error.</p>
+<pre><code class="highlight java"><span class="c1">//TODO: We need sample code here</span>
+</code></pre>
+<pre><code class="highlight javascript"><span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+  <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
+  <span class="na">type</span><span class="p">:</span> <span class="s1">'DELETE'</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span> <span class="s1">'apikey'</span><span class="p">:</span> <span class="nx">apikey</span> <span class="p">},</span>
+  <span class="na">url</span><span class="p">:</span> <span class="s1">'/1.0/collections/'</span> <span class="o">+</span> <span class="nx">database</span> <span class="o">+</span> <span class="s1">'/'</span> <span class="o">+</span> <span class="nx">collection</span><span class="p">,</span>
+  <span class="na">success</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">){</span>
+    <span class="nx">getDBCollections</span><span class="p">(</span><span class="nx">database</span><span class="p">);</span>
+  <span class="p">},</span>
+  <span class="nx">error</span><span class="err">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">xhr</span><span class="p">,</span> <span class="nx">status</span><span class="p">,</span> <span class="nx">error</span><span class="p">){</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">status</span> <span class="o">==</span> <span class="mi">401</span><span class="p">){</span>
+      <span class="nx">alert</span><span class="p">(</span><span class="s2">"You do not have the rights to delete the collection"</span><span class="p">);</span>
+    <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+      <span class="nx">alert</span><span class="p">(</span><span class="nx">status</span> <span class="o">+</span> <span class="s1">'\n'</span> <span class="o">+</span> <span class="nx">error</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">})</span>
 
-<h2 id="update-a-document">Update a document</h2>
+</code></pre>
 
-<h2 id="delete-a-document">Delete a document</h2>
+<blockquote>
+<p>The above returns JSON structured like this:</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p>`DELETE https://example.com/1.0/collections/:database/:collectionname</p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>:database</td>
+<td>This is the unique name of the database which can be accessed using the API 1.0 databases method.</td>
+</tr>
+<tr>
+<td>:collectionname</td>
+<td>The name of the collection to delete</td>
+</tr>
+</tbody></table>
 
           <h1 id="errors">Errors</h1>
 
-<aside class="notice">This error section is stored in a separate file in `includes/_errors.md`. Slate allows you to optionally separate out your docs into many files&hellip;just save them to the `includes` folder and add them to the top of your `index.md`&rsquo;s frontmatter. Files are included in the order listed.</aside>
+<aside class="notice">If an operation fails you will receive an error code, and a message in the response from our server</aside>
 
-<p>The Kittn API uses the following error codes:</p>
+<p>The LDC Via API uses the following error codes:</p>
 
 <table><thead>
 <tr>
@@ -422,31 +596,19 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 </tr>
 <tr>
 <td>403</td>
-<td>Forbidden &ndash; The kitten requested is hidden for administrators only</td>
+<td>Forbidden &ndash; You&rsquo;re trying to do something that you are not allowed to</td>
 </tr>
 <tr>
 <td>404</td>
-<td>Not Found &ndash; The specified kitten could not be found</td>
+<td>Not Found &ndash; The specified request could not be found</td>
 </tr>
 <tr>
 <td>405</td>
-<td>Method Not Allowed &ndash; You tried to access a kitten with an invalid method</td>
-</tr>
-<tr>
-<td>406</td>
-<td>Not Acceptable &ndash; You requested a format that isn&rsquo;t json</td>
-</tr>
-<tr>
-<td>410</td>
-<td>Gone &ndash; The kitten requested has been removed from our servers</td>
+<td>Method Not Allowed &ndash; You tried to access a URL with an invalid method</td>
 </tr>
 <tr>
 <td>418</td>
 <td>I&rsquo;m a teapot</td>
-</tr>
-<tr>
-<td>429</td>
-<td>Too Many Requests &ndash; You&rsquo;re requesting too many kittens! Slown down!</td>
 </tr>
 <tr>
 <td>500</td>
