@@ -203,6 +203,51 @@ This endpoint retrieves all databases that you have access to.
 
 `GET http://example.com/api/1.0/databases`
 
+## Delete Entire Database
+
+Use this method to delete a database. You must be a super user to perform this operation, otherwise you will receive a 401 error.
+
+```java
+//TODO: We need a sample here
+```
+
+```javascript
+$.ajax({
+  dataType: 'json',
+  type: 'DELETE',
+  headers: { 'apikey': apikey },
+  url: '/1.0/databases/' + database,
+  success: function(res){
+    //do something
+  },
+  error: function(xhr, status, error){
+    if (xhr.status == 401){
+      alert("You do not have the rights to delete the database");
+    }else{
+      alert(status + '\n' + error);
+    }
+  }
+});
+```
+
+> If you can delete the database you will see:
+
+```json
+{
+  "result": "ok"
+}
+```
+
+### HTTP Request
+`DELETE https://example.com/1.0/collections/:database/:collectionname
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+:database | This is the unique name of the database which can be accessed using the API 1.0 databases method.
+
+
 # Collections
 
 ## Get All Collections in a Database
@@ -309,15 +354,64 @@ Parameter | Description
 Description
 
 ```java
+/**
+ * Get a list of documents from a collection
+ * Document level security applies
+ * @param dbname
+ * @param collection
+ * @param position
+ * @return
+ * @throws ClientProtocolException
+ * @throws IOException
+ * @throws JsonException
+ */
+public JsonJavaArray getDocuments(String dbname, String collection, int position) throws ClientProtocolException, IOException, JsonException{
+	String responseBody = loadURL("/1.0/collections/" + dbname + "/" + collection + "?start=" + position);
 
+	JsonJavaFactory factory = JsonJavaFactory.instanceEx;
+	JsonJavaObject json = (JsonJavaObject) JsonParser.fromJson(factory, responseBody);
+	return json.getAsArray("data");
+}
 ```
 
 ```javascript
+var root = 'https://example.com';
+var apikey = 'MYSECRETAPIKEY';
+$.ajax({
+  dataType: 'json',
+  type: 'GET',
+  url: root + '/1.0/collections/' + dbname + '/' + collectionname,
+  headers: {
+    'apikey': apikey
+  },
+  success: function(res) {
+    console.log(res);
+  }
+})
 ```
 
 > The above returns JSON structured like this:
 
 ```json
+{
+  "count":1,
+  "data":[
+    {
+      "_id":"53c8cf7983217c4dd0a5580b",
+      "Title":"This is the title",
+      "Body":"LDC Via frees your Domino data to be used in other applications or to\r\nallow the sunsetting of your Domino infrastructure without losing the data\r\nand security that you have grown used to.\r\n\r\n(See attached file: API.xlsx)",
+      "Body__parsed":"LDC Via frees your Domino data to be used in other applications or to\r\nallow the sunsetting of your Domino infrastructure without losing the data\r\nand security that you have grown used to.\r\n\r\n(See attached file: API.xlsx)",
+      "readers":[ "CN=Matt White/O=Exhilarate", "CN=Fred Bloggs/O=FCL" ],
+      "__unid":"C56DB3F14258431380257D190026303A",
+      "__noteid":"10F2",
+      "__created":"2014-07-18T06:57:07Z",
+      "__modified":"2014-07-18T07:21:31Z",
+      "__authors":"CN=Matt White/O=Exhilarate",
+      "__form":"MainTopic",
+      "_files":[ "API.xlsx" ]
+    }
+  ]
+}
 ```
 
 ### HTTP Request
@@ -328,6 +422,7 @@ Description
 Parameter | Description
 --------- | -----------
 :database | This is the unique name of the database which can be accessed using the API 1.0 databases method.
+:collectionname | The name of the collection to get documents from
 
 ### Query Parameters
 
@@ -336,15 +431,59 @@ Parameter | Default | Description
 count | 30 | The number of documents to get data for.
 start | 0 | The starting position in the view, use this to page through documents
 
+### Response JSON
 
-## Delete a Collection
+Property | Description
+-------- | -----------
+count | the total count of documents in the collection that the current user can see
+data | an array of document objects. the size of this array will not exceed the count URL parameter even if there are more documents in the collection. You will need to page through the data to get it all.
+_id | internal unique reference id
+rich text fields | when accessed via a collection all formatting is removed and a plain text representation of the content is returned. For full access to the rich text load the relevant document. Rich Text fields always have a second "__parsed" version of the field that can be used for searching purposes, this allows binary data to be stored in the primary rich text field
+system fields | fields prefixed with __ are system fields that relate to your original Domino data. If the document has file attachments associated with it, the names of the files can be found in the field _files
 
-# Documents
 
-## Get a document
+## Delete entire collection
 
-## Insert a document
+To delete a collection, use this method. You must be a super user to perform this operation, or you will receive a 401 error.
 
-## Update a document
+```java
+//TODO: We need sample code here
+```
 
-## Delete a document
+```javascript
+$.ajax({
+  dataType: 'json',
+  type: 'DELETE',
+  headers: { 'apikey': apikey },
+  url: '/1.0/collections/' + database + '/' + collection,
+  success: function(res){
+    getDBCollections(database);
+  },
+  error: function(xhr, status, error){
+    if (xhr.status == 401){
+      alert("You do not have the rights to delete the collection");
+    }else{
+      alert(status + '\n' + error);
+    }
+  }
+})
+
+```
+
+> The above returns JSON structured like this:
+
+```json
+{
+  "result": "ok"
+}
+```
+
+### HTTP Request
+`DELETE https://example.com/1.0/collections/:database/:collectionname
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+:database | This is the unique name of the database which can be accessed using the API 1.0 databases method.
+:collectionname | The name of the collection to delete
