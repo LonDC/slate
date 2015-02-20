@@ -20,6 +20,9 @@ Welcome to the LDC Via API! You can use our API to access LDC Via API endpoints,
 
 We have language bindings in Java and JavaScript (jQuery)! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
 
+The video below shows how to get your API key:
+<iframe src="//player.vimeo.com/video/113910972" width="500" height="281" frameborder="0" allowfullscreen=""></iframe>
+
 # Authentication
 
 > To authorize, always pass the 'apikey' header:
@@ -957,3 +960,935 @@ Parameter | Description
 :collectionname | The name of the collection to delete
 :unid | The unid of the document to delete
 :filename | The name of the file to delete (can be retrieved from _files field on any document)
+
+# Meta Data
+
+When data is added to the database, we maintain a description of the fields and data types in each collection.
+
+You have the ability to read and update certain metadata details. An example of when you might want to do this is to update security: to mark a field as being readers or authors.
+
+## Get Meta Data for a collection
+
+To get a list of all fields that are in a collection, use this method.
+
+```java
+//TODO: Add sample
+```
+
+```javascript
+$.ajax({
+  dataType: 'json',
+  type: 'GET',
+  headers: {
+    'apikey': apikey
+  },
+  url: '/1.0/metadata/' + dbname + "/" + collectionname,
+  success: function(res) {
+    //Do Something
+  }
+})
+```
+
+> The above returns JSON structured like this:
+
+```json
+{
+   "_id":"53c8cc790e76eee06aed49ba",
+   "dbname":"dev-londc-com-demos-discussion-nsf",
+   "collectionname":"MainTopic",
+   "__v":1,
+   "lastimported":"2014-07-18T07:40:49.632Z",
+   "fields":[
+      {
+         "fieldname":"From",
+         "_id":"53c8cf810e76eee06aed4ad7",
+         "fieldtype":"Names"
+      },
+      {
+         "fieldname":"AbbreviateFrom",
+         "_id":"53c8cf810e76eee06aed4ad6",
+         "fieldtype":"String"
+      },
+      {
+         "fieldname":"Current_Status",
+         "_id":"53c8cf810e76eee06aed4ac8",
+         "fieldtype":"Number"
+      },
+      {
+         "fieldname":"FilebyDate",
+         "_id":"53c8cf810e76eee06aed4ac6",
+         "fieldtype":"Date"
+      },
+      {
+         "fieldname":"Editors",
+         "_id":"53c8cf810e76eee06aed4abf",
+         "fieldtype":"Authors"
+      },
+      {
+         "fieldname":"readers",
+         "_id":"53c8cf810e76eee06aed4aa2",
+         "fieldtype":"Readers"
+      }
+   ]
+}
+```
+
+### HTTP Request
+`GET https://example.com/1.0/metadata/:database/:collectionname`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+:database | This is the unique name of the database which can be accessed using the databases service.
+:collectionname | The name of the collection to get meta data for
+
+## Update Meta Data for a Collection
+
+You can update meta data for a collection with this method. The most common use for this will be to enable and disable readers and authors fields, thus controlling document level security.
+
+```java
+//TODO: Add a sample
+```
+
+```javascript
+var data = {
+  "fields":[
+    {
+      "fieldname":"From",
+      "fieldtype":"Names"
+    }
+  ]
+};
+$.ajax({
+  dataType: 'json',
+  type: 'POST',
+  data: data,
+  headers: {
+    'apikey': apikey
+  },
+  url: '/1.0/metadata/' + dbname + "/" + collectionname,
+  success: function(res) {
+    //Do Something
+  }
+})
+```
+
+> The above returns JSON structured like this:
+
+```json
+{"result": "ok"}
+```
+
+### HTTP Request
+`POST https://example.com/1.0/collections/:database/:collectionname`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+:database | This is the unique name of the database which can be accessed using the databases service.
+:collectionname | The name of the collection to update meta data for
+
+## Reset Meta Data for a Collection
+
+When data is added to the database, we maintain a description of the fields and data types in each collection. It is possible for this meta data to get out of sync with the data or become corrupt. This method will reset the meta data.
+
+Be aware that if you have set any readers and authors fields in the meta data that these will be reset and thus all document security will be disabled.
+
+Because of this potential, you must be a super user or administrator to run this method.
+
+```java
+//TODO: Add a sample
+```
+
+```javascript
+$.ajax({
+  dataType: 'json',
+  type: 'GET',
+  headers: {
+    'apikey': apikey
+  },
+  url: '/1.0/resetmetadata/' + dbname + "/" + collectionname,
+  success: function(res) {
+    //Do Something
+  }
+})
+```
+
+> The above returns JSON structured like this:
+
+```json
+{"result": "ok"}
+```
+
+### HTTP Request
+`GET https://example.com/1.0/collections/:database/:collectionname`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+:database | This is the unique name of the database which can be accessed using the databases service.
+:collectionname | The name of the collection that you want to reset meta data for. By default the meta data will be built using a sampling of the first 100 documents in the collection. If all documents have exactly the same fields on them, then this number can be reduced to improve performance. To change the number of documents sampled, add a URL parameter: "&count=n". Likewise, if all documents do not have the same fields on them, then you can increase the sample size using the same technique. Be aware that the larger the sample size, the longer the response will take.
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+count | 100 | The number of documents to sample for field names
+
+# User Details
+
+You can get either your own details of the details of a different user within your organisation. To get you own details omit the :useremail url parameter.
+
+## Get your own user details
+
+```java
+//TODO: Add Sample
+```
+
+```javascript
+$.ajax({
+  dataType: 'json',
+  type: 'GET',
+  headers: {
+    'apikey': apikey
+  },
+  url: '/1.0/userdetails',
+  success: function(res) {
+    //Do Something
+  }
+})
+```
+
+> The above returns JSON structured like this:
+
+```json
+{
+  "notesnames":[
+    {
+      "notesname":"CN=Fred Bloggs/O=FCL"
+    },
+    {
+      "notesname":"Fred Bloggs"
+    },
+    {
+      "notesname":"DocEditors",
+      "group": true
+    }
+  ],
+  "apikey":"hwxsftXnd88KFq",
+  "username":"Fred Bloggs",
+  "email":"fred@fclonline.com",
+  "admin":false,
+  "superuser":false,
+  "databases":[
+    {
+      "database":"dev-londc-com-demos-discussion-nsf",
+      "_id":"53c8cc6e0e76eee06aed497b"
+    },
+    {
+      "database":"dev-londc-com-demos-journal-nsf",
+      "_id":"53cecd0819a5ac73b57964e5"
+    }
+  ]
+}
+```
+
+### HTTP Request
+`GET https://example.com/1.0/userdetails`
+
+## Get other user's details
+
+The get another user's details, use this method. If you are a super user or the same user as the email address, you will be able to get the API Key, otherwise that will not be returned.
+
+```java
+//TODO: Add Sample
+```
+
+```javascript
+$.ajax({
+  dataType: 'json',
+  type: 'GET',
+  headers: {
+    'apikey': apikey
+  },
+  url: '/1.0/userdetails/fred@bloggs.com',
+  success: function(res) {
+    //Do Something
+  }
+})
+```
+
+> The above returns JSON structured like this:
+
+```json
+{
+  "notesnames":[
+    {
+      "notesname":"CN=Fred Bloggs/O=FCL"
+    },
+    {
+      "notesname":"Fred Bloggs"
+    },
+    {
+      "notesname":"DocEditors",
+      "group": true
+    }
+  ],
+  "apikey":"hwxsftXnd88KFq",
+  "username":"Fred Bloggs",
+  "email":"fred@bloggs.com",
+  "admin":false,
+  "superuser":false,
+  "databases":[
+    {
+      "database":"dev-londc-com-demos-discussion-nsf",
+      "_id":"53c8cc6e0e76eee06aed497b"
+    },
+    {
+      "database":"dev-londc-com-demos-journal-nsf",
+      "_id":"53cecd0819a5ac73b57964e5"
+    }
+  ]
+}
+```
+
+### HTTP Request
+`GET https://example.com/1.0/userdetails/:email`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+:email | The email address of the person to get
+
+## Add New User
+
+In addition to retrieving user details, you can also create users via the API. A POST to create users involves sending an organisation ID, and a collection of user objects.
+
+Once the API has validated the request, for each user two objects will be created: a User and an Account (the two elements maintain a 1:1 relationship, with the Account controlling a user's ability to log in). In addition, all users created will be linked to the passed-in organisation.
+
+```java
+//TODO: Add Sample
+```
+
+```javascript
+var data = {
+ "organisation": "548598c6b283ccf00e5edf43",
+ "users": [
+ {
+ "email": "fbloggs@acme.com",
+ "firstname": "Fred",
+ "lastname": "Bloggs",
+ "notesnames": [
+ {
+ "notesname": "test01/acme"
+ },
+ {
+ "notesname": "user01/acme"
+ }
+ ]
+ },
+ {
+ "email": "jh@acme.com",
+ "firstname": "Jeremy",
+ "lastname": "Hardy"
+ }
+ ]
+};
+$.ajax({
+  dataType: 'json',
+  type: 'POST',
+  data: data,
+  headers: {
+    'apikey': apikey
+  },
+  url: '/1.0/users',
+  success: function(res) {
+    //Do Something
+  }
+})
+```
+
+> The above returns JSON structured like this:
+
+```json
+{
+  "result": "ok"
+}
+```
+
+### HTTP Request
+`POST https://example.com/1.0/users`
+
+
+## Update Users details
+
+The update another user's details, use this method. You must be a super user to use this method.
+
+```java
+//TODO: Add Sample
+```
+
+```javascript
+var data = {
+  "notesnames":
+    [
+      {"notesname": "CN=Fred Blogs/O=Londc"},
+      {"notesname": "Fred Blogs/Londc"},
+      {"notesname": "Fred Blogs"},
+      {"notesname": "*/Londc"},
+    ]
+};
+$.ajax({
+  dataType: 'json',
+  type: 'POST',
+  data: data,
+  headers: {
+    'apikey': apikey
+  },
+  url: '/1.0/userdetails/fred@bloggs.com',
+  success: function(res) {
+    //Do Something
+  }
+})
+```
+
+> The above returns JSON structured like this:
+
+```json
+{
+  "result": "ok"
+}
+```
+
+### HTTP Request
+`POST https://example.com/1.0/userdetails/:email`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+:email | The email address of the person to update
+
+## Delete User
+
+This method is available for super users to remove another user (you cannot delete yourself!)
+
+```java
+//TODO: Add Sample
+```
+
+```javascript
+$.ajax({
+  dataType: 'json',
+  type: 'DELETE',
+  headers: {
+    'apikey': apikey
+  },
+  url: '/1.0/userdetails/fred@bloggs.com',
+  success: function(res) {
+    //Do Something
+  }
+})
+```
+
+> The above returns JSON structured like this:
+
+```json
+{"result": "ok"}
+```
+
+### HTTP Request
+`DELETE https://example.com/1.0/userdetails/:email`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+:email | the email of the person to delete
+
+# Access Control
+
+## Get list of groups in organisation
+```java
+//TODO: Add Sample
+```
+
+```javascript
+$.ajax({
+  dataType: 'json',
+  type: 'GET',
+  headers: {
+    'apikey': apikey
+  },
+  url: '/1.0/groups',
+  success: function(res) {
+    //Do Something
+  }
+})
+```
+
+> The above returns JSON structured like this:
+
+```json
+["Group 1", "Group 2"]
+```
+
+### HTTP Request
+`GET https://example.com/1.0/groups`
+
+
+## Add multiple users to group
+```java
+//TODO: Add Sample
+```
+
+```javascript
+var data = {
+"groupname":"TestGroup",
+"emails": ["fred@bloggs.com", "joe@blow.com"]
+};
+$.ajax({
+  dataType: 'json',
+  type: 'POST',
+  data: data,
+  headers: {
+    'apikey': apikey
+  },
+  url: '/1.0/groups',
+  success: function(res) {
+    //Do Something
+  }
+})
+```
+
+> The above returns JSON structured like this:
+
+```json
+{"result": "ok"}
+```
+
+### HTTP Request
+`POST https://example.com/1.0/groups`
+
+## Add single user to group
+```java
+//TODO: Add Sample
+```
+
+```javascript
+$.ajax({
+  dataType: 'json',
+  type: 'GET',
+  headers: {
+    'apikey': apikey
+  },
+  url: '/1.0/groups/fred@bloggs.com/Group1',
+  success: function(res) {
+    //Do Something
+  }
+})
+```
+
+> The above returns 200 Success if the action worked
+
+### HTTP Request
+`GET https://example.com/1.0/groups/:email/:groupname`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+:email | the email of the user to add to the group
+:groupname | the groupname to add the user to
+
+## Remove user from group
+```java
+//TODO: Add Sample
+```
+
+```javascript
+$.ajax({
+  dataType: 'json',
+  type: 'DELETE',
+  headers: {
+    'apikey': apikey
+  },
+  url: '/1.0/groups/fred@bloggs.com/Group1',
+  success: function(res) {
+    //Do Something
+  }
+})
+```
+
+> The above returns 200 Success if the action worked
+
+### HTTP Request
+`DELETE https://example.com/1.0/groups/:email/:groupname`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+:email | the email of the user to remove from the group
+:groupname | the groupname to remove the user from
+
+## Get Members of Group
+```java
+//TODO: Add Sample
+```
+
+```javascript
+$.ajax({
+  dataType: 'json',
+  type: 'GET',
+  headers: {
+    'apikey': apikey
+  },
+  url: '/1.0/groups/Group1',
+  success: function(res) {
+    //Do Something
+  }
+})
+```
+
+> The above returns an array of user emails
+
+```json
+["fred@bloggs.com", "joe@smith.com"]
+```
+
+### HTTP Request
+`GET https://example.com/1.0/groups/:groupname`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+:groupname | the groupname to get member list of
+
+## Remove Group
+```java
+//TODO: Add Sample
+```
+
+```javascript
+$.ajax({
+  dataType: 'json',
+  type: 'DELETE',
+  headers: {
+    'apikey': apikey
+  },
+  url: '/1.0/groups/Group1',
+  success: function(res) {
+    //Do Something
+  }
+})
+```
+
+> The above returns 200 Success if the action worked
+
+### HTTP Request
+`DELETE https://example.com/1.0/groups/:groupname`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+:groupname | the groupname to delete
+
+## List all users in organisation
+```java
+//TODO: Add Sample
+```
+
+```javascript
+$.ajax({
+  dataType: 'json',
+  type: 'GET',
+  headers: {
+    'apikey': apikey
+  },
+  url: '/1.0/users',
+  success: function(res) {
+    //Do Something
+  }
+})
+```
+
+> The above returns an array of emails
+
+```json
+["fred@bloggs.com", "joe@smith.com"]
+```
+
+### HTTP Request
+`GET https://example.com/1.0/users`
+
+## Add user to database
+```java
+//TODO: Add Sample
+```
+
+```javascript
+$.ajax({
+  dataType: 'json',
+  type: 'GET',
+  headers: {
+    'apikey': apikey
+  },
+  url: '/1.0/userdetails/joe@bloggs.com/dev-londc-demos-discussion-nsf',
+  success: function(res) {
+    //Do Something
+  }
+})
+```
+
+> The above returns 200 Success if the operation completed successfully
+
+### HTTP Request
+`GET https://example.com/1.0/userdetails/:email/:database`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+:email | the email of the user to give access to the database
+:database | the database to give the user access to
+
+## Remove user from database
+```java
+//TODO: Add Sample
+```
+
+```javascript
+$.ajax({
+  dataType: 'json',
+  type: 'DELETE',
+  headers: {
+    'apikey': apikey
+  },
+  url: '/1.0/userdetails/joe@bloggs.com/dev-londc-demos-discussion-nsf',
+  success: function(res) {
+    //Do Something
+  }
+})
+```
+
+> The above returns 200 Success if the operation completed successfully
+
+### HTTP Request
+`DELETE https://example.com/1.0/userdetails/:email/:database`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+:email | the email of the user to remove access to the database
+:database | the database to remove the user access to
+
+# Utilities
+
+We provide several extra services that act as utilities to make developing applications easier.
+
+## Get List of Distinct Values
+
+Similar in concept to an @DBColumn in Notes, this will return a unique list of values from a field in a collection
+
+```java
+//TODO: Add Sample
+```
+
+```javascript
+$.ajax({
+  dataType: 'json',
+  type: 'GET',
+  headers: {
+    'apikey': apikey
+  },
+  url: '/1.0/list/dev-londc-com-demos-discussion-nsf/MainTopic/Subject',
+  success: function(res) {
+    //Do Something
+  }
+})
+```
+
+> The above returns an array of items
+
+```json
+["value one", "value two"]
+```
+
+### HTTP Request
+`GET https://example.com/1.0/list/:database/:collectionname/:fieldname`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+:database | the database to get the value list from
+:collectionname | the collection to get the value list from
+:fieldname | the field to get value list from
+
+## Responses
+
+Given a database, collection name and document id, this method will return to you a list of collection names and document ids that are responses to this document.
+
+```java
+//TODO: Add Sample
+```
+
+```javascript
+$.ajax({
+  dataType: 'json',
+  type: 'GET',
+  headers: {
+    'apikey': apikey
+  },
+  url: '/1.0/responses/dev-londc-com-demos-discussion-nsf/MainTopic/12345678',
+  success: function(res) {
+    //Do Something
+  }
+})
+```
+
+> The response object is similar to the standard collections response
+
+```json
+[
+  {
+    "_id": "5411514d8c1fd625dc2ab8c9",
+    "__unid": "A4D2533D7A91573E80257D1900276F8D",
+    "__parentid": "BAB78224CA0B0FEC80257D1900276F91",
+    "__form": "Response"
+  },
+  {
+    "_id": "5411514e8c1fd625dc2ab8d3",
+    "__unid": "3411614A3E45C7FB80257D1900276F92",
+    "__parentid": "BAB78224CA0B0FEC80257D1900276F91",
+    "__form": "ResponseToResponse"
+  },
+  {
+    "_id": "5411514d8c1fd625dc2ab8c3",
+    "__unid": "8D58E7A1EFD6899C80257D1900276F8E",
+    "__parentid": "A4D2533D7A91573E80257D1900276F8D",
+    "__form": "ResponseToResponse"
+  }
+]
+```
+
+### HTTP Request
+`GET https://example.com/1.0/responses/:database/:collectionname/:unid`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+:database | This is the unique name of the database which can be accessed using the databases service.
+:collectionname | the name of the collection that contains the document
+:unid | the document to get a list of responses for
+
+### Response Properties
+Property | Description
+-------- | -----------
+_id | the internal reference for the document
+__unid | the unid of the response document
+__parentid | the parentid of the document, this may not be the same as the :unid parameter as this method returns response to responses
+__form | the collection of the response document
+
+## Export to PDF
+Given a database, collection name and document id, this method will return PDF with all fields on the document.
+
+```java
+//TODO: Add Sample
+```
+
+```javascript
+$.ajax({
+  dataType: 'json',
+  type: 'GET',
+  headers: {
+    'apikey': apikey
+  },
+  url: '/1.0/pdf/dev-londc-com-demos-discussion-nsf/MainTopic/12345678',
+  success: function(res) {
+    //Do Something
+  }
+})
+```
+
+> The above returns a binary stream of the PDF document
+
+### HTTP Request
+`GET https://example.com/1.0/pdf/:database/:collectionname/:unid`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+:database | This is the unique name of the database which can be accessed using the databases service.
+:collectionname | the name of the collection to get the document from
+:unid | the unid of the document to export to PDF
+
+## Export to Excel
+Given a database and collection name, this method will return an Excel spreadsheet list of documents in the collection. The response will contain a list of documents from the collection, you can control how many documents and where in the collection to get them from using URL parameters.
+
+The count of the documents have document level security applied to them, so if there are 100 documents in the collection but the user can see only 10, then the count will be 10.
+
+```java
+//TODO: Add Sample
+```
+
+```javascript
+$.ajax({
+  dataType: 'json',
+  type: 'GET',
+  headers: {
+    'apikey': apikey
+  },
+  url: '/1.0/excel/dev-londc-com-demos-discussion-nsf/MainTopic',
+  success: function(res) {
+    //Do Something
+  }
+})
+```
+
+> The above returns a binary stream of the PDF document
+
+### HTTP Request
+`GET https://example.com/1.0/excel/:database/:collectionname`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+:database | This is the unique name of the database which can be accessed using the databases service.
+:collectionname | the name of the collection to export
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+count | 500 | The number of documents to get data for.
+start | 0 | The starting position in the view
+
+# Audit Trail
+
+## Get All Logs
+
+## Search Logs
+
+## Get Single Database Logs
+
+## Search Single Database Logs
+
+## Get Single Collection logs
+
+## Search Single Collection Logs
+
+## Get Single Document Logs
+
+## Search Single Document Logs
