@@ -14,4 +14,4 @@ Error Code | Meaning
 405 | Method Not Allowed -- You tried to access a URL with an invalid method
 418 | I'm a teapot
 500 | Internal Server Error -- We had a problem with our server. Try again later.
-503 | Service Unavailable -- We're temporarially offline for maintanance. Please try again later.
+503 | Service Unavailable -- We're temporarially offline for maintenance. Please try again later.
