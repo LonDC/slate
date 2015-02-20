@@ -263,7 +263,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p>`DELETE https://example.com/1.0/collections/:database/:collectionname</p>
+<p><code class="prettyprint">DELETE https://example.com/1.0/collections/:database/:collectionname</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
@@ -275,7 +275,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 </thead><tbody>
 <tr>
 <td>:database</td>
-<td>This is the unique name of the database which can be accessed using the API 1.0 databases method.</td>
+<td>This is the unique name of the database which can be accessed using the databases service</td>
 </tr>
 </tbody></table>
 
@@ -382,7 +382,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 </thead><tbody>
 <tr>
 <td>:database</td>
-<td>This is the unique name of the database which can be accessed using the API 1.0 databases method.</td>
+<td>This is the unique name of the database which can be accessed using the databases service</td>
 </tr>
 </tbody></table>
 
@@ -449,7 +449,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p>`GET https://example.com/1.0/collections/:database/:collectionname</p>
+<p><code class="prettyprint">GET https://example.com/1.0/collections/:database/:collectionname</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
@@ -461,7 +461,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 </thead><tbody>
 <tr>
 <td>:database</td>
-<td>This is the unique name of the database which can be accessed using the API 1.0 databases method.</td>
+<td>This is the unique name of the database which can be accessed using the databases service</td>
 </tr>
 <tr>
 <td>:collectionname</td>
@@ -554,7 +554,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p>`DELETE https://example.com/1.0/collections/:database/:collectionname</p>
+<p><code class="prettyprint">DELETE https://example.com/1.0/collections/:database/:collectionname</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
@@ -566,11 +566,597 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 </thead><tbody>
 <tr>
 <td>:database</td>
-<td>This is the unique name of the database which can be accessed using the API 1.0 databases method.</td>
+<td>This is the unique name of the database which can be accessed using the databases service</td>
 </tr>
 <tr>
 <td>:collectionname</td>
 <td>The name of the collection to delete</td>
+</tr>
+</tbody></table>
+
+<h2 id="search-in-a-collection">Search in a collection</h2>
+
+<p>To perform a search against a collection, you can submit queries to be run against one or more fields.</p>
+<pre><code class="highlight java"><span class="c1">//TODO: Sample code required</span>
+</code></pre>
+<pre><code class="highlight javascript"><span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+  <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
+  <span class="na">type</span><span class="p">:</span> <span class="s1">'POST'</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s1">'apikey'</span><span class="p">:</span> <span class="nx">apikey</span>
+  <span class="p">},</span>
+  <span class="na">data</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">"filters"</span><span class="p">:</span> <span class="p">[{</span>
+      <span class="s2">"operator"</span><span class="p">:</span> <span class="s2">"contains"</span><span class="p">,</span>
+      <span class="s2">"field"</span><span class="p">:</span> <span class="s2">"FieldToSearch"</span><span class="p">,</span>
+      <span class="s2">"value"</span><span class="p">:</span> <span class="nx">query</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">"operator"</span><span class="p">:</span> <span class="s2">"equals"</span><span class="p">,</span>
+      <span class="s2">"field"</span><span class="p">:</span> <span class="s2">"From"</span><span class="p">,</span>
+      <span class="s2">"value"</span><span class="p">:</span> <span class="nx">query</span>
+    <span class="p">}]</span>
+  <span class="p">},</span>
+  <span class="na">url</span><span class="p">:</span> <span class="s1">'/1.0/search/'</span> <span class="o">+</span> <span class="nx">dbname</span> <span class="o">+</span> <span class="s2">"/"</span> <span class="o">+</span> <span class="nx">collectionname</span> <span class="o">+</span> <span class="s2">"?count=10&amp;start="</span> <span class="o">+</span> <span class="nx">start</span><span class="p">,</span>
+  <span class="na">success</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//Do something</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</code></pre>
+
+<blockquote>
+<p>The above returns JSON structured like this:</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"count"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"data"</span><span class="p">:[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"_id"</span><span class="p">:</span><span class="s2">"53c8cf7983217c4dd0a5580b"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"Title"</span><span class="p">:</span><span class="s2">"This is the title"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"Body"</span><span class="p">:</span><span class="s2">"NSF2MongoDB frees your Domino data to be used in other applications or to\r\nallow the sunsetting of your Domino infrastructure without losing the data\r\nand security that you have grown used to.\r\n\r\n(See attached file: API.xlsx)"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"readers"</span><span class="p">:[</span><span class="w">
+        </span><span class="s2">"CN=Matt White/O=Exhilarate"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"CN=Fred Bloggs/O=FCL"</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="s2">"__unid"</span><span class="p">:</span><span class="s2">"C56DB3F14258431380257D190026303A"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"__noteid"</span><span class="p">:</span><span class="s2">"10F2"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"__created"</span><span class="p">:</span><span class="s2">"2014-07-18T06:57:07Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"__modified"</span><span class="p">:</span><span class="s2">"2014-07-18T07:21:31Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"__authors"</span><span class="p">:</span><span class="s2">"CN=Matt White/O=Exhilarate"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"__form"</span><span class="p">:</span><span class="s2">"MainTopic"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"_files"</span><span class="p">:[</span><span class="w">
+        </span><span class="s2">"API.xlsx"</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">POST https://example.com/1.0/collections/:database/:collectionname</code></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>:database</td>
+<td>This is the unique name of the database which can be accessed using the databases service</td>
+</tr>
+</tbody></table>
+
+<h3 id="query-parameters">Query Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>count</td>
+<td>30</td>
+<td>The number of documents to get data for.</td>
+</tr>
+<tr>
+<td>start</td>
+<td>0</td>
+<td>The starting position in the view, use this to page through documents</td>
+</tr>
+</tbody></table>
+
+<h3 id="response-json">Response JSON</h3>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>count</td>
+<td>the total count of documents in the collection that the current user can see</td>
+</tr>
+<tr>
+<td>data</td>
+<td>an array of document objects. the size of this array will not exceed the count URL parameter even if there are more documents in the collection. You will need to page through the data to get it all.</td>
+</tr>
+<tr>
+<td>_id</td>
+<td>internal unique reference id</td>
+</tr>
+<tr>
+<td>rich text fields</td>
+<td>when accessed via a collection all formatting is removed and a plain text representation of the content is returned. For full access to the rich text load the relevant document. Rich Text fields always have a second &ldquo;__parsed&rdquo; version of the field that can be used for searching purposes, this allows binary data to be stored in the primary rich text field</td>
+</tr>
+<tr>
+<td>system fields</td>
+<td>fields prefixed with __ are system fields that relate to your original Domino data. If the document has file attachments associated with it, the names of the files can be found in the field _files</td>
+</tr>
+</tbody></table>
+
+<h1 id="documents">Documents</h1>
+
+<h2 id="get-a-document">Get a document</h2>
+
+<p>To get the full detail for a document, use this method.</p>
+<pre><code class="highlight java"><span class="cm">/**
+ * Get full detail for an individual document
+ * @param dbname
+ * @param collection
+ * @param unid
+ * @return
+ * @throws ClientProtocolException
+ * @throws IOException
+ * @throws JsonException
+ */</span>
+<span class="kd">public</span> <span class="n">JsonJavaObject</span> <span class="nf">getDocument</span><span class="p">(</span><span class="n">String</span> <span class="n">dbname</span><span class="o">,</span> <span class="n">String</span> <span class="n">collection</span><span class="o">,</span> <span class="n">String</span> <span class="n">unid</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ClientProtocolException</span><span class="o">,</span> <span class="n">IOException</span><span class="o">,</span> <span class="n">JsonException</span> <span class="o">{</span>
+    <span class="n">String</span> <span class="n">responseBody</span> <span class="o">=</span> <span class="n">loadURL</span><span class="o">(</span><span class="s">"/1.0/document/"</span> <span class="o">+</span> <span class="n">dbname</span> <span class="o">+</span> <span class="s">"/"</span> <span class="o">+</span> <span class="n">collection</span> <span class="o">+</span> <span class="s">"/"</span> <span class="o">+</span> <span class="n">unid</span><span class="o">);</span>
+
+    <span class="n">JsonJavaFactory</span> <span class="n">factory</span> <span class="o">=</span> <span class="n">JsonJavaFactory</span><span class="o">.</span><span class="na">instanceEx</span><span class="o">;</span>
+    <span class="n">JsonJavaObject</span> <span class="n">json</span> <span class="o">=</span> <span class="o">(</span><span class="n">JsonJavaObject</span><span class="o">)</span> <span class="n">JsonParser</span><span class="o">.</span><span class="na">fromJson</span><span class="o">(</span><span class="n">factory</span><span class="o">,</span> <span class="n">responseBody</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">json</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre>
+<pre><code class="highlight javascript"><span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+  <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
+  <span class="na">type</span><span class="p">:</span> <span class="s1">'GET'</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s1">'apikey'</span><span class="p">:</span> <span class="nx">apikey</span>
+  <span class="p">},</span>
+  <span class="na">url</span><span class="p">:</span> <span class="s1">'/1.0/document/'</span> <span class="o">+</span> <span class="nx">dbname</span> <span class="o">+</span> <span class="s2">"/"</span> <span class="o">+</span> <span class="nx">collectionname</span> <span class="o">+</span> <span class="s2">"/"</span> <span class="o">+</span> <span class="nx">unid</span><span class="p">,</span>
+  <span class="na">success</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//Do Something</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</code></pre>
+
+<blockquote>
+<p>The above returns JSON structured like this:</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"_id"</span><span class="p">:</span><span class="s2">"53c8cf7783217c4dd0a557f6"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"Formname"</span><span class="p">:</span><span class="s2">"Response"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"ThreadSort"</span><span class="p">:</span><span class="s2">" 201218/062011:17:20 771AB2C8B80E229980257A210038850A"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"ThreadIndent"</span><span class="p">:</span><span class="s2">". . "</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"From"</span><span class="p">:</span><span class="s2">"CN=Matt White/O=Exhilarate"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"ParentForm"</span><span class="p">:</span><span class="s2">"Response"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"ParentSubject"</span><span class="p">:</span><span class="s2">"Response"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"Categories"</span><span class="p">:</span><span class="s2">"Sales"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"Body"</span><span class="p">:{</span><span class="w">
+    </span><span class="s2">"type"</span><span class="p">:</span><span class="s2">"multipart"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"content"</span><span class="p">:[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"contentType"</span><span class="p">:</span><span class="s2">"multipart/alternative; Boundary=\"0__=0FBBF78ADFB9AAF98f9e8a93df938690918c0FBBF78ADFB9AAF9\""</span><span class="p">,</span><span class="w">
+</span><span class="s2">"contentDisposition"</span><span class="p">:</span><span class="s2">"inline"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"contentType"</span><span class="p">:</span><span class="s2">"text/plain; charset=US-ASCII"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"data"</span><span class="p">:</span><span class="s2">"This looks good to me - we need to make sure that the right Project Manager\r\nis assigned to this project"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"boundary"</span><span class="p">:</span><span class="s2">"--0__=0FBBF78ADFB9AAF98f9e8a93df938690918c0FBBF78ADFB9AAF9"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"contentType"</span><span class="p">:</span><span class="s2">"text/html; charset=US-ASCII"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"contentDisposition"</span><span class="p">:</span><span class="s2">"inline"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"data"</span><span class="p">:</span><span class="s2">"&lt;html&gt;&lt;body&gt;&lt;font size=\"1\" face=\"sans-serif\"&gt;This looks good to me - we need to make sure that the right Project Manager is assigned to this project &lt;/font&gt;&lt;/body&gt;&lt;/html&gt;"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"boundary"</span><span class="p">:</span><span class="s2">"--0__=0FBBF78ADFB9AAF98f9e8a93df938690918c0FBBF78ADFB9AAF9"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"Body__parsed"</span><span class="p">:</span><span class="s2">"&lt;html&gt;&lt;body&gt;&lt;font size=\"1\" face=\"sans-serif\"&gt;This looks good to me - we need to make sure that the right Project Manager is assigned to this project &lt;/font&gt;&lt;/body&gt;&lt;/html&gt;"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"Subject"</span><span class="p">:</span><span class="s2">"Looks good to me"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"__href"</span><span class="p">:</span><span class="s2">"http://dev.londc.com:80/demos/Discussion.nsf/api/data/documents/unid/FC7D00934676A6B580257D1900278BAA"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"__unid"</span><span class="p">:</span><span class="s2">"FC7D00934676A6B580257D1900278BAA"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"__noteid"</span><span class="p">:</span><span class="s2">"114E"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"__parentid"</span><span class="p">:</span><span class="s2">"E2445C89357BB15080257D1900278BA9"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"__created"</span><span class="p">:</span><span class="s2">"2014-07-18T07:11:56Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"__modified"</span><span class="p">:</span><span class="s2">"2014-07-18T07:13:19Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"__authors"</span><span class="p">:</span><span class="w">  </span><span class="p">[</span><span class="w"> </span><span class="s2">"CN=Matt White/O=Exhilarate"</span><span class="p">,</span><span class="w"> </span><span class="s2">"CN=Matt White/O=Exhilarate"</span><span class="w"> </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"__form"</span><span class="p">:</span><span class="s2">"Response"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"_files"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"api.xls"</span><span class="w"> </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://example.com/1.0/collections/:database/:collectionname/:unid</code></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>:database</td>
+<td>This is the unique name of the database which can be accessed using the databases service.</td>
+</tr>
+<tr>
+<td>:collectionname</td>
+<td>The name of the collection that contains the document</td>
+</tr>
+<tr>
+<td>:unid</td>
+<td>The unique ID of the document to get (this maps to the __unid field, not the _id field)</td>
+</tr>
+</tbody></table>
+
+<h2 id="insert-a-new-document">Insert a new document</h2>
+
+<p>To insert a new document, use the PUT method and send JSON data to the service. If a document with the :unid already exists in the collection, an error will be returned. Use the POST method to update existing documents.</p>
+
+<p>If the collection name (or database name) do not currently exist then they will automatically be created. By this process you can effectively create a brand new database by simply inserting a new document. Bear in mind that you will need to set up security for the database once it has been created.</p>
+<pre><code class="highlight java"><span class="c1">//TODO: Add Sample Code</span>
+</code></pre>
+<pre><code class="highlight javascript"><span class="c1">//Taken from our Discussion template</span>
+<span class="nx">disc</span><span class="p">.</span><span class="nx">saveNewMainTopic</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">fileInput</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">"#fileupload"</span><span class="p">);</span>
+  <span class="kd">var</span> <span class="nx">file</span> <span class="o">=</span> <span class="nx">fileInput</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">files</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+  <span class="kd">var</span> <span class="nx">reader</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FileReader</span><span class="p">();</span>
+  <span class="c1">//Start building the document data</span>
+  <span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="p">{};</span>
+  <span class="nx">data</span><span class="p">.</span><span class="nx">FormName</span> <span class="o">=</span> <span class="s2">"MainTopic"</span><span class="p">;</span>
+  <span class="nx">data</span><span class="p">.</span><span class="nx">__form</span> <span class="o">=</span> <span class="s2">"MainTopic"</span><span class="p">;</span>
+  <span class="nx">data</span><span class="p">.</span><span class="nx">Categories</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">"#categories option:selected"</span><span class="p">).</span><span class="nx">val</span><span class="p">();</span>
+  <span class="nx">data</span><span class="p">.</span><span class="nx">From</span> <span class="o">=</span> <span class="nx">username</span><span class="p">;</span>
+  <span class="nx">data</span><span class="p">.</span><span class="nx">AbbreviateFrom</span> <span class="o">=</span> <span class="nx">username</span><span class="p">;</span>
+  <span class="nx">data</span><span class="p">.</span><span class="nx">Body</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"multipart"</span><span class="p">,</span>
+    <span class="s2">"content"</span><span class="p">:</span> <span class="p">[{</span>
+      <span class="s2">"contentType"</span><span class="p">:</span> <span class="s2">"text/plain; charset=UTF-8"</span><span class="p">,</span>
+      <span class="s2">"data"</span><span class="p">:</span> <span class="nx">CKEDITOR</span><span class="p">.</span><span class="nx">instances</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">getData</span><span class="p">()</span>
+    <span class="p">}]</span>
+  <span class="p">};</span>
+  <span class="nx">data</span><span class="p">.</span><span class="nx">Subject</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">"#subject"</span><span class="p">).</span><span class="nx">val</span><span class="p">();</span>
+  <span class="nx">data</span><span class="p">.</span><span class="nx">__created</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">().</span><span class="nx">toISOString</span><span class="p">();</span>
+  <span class="nx">data</span><span class="p">.</span><span class="nx">__modified</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">().</span><span class="nx">toISOString</span><span class="p">();</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="nx">file</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//Convert the file attachment to BASE64 string</span>
+    <span class="nx">reader</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">data</span><span class="p">.</span><span class="nx">Body</span><span class="p">.</span><span class="nx">content</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span>
+        <span class="s2">"contentType"</span><span class="p">:</span> <span class="nx">file</span><span class="p">.</span><span class="nx">type</span> <span class="o">+</span> <span class="s2">"; name=\""</span> <span class="o">+</span> <span class="nx">file</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="s2">"\""</span><span class="p">,</span>
+        <span class="s2">"contentDisposition"</span><span class="p">:</span> <span class="s2">"attachment; filename=\""</span> <span class="o">+</span> <span class="nx">file</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="s2">"\""</span><span class="p">,</span>
+        <span class="s2">"contentTransferEncoding"</span><span class="p">:</span> <span class="s2">"base64"</span><span class="p">,</span>
+        <span class="s2">"data"</span><span class="p">:</span> <span class="nx">reader</span><span class="p">.</span><span class="nx">result</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/,</span><span class="se">(</span><span class="sr">.*</span><span class="se">)</span><span class="sr">$/</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+      <span class="p">});</span>
+      <span class="nx">disc</span><span class="p">.</span><span class="nx">sendNewMainTopic</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="nx">reader</span><span class="p">.</span><span class="nx">readAsDataURL</span><span class="p">(</span><span class="nx">file</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">disc</span><span class="p">.</span><span class="nx">sendNewMainTopic</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="nx">disc</span><span class="p">.</span><span class="nx">sendNewMainTopic</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">unid</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">().</span><span class="nx">getTime</span><span class="p">();</span>
+
+  <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+    <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
+    <span class="na">type</span><span class="p">:</span> <span class="s1">'PUT'</span><span class="p">,</span>
+    <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s1">'apikey'</span><span class="p">:</span> <span class="nx">apikey</span>
+    <span class="p">},</span>
+    <span class="na">data</span><span class="p">:</span> <span class="nx">data</span><span class="p">,</span>
+    <span class="na">url</span><span class="p">:</span> <span class="s1">'/1.0/document/'</span> <span class="o">+</span> <span class="nx">dbname</span> <span class="o">+</span> <span class="s2">"/"</span> <span class="o">+</span> <span class="nx">data</span><span class="p">.</span><span class="nx">FormName</span> <span class="o">+</span> <span class="s2">"/"</span> <span class="o">+</span> <span class="nx">unid</span><span class="p">,</span>
+    <span class="na">complete</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">//Do something</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+
+<span class="p">}</span>
+</code></pre>
+
+<blockquote>
+<p>If the document is inserted correctly, the above returns a 200 success code, otherwise you will receive an error</p>
+</blockquote>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">PUT https://example.com/1.0/collections/:database/:collectionname/:unid</code></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>:database</td>
+<td>This is the unique name of the database which can be accessed using the databases service.</td>
+</tr>
+<tr>
+<td>:collectionname</td>
+<td>The name of the collection into which the document will be inserted</td>
+</tr>
+<tr>
+<td>:unid</td>
+<td>The unique identifier of the document to be inserted</td>
+</tr>
+</tbody></table>
+
+<h2 id="update-an-existing-document">Update an existing document</h2>
+
+<p>When you want to update a document use this method. You only need to post the fields that you want to update. Those fields will overwrite matching fields in the document, or add them if they don&rsquo;t already exist. To remove a field set its value to null.</p>
+
+<p>If the document does not exist then an error will be returned, in this case you should use the PUT method instead.</p>
+<pre><code class="highlight java"><span class="c1">//TODO: Add Sample Code</span>
+</code></pre>
+<pre><code class="highlight javascript"><span class="c1">//Taken from our Discussion template</span>
+<span class="nx">disc</span><span class="p">.</span><span class="nx">saveMainTopic</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">unid</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">fileInput</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">"#fileupload"</span><span class="p">);</span>
+  <span class="kd">var</span> <span class="nx">file</span> <span class="o">=</span> <span class="nx">fileInput</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">files</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+  <span class="kd">var</span> <span class="nx">reader</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FileReader</span><span class="p">();</span>
+  <span class="c1">//Start building the document data</span>
+  <span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="p">{};</span>
+  <span class="nx">data</span><span class="p">.</span><span class="nx">FormName</span> <span class="o">=</span> <span class="s2">"MainTopic"</span><span class="p">;</span>
+  <span class="nx">data</span><span class="p">.</span><span class="nx">__form</span> <span class="o">=</span> <span class="s2">"MainTopic"</span><span class="p">;</span>
+  <span class="nx">data</span><span class="p">.</span><span class="nx">Categories</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">"#categories option:selected"</span><span class="p">).</span><span class="nx">val</span><span class="p">();</span>
+  <span class="nx">data</span><span class="p">.</span><span class="nx">From</span> <span class="o">=</span> <span class="nx">username</span><span class="p">;</span>
+  <span class="nx">data</span><span class="p">.</span><span class="nx">AbbreviateFrom</span> <span class="o">=</span> <span class="nx">username</span><span class="p">;</span>
+  <span class="nx">data</span><span class="p">.</span><span class="nx">Body</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"multipart"</span><span class="p">,</span>
+    <span class="s2">"content"</span><span class="p">:</span> <span class="p">[{</span>
+      <span class="s2">"contentType"</span><span class="p">:</span> <span class="s2">"text/plain; charset=UTF-8"</span><span class="p">,</span>
+      <span class="s2">"data"</span><span class="p">:</span> <span class="nx">CKEDITOR</span><span class="p">.</span><span class="nx">instances</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">getData</span><span class="p">()</span>
+    <span class="p">}]</span>
+  <span class="p">};</span>
+  <span class="nx">data</span><span class="p">.</span><span class="nx">Subject</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">"#subject"</span><span class="p">).</span><span class="nx">val</span><span class="p">();</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="nx">file</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//Convert the file attachment to BASE64 string</span>
+    <span class="nx">reader</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">data</span><span class="p">.</span><span class="nx">Body</span><span class="p">.</span><span class="nx">content</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span>
+        <span class="s2">"contentType"</span><span class="p">:</span> <span class="nx">file</span><span class="p">.</span><span class="nx">type</span> <span class="o">+</span> <span class="s2">"; name=\""</span> <span class="o">+</span> <span class="nx">file</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="s2">"\""</span><span class="p">,</span>
+        <span class="s2">"contentDisposition"</span><span class="p">:</span> <span class="s2">"attachment; filename=\""</span> <span class="o">+</span> <span class="nx">file</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="s2">"\""</span><span class="p">,</span>
+        <span class="s2">"contentTransferEncoding"</span><span class="p">:</span> <span class="s2">"base64"</span><span class="p">,</span>
+        <span class="s2">"data"</span><span class="p">:</span> <span class="nx">reader</span><span class="p">.</span><span class="nx">result</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/,</span><span class="se">(</span><span class="sr">.*</span><span class="se">)</span><span class="sr">$/</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+      <span class="p">});</span>
+      <span class="nx">disc</span><span class="p">.</span><span class="nx">sendNewMainTopic</span><span class="p">(</span><span class="nx">unid</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="nx">reader</span><span class="p">.</span><span class="nx">readAsDataURL</span><span class="p">(</span><span class="nx">file</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">disc</span><span class="p">.</span><span class="nx">sendMainTopic</span><span class="p">(</span><span class="nx">unid</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="nx">disc</span><span class="p">.</span><span class="nx">sendMainTopic</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">unid</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+
+  <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+    <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
+    <span class="na">type</span><span class="p">:</span> <span class="s1">'POST'</span><span class="p">,</span>
+    <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s1">'apikey'</span><span class="p">:</span> <span class="nx">apikey</span>
+    <span class="p">},</span>
+    <span class="na">data</span><span class="p">:</span> <span class="nx">data</span><span class="p">,</span>
+    <span class="na">url</span><span class="p">:</span> <span class="s1">'/1.0/document/'</span> <span class="o">+</span> <span class="nx">dbname</span> <span class="o">+</span> <span class="s2">"/"</span> <span class="o">+</span> <span class="nx">data</span><span class="p">.</span><span class="nx">FormName</span> <span class="o">+</span> <span class="s2">"/"</span> <span class="o">+</span> <span class="nx">unid</span><span class="p">,</span>
+    <span class="na">complete</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">//Do something</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+
+<span class="p">}</span>
+</code></pre>
+
+<blockquote>
+<p>If the document is updated correctly, the above returns a 200 success code, otherwise you will receive an error</p>
+</blockquote>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">POST https://example.com/1.0/collections/:database/:collectionname/:unid</code></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>:database</td>
+<td>This is the unique name of the database which can be accessed using the databases service.</td>
+</tr>
+<tr>
+<td>:collectionname</td>
+<td>The name of the collection in which the document will be updated</td>
+</tr>
+<tr>
+<td>:unid</td>
+<td>The unique identifier of the document to be updated</td>
+</tr>
+</tbody></table>
+
+<h2 id="delete-a-document">Delete a document</h2>
+
+<p>To delete a document, use this method. You must have the rights to update the document</p>
+<pre><code class="highlight java"><span class="c1">//TODO: We need sample code here</span>
+</code></pre>
+<pre><code class="highlight javascript"><span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+  <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
+  <span class="na">type</span><span class="p">:</span> <span class="s1">'DELETE'</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span> <span class="s1">'apikey'</span><span class="p">:</span> <span class="nx">apikey</span> <span class="p">},</span>
+  <span class="na">url</span><span class="p">:</span> <span class="s1">'/1.0/collections/'</span> <span class="o">+</span> <span class="nx">database</span> <span class="o">+</span> <span class="s1">'/'</span> <span class="o">+</span> <span class="nx">collection</span> <span class="o">+</span> <span class="s2">"/"</span> <span class="o">+</span> <span class="nx">unid</span><span class="p">,</span>
+  <span class="na">success</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">){</span>
+    <span class="c1">//Do something</span>
+  <span class="p">},</span>
+  <span class="nx">error</span><span class="err">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">xhr</span><span class="p">,</span> <span class="nx">status</span><span class="p">,</span> <span class="nx">error</span><span class="p">){</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">status</span> <span class="o">==</span> <span class="mi">401</span><span class="p">){</span>
+      <span class="nx">alert</span><span class="p">(</span><span class="s2">"You do not have the rights to delete the document"</span><span class="p">);</span>
+    <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+      <span class="nx">alert</span><span class="p">(</span><span class="nx">status</span> <span class="o">+</span> <span class="s1">'\n'</span> <span class="o">+</span> <span class="nx">error</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+
+</code></pre>
+
+<blockquote>
+<p>The above returns JSON structured like this:</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">DELETE https://example.com/1.0/collections/:database/:collectionname/:unid</code></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>:database</td>
+<td>This is the unique name of the database which can be accessed using the databases service</td>
+</tr>
+<tr>
+<td>:collectionname</td>
+<td>The name of the collection to delete</td>
+</tr>
+<tr>
+<td>:unid</td>
+<td>The unid of the document to delete</td>
+</tr>
+</tbody></table>
+
+<h1 id="file-attachments">File Attachments</h1>
+
+<p>Given a database name, collection name, document id and attachment name, you can either download the attachment or delete it from the database. To insert new attachments, use the document PUT or POST methods.</p>
+
+<h2 id="get-a-file-attachment">Get a File Attachment</h2>
+<pre><code class="highlight java"><span class="c1">//TODO: We need sample code here</span>
+</code></pre>
+<pre><code class="highlight javascript"><span class="nb">window</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s2">"https://example.com/1.0/attachment/:database/:collectionname/:unid/:filename"</span><span class="p">);</span>
+</code></pre>
+
+<blockquote>
+<p>If the file exists (and you are allowed to access it), then the file will be sent as a binary stream to the requestor. If the file does not exists (or you are not allowed to access it) then an error will be returned.</p>
+</blockquote>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://example.com/1.0/collections/:database/:collectionname/:unid/:filename</code></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>:database</td>
+<td>This is the unique name of the database which can be accessed using the databases service</td>
+</tr>
+<tr>
+<td>:collectionname</td>
+<td>The name of the collection to delete</td>
+</tr>
+<tr>
+<td>:unid</td>
+<td>The unid of the document to delete</td>
+</tr>
+<tr>
+<td>:filename</td>
+<td>The name of the file to access (can be retrieved from _files field on any document)</td>
+</tr>
+</tbody></table>
+
+<h2 id="delete-a-file-attachment">Delete a file attachment</h2>
+
+<p>To delete a file attachment, use this method. You must have the rights to update the document to which the file is associated</p>
+<pre><code class="highlight java"><span class="c1">//TODO: We need sample code here</span>
+</code></pre>
+<pre><code class="highlight javascript"><span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+  <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
+  <span class="na">type</span><span class="p">:</span> <span class="s1">'DELETE'</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span> <span class="s1">'apikey'</span><span class="p">:</span> <span class="nx">apikey</span> <span class="p">},</span>
+  <span class="na">url</span><span class="p">:</span> <span class="s1">'/1.0/collections/'</span> <span class="o">+</span> <span class="nx">database</span> <span class="o">+</span> <span class="s1">'/'</span> <span class="o">+</span> <span class="nx">collection</span> <span class="o">+</span> <span class="s2">"/"</span> <span class="o">+</span> <span class="nx">unid</span> <span class="o">+</span> <span class="s2">"/"</span> <span class="o">+</span> <span class="nx">filename</span><span class="p">,</span>
+  <span class="na">success</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">){</span>
+    <span class="c1">//Do something</span>
+  <span class="p">},</span>
+  <span class="nx">error</span><span class="err">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">xhr</span><span class="p">,</span> <span class="nx">status</span><span class="p">,</span> <span class="nx">error</span><span class="p">){</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">status</span> <span class="o">==</span> <span class="mi">401</span><span class="p">){</span>
+      <span class="nx">alert</span><span class="p">(</span><span class="s2">"You do not have the rights to delete the filename"</span><span class="p">);</span>
+    <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+      <span class="nx">alert</span><span class="p">(</span><span class="nx">status</span> <span class="o">+</span> <span class="s1">'\n'</span> <span class="o">+</span> <span class="nx">error</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+
+</code></pre>
+
+<blockquote>
+<p>The above returns JSON structured like this:</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">DELETE https://example.com/1.0/collections/:database/:collectionname/:unid/:filename</code></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>:database</td>
+<td>This is the unique name of the database which can be accessed using the databases service</td>
+</tr>
+<tr>
+<td>:collectionname</td>
+<td>The name of the collection to delete</td>
+</tr>
+<tr>
+<td>:unid</td>
+<td>The unid of the document to delete</td>
+</tr>
+<tr>
+<td>:filename</td>
+<td>The name of the file to delete (can be retrieved from _files field on any document)</td>
 </tr>
 </tbody></table>
 
