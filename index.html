@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>API Reference</title>
+    <title>LDC Via API Reference</title>
 
     <link href="stylesheets/screen.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="stylesheets/print.css" rel="stylesheet" type="text/css" media="print" />
@@ -13,7 +13,7 @@
 
       <script>
         $(function() {
-          setupLanguages(["shell","ruby","python"]);
+          setupLanguages(["java","javascript"]);
         });
       </script>
   </head>
@@ -28,9 +28,8 @@
     <div class="tocify-wrapper">
       <img src="images/logo.png" />
         <div class="lang-selector">
-              <a href="#" data-language-name="shell">shell</a>
-              <a href="#" data-language-name="ruby">ruby</a>
-              <a href="#" data-language-name="python">python</a>
+              <a href="#" data-language-name="java">java</a>
+              <a href="#" data-language-name="javascript">javascript</a>
         </div>
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Search">
@@ -39,61 +38,266 @@
       <div id="toc">
       </div>
         <ul class="toc-footer">
-            <li><a href='#'>Sign Up for a Developer Key</a></li>
-            <li><a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a></li>
+            <li><a href='http://ldcvia.com'>Sign Up for a trial account</a></li>
         </ul>
     </div>
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
-        <h1 id='introduction'>Introduction</h1>
-<p>Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.</p>
+        <h1 id="introduction">Introduction</h1>
 
-<p>We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
+<p>Welcome to the LDC Via API! You can use our API to access LDC Via API endpoints, this allows you to access and modify documents within databases in your organisation.</p>
 
-<p>This example API documentation page was created with <a href="http://github.com/tripit/slate">Slate</a>. Feel free to edit it and use it as a base for your own API&rsquo;s documentation.</p>
-<h1 id='authentication'>Authentication</h1>
-<blockquote>
-<p>To authorize, use this code:</p>
-</blockquote>
-<pre><code class="highlight ruby"><span class="nb">require</span> <span class="s1">'kittn'</span>
+<p>We have language bindings in Java and JavaScript (jQuery)! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre>
-<pre><code class="highlight python"><span class="kn">import</span> <span class="nn">kittn</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre>
-<pre><code class="highlight shell"><span class="c"># With shell, you can just pass the correct header with each request</span>
-curl <span class="s2">"api_endpoint_here"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre>
+<h1 id="authentication">Authentication</h1>
 
 <blockquote>
-<p>Make sure to replace <code class="prettyprint">meowmeowmeow</code> with your API key.</p>
+<p>To authorize, always pass the &lsquo;apikey&rsquo; header:</p>
+</blockquote>
+<pre><code class="highlight java"><span class="kn">package</span> <span class="n">com</span><span class="o">.</span><span class="na">ldcvia</span><span class="o">.</span><span class="na">rest</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.Serializable</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Collections</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.apache.http.HttpEntity</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.HttpResponse</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.client.ClientProtocolException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.client.ResponseHandler</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.client.methods.HttpGet</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.impl.client.CloseableHttpClient</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.impl.client.HttpClients</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.util.EntityUtils</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.ibm.commons.util.io.json.JsonException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.ibm.commons.util.io.json.JsonJavaArray</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.ibm.commons.util.io.json.JsonJavaFactory</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.ibm.commons.util.io.json.JsonJavaObject</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.ibm.commons.util.io.json.JsonParser</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.ibm.xsp.extlib.util.ExtLibUtil</span><span class="o">;</span>
+
+<span class="cm">/**
+ * Get a list of databases that the current user has access to
+ *  
+ * @return
+ * @throws ClientProtocolException
+ * @throws IOException
+ * @throws JsonException
+ */</span>
+<span class="kd">public</span> <span class="n">JsonJavaArray</span> <span class="nf">getDatabases</span><span class="p">(</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ClientProtocolException</span><span class="o">,</span> <span class="n">IOException</span><span class="o">,</span> <span class="n">JsonException</span><span class="o">{</span>
+    <span class="n">String</span> <span class="n">responseBody</span> <span class="o">=</span> <span class="n">loadURL</span><span class="o">(</span><span class="s">"/1.0/databases"</span><span class="o">);</span>
+    <span class="n">JsonJavaFactory</span> <span class="n">factory</span> <span class="o">=</span> <span class="n">JsonJavaFactory</span><span class="o">.</span><span class="na">instanceEx</span><span class="o">;</span>
+    <span class="n">JsonJavaObject</span> <span class="n">json</span> <span class="o">=</span> <span class="o">(</span><span class="n">JsonJavaObject</span><span class="o">)</span> <span class="n">JsonParser</span><span class="o">.</span><span class="na">fromJson</span><span class="o">(</span><span class="n">factory</span><span class="o">,</span> <span class="n">responseBody</span><span class="o">);</span>
+
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="na">getAsArray</span><span class="o">(</span><span class="s">"databases"</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="cm">/**
+ * Helper method to request a URL from the LDC Via service
+ * @param url
+ * @return
+ * @throws ClientProtocolException
+ * @throws IOException
+ */</span>
+<span class="kd">private</span> <span class="n">String</span> <span class="nf">loadURL</span><span class="p">(</span><span class="n">String</span> <span class="n">url</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ClientProtocolException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+    <span class="n">CloseableHttpClient</span> <span class="n">httpclient</span> <span class="o">=</span> <span class="n">HttpClients</span><span class="o">.</span><span class="na">createDefault</span><span class="o">();</span>
+    <span class="n">HttpGet</span> <span class="n">httpget</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HttpGet</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">baseurl</span> <span class="o">+</span> <span class="n">url</span><span class="o">);</span>
+
+    <span class="c1">// Create a custom response handler</span>
+    <span class="n">ResponseHandler</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">responseHandler</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ResponseHandler</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;()</span> <span class="o">{</span>
+
+        <span class="kd">public</span> <span class="n">String</span> <span class="n">handleResponse</span><span class="o">(</span><span class="kd">final</span> <span class="n">HttpResponse</span> <span class="n">response</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ClientProtocolException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+            <span class="kt">int</span> <span class="n">status</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="na">getStatusLine</span><span class="o">().</span><span class="na">getStatusCode</span><span class="o">();</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">status</span> <span class="o">&gt;=</span> <span class="mi">200</span> <span class="o">&amp;&amp;</span> <span class="n">status</span> <span class="o">&lt;</span> <span class="mi">300</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">HttpEntity</span> <span class="n">entity</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="na">getEntity</span><span class="o">();</span>
+                <span class="k">return</span> <span class="n">entity</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">?</span> <span class="n">EntityUtils</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="n">entity</span><span class="o">)</span> <span class="o">:</span> <span class="kc">null</span><span class="o">;</span>
+            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="n">ClientProtocolException</span><span class="o">(</span><span class="s">"Unexpected response status: "</span> <span class="o">+</span> <span class="n">status</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+
+    <span class="o">};</span>
+    <span class="n">httpget</span><span class="o">.</span><span class="na">addHeader</span><span class="o">(</span><span class="s">"apikey"</span><span class="o">,</span> <span class="s">"MYSECRETAPIKEY"</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">httpclient</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="n">httpget</span><span class="o">,</span> <span class="n">responseHandler</span><span class="o">);</span>
+<span class="o">}</span>
+
+</code></pre>
+<pre><code class="highlight javascript"><span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+    <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
+    <span class="na">type</span><span class="p">:</span> <span class="s1">'GET'</span><span class="p">,</span>
+    <span class="na">headers</span><span class="p">:</span> <span class="p">{</span> <span class="s1">'apikey'</span><span class="p">:</span> <span class="s1">'MYSECRETAPIKEY'</span> <span class="p">},</span>
+    <span class="na">url</span><span class="p">:</span> <span class="s1">'/1.0/databases'</span><span class="p">,</span>
+    <span class="na">success</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
+      <span class="c1">//Do something</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+</code></pre>
+
+<blockquote>
+<p>Make sure to replace <code class="prettyprint">MYSECRETAPIKEY</code> with your API key.</p>
 </blockquote>
 
-<p>Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our <a href="http://example.com/developers">developer portal</a>.</p>
+<p>Each user in the application is assigned an API Key when they are registered. This key is unique and should be considered a secret (i.e. do not share your key with anyone else). Your API Key is required for all interactions with the API, without the key, or with an incorrect key you will not be able to access the API.</p>
 
-<p>Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:</p>
+<p><code class="prettyprint">apikey: INSERTYOURAPIKEYHERE</code></p>
 
-<p><code class="prettyprint">Authorization: meowmeowmeow</code></p>
+<aside class="notice">
+You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
+</aside>
 
-<p><aside class="notice">
-You must replace <code class="prettyprint">meowmeowmeow</code> with your personal API key.
-</aside></p>
-<h1 id='kittens'>Kittens</h1><h2 id='get-all-kittens'>Get All Kittens</h2><pre><code class="highlight ruby"><span class="nb">require</span> <span class="s1">'kittn'</span>
+<h1 id="databases">Databases</h1>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span>
+<p>This is probably the simplest API method that we offer, it provides a simple list of databases that a user has access to.</p>
+
+<h2 id="get-all-databases">Get All Databases</h2>
+<pre><code class="highlight java"><span class="cm">/**
+ * Get a list of databases that the current user has access to
+ *  
+ * @return
+ * @throws ClientProtocolException
+ * @throws IOException
+ * @throws JsonException
+ */</span>
+<span class="kd">public</span> <span class="n">JsonJavaArray</span> <span class="nf">getDatabases</span><span class="p">(</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ClientProtocolException</span><span class="o">,</span> <span class="n">IOException</span><span class="o">,</span> <span class="n">JsonException</span><span class="o">{</span>
+    <span class="n">String</span> <span class="n">responseBody</span> <span class="o">=</span> <span class="n">loadURL</span><span class="o">(</span><span class="s">"/1.0/databases"</span><span class="o">);</span>
+    <span class="n">JsonJavaFactory</span> <span class="n">factory</span> <span class="o">=</span> <span class="n">JsonJavaFactory</span><span class="o">.</span><span class="na">instanceEx</span><span class="o">;</span>
+    <span class="n">JsonJavaObject</span> <span class="n">json</span> <span class="o">=</span> <span class="o">(</span><span class="n">JsonJavaObject</span><span class="o">)</span> <span class="n">JsonParser</span><span class="o">.</span><span class="na">fromJson</span><span class="o">(</span><span class="n">factory</span><span class="o">,</span> <span class="n">responseBody</span><span class="o">);</span>
+
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="na">getAsArray</span><span class="o">(</span><span class="s">"databases"</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="cm">/**
+ * Helper method to request a URL from the LDC Via service
+ * @param url
+ * @return
+ * @throws ClientProtocolException
+ * @throws IOException
+ */</span>
+<span class="kd">private</span> <span class="n">String</span> <span class="nf">loadURL</span><span class="p">(</span><span class="n">String</span> <span class="n">url</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ClientProtocolException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+    <span class="n">CloseableHttpClient</span> <span class="n">httpclient</span> <span class="o">=</span> <span class="n">HttpClients</span><span class="o">.</span><span class="na">createDefault</span><span class="o">();</span>
+    <span class="n">HttpGet</span> <span class="n">httpget</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HttpGet</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">baseurl</span> <span class="o">+</span> <span class="n">url</span><span class="o">);</span>
+
+    <span class="c1">// Create a custom response handler</span>
+    <span class="n">ResponseHandler</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">responseHandler</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ResponseHandler</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;()</span> <span class="o">{</span>
+
+        <span class="kd">public</span> <span class="n">String</span> <span class="n">handleResponse</span><span class="o">(</span><span class="kd">final</span> <span class="n">HttpResponse</span> <span class="n">response</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ClientProtocolException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+            <span class="kt">int</span> <span class="n">status</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="na">getStatusLine</span><span class="o">().</span><span class="na">getStatusCode</span><span class="o">();</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">status</span> <span class="o">&gt;=</span> <span class="mi">200</span> <span class="o">&amp;&amp;</span> <span class="n">status</span> <span class="o">&lt;</span> <span class="mi">300</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">HttpEntity</span> <span class="n">entity</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="na">getEntity</span><span class="o">();</span>
+                <span class="k">return</span> <span class="n">entity</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">?</span> <span class="n">EntityUtils</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="n">entity</span><span class="o">)</span> <span class="o">:</span> <span class="kc">null</span><span class="o">;</span>
+            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="n">ClientProtocolException</span><span class="o">(</span><span class="s">"Unexpected response status: "</span> <span class="o">+</span> <span class="n">status</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+
+    <span class="o">};</span>
+    <span class="n">httpget</span><span class="o">.</span><span class="na">addHeader</span><span class="o">(</span><span class="s">"apikey"</span><span class="o">,</span> <span class="s">"MYSECRETAPIKEY"</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">httpclient</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="n">httpget</span><span class="o">,</span> <span class="n">responseHandler</span><span class="o">);</span>
+<span class="o">}</span>
 </code></pre>
-<pre><code class="highlight python"><span class="kn">import</span> <span class="nn">kittn</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<pre><code class="highlight javascript"><span class="kd">var</span> <span class="nx">root</span> <span class="o">=</span> <span class="s1">'https://example.com'</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">apikey</span> <span class="o">=</span> <span class="s1">'MYSECRETAPIKEY'</span><span class="p">;</span>
+  <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+    <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
+    <span class="na">type</span><span class="p">:</span> <span class="s1">'GET'</span><span class="p">,</span>
+    <span class="na">url</span><span class="p">:</span> <span class="nx">root</span> <span class="o">+</span> <span class="s1">'/1.0/databases'</span><span class="p">,</span>
+    <span class="na">data</span><span class="p">:</span> <span class="nx">data</span><span class="p">,</span>
+    <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s1">'apikey'</span><span class="p">:</span> <span class="nx">apikey</span>
+    <span class="p">},</span>
+    <span class="na">success</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">})</span>
 </code></pre>
-<pre><code class="highlight shell">curl <span class="s2">"http://example.com/api/kittens"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"databases"</span><span class="p">:[</span><span class="w">
+    </span><span class="s2">"acme-com-discussion"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"acme-com-discussion2"</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>This endpoint retrieves all databases that you have access to.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET http://example.com/api/1.0/databases</code></p>
+
+<h1 id="collections">Collections</h1>
+
+<h2 id="get-all-collections-in-a-database">Get All Collections in a Database</h2>
+
+<p>Given a database name, this method will return a list of all collections in the database along with a count of documents in each collection.</p>
+
+<p>The counts of the documents have document level security applied to them, so if there are 100 documents in the collection but the user can see only 10, then the count will be 10.</p>
+<pre><code class="highlight java"><span class="cm">/**
+ * Gets a list of collections for the given database
+ * Each element contains two properties: collection and count. Count is relative to the api key used to get the collection list
+ * @param dbname
+ * @return
+ * @throws ClientProtocolException
+ * @throws IOException
+ * @throws JsonException
+ */</span>
+<span class="nd">@SuppressWarnings</span><span class="o">(</span><span class="s">"unchecked"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="n">ArrayList</span> <span class="nf">getCollections</span><span class="p">(</span><span class="n">String</span> <span class="n">dbname</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ClientProtocolException</span><span class="o">,</span> <span class="n">IOException</span><span class="o">,</span> <span class="n">JsonException</span><span class="o">{</span>
+    <span class="n">String</span> <span class="n">responseBody</span> <span class="o">=</span> <span class="n">loadURL</span><span class="o">(</span><span class="s">"/1.0/collections/"</span> <span class="o">+</span> <span class="n">dbname</span><span class="o">);</span>
+
+    <span class="n">JsonJavaFactory</span> <span class="n">factory</span> <span class="o">=</span> <span class="n">JsonJavaFactory</span><span class="o">.</span><span class="na">instanceEx</span><span class="o">;</span>
+    <span class="n">ArrayList</span> <span class="n">list</span> <span class="o">=</span> <span class="o">(</span><span class="n">ArrayList</span><span class="o">)</span> <span class="n">JsonParser</span><span class="o">.</span><span class="na">fromJson</span><span class="o">(</span><span class="n">factory</span><span class="o">,</span> <span class="n">responseBody</span><span class="o">);</span>
+    <span class="n">Collections</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">list</span><span class="o">,</span> <span class="k">new</span> <span class="n">CollectionComparator</span><span class="o">());</span>
+    <span class="k">return</span> <span class="n">list</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="cm">/**
+ * Helper method to request a URL from the LDC Via service
+ * @param url
+ * @return
+ * @throws ClientProtocolException
+ * @throws IOException
+ */</span>
+<span class="kd">private</span> <span class="n">String</span> <span class="nf">loadURL</span><span class="p">(</span><span class="n">String</span> <span class="n">url</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ClientProtocolException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+    <span class="n">CloseableHttpClient</span> <span class="n">httpclient</span> <span class="o">=</span> <span class="n">HttpClients</span><span class="o">.</span><span class="na">createDefault</span><span class="o">();</span>
+    <span class="n">HttpGet</span> <span class="n">httpget</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HttpGet</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">baseurl</span> <span class="o">+</span> <span class="n">url</span><span class="o">);</span>
+
+    <span class="c1">// Create a custom response handler</span>
+    <span class="n">ResponseHandler</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">responseHandler</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ResponseHandler</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;()</span> <span class="o">{</span>
+
+        <span class="kd">public</span> <span class="n">String</span> <span class="n">handleResponse</span><span class="o">(</span><span class="kd">final</span> <span class="n">HttpResponse</span> <span class="n">response</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ClientProtocolException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+            <span class="kt">int</span> <span class="n">status</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="na">getStatusLine</span><span class="o">().</span><span class="na">getStatusCode</span><span class="o">();</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">status</span> <span class="o">&gt;=</span> <span class="mi">200</span> <span class="o">&amp;&amp;</span> <span class="n">status</span> <span class="o">&lt;</span> <span class="mi">300</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">HttpEntity</span> <span class="n">entity</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="na">getEntity</span><span class="o">();</span>
+                <span class="k">return</span> <span class="n">entity</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">?</span> <span class="n">EntityUtils</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="n">entity</span><span class="o">)</span> <span class="o">:</span> <span class="kc">null</span><span class="o">;</span>
+            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="n">ClientProtocolException</span><span class="o">(</span><span class="s">"Unexpected response status: "</span> <span class="o">+</span> <span class="n">status</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+
+    <span class="o">};</span>
+    <span class="n">httpget</span><span class="o">.</span><span class="na">addHeader</span><span class="o">(</span><span class="s">"apikey"</span><span class="o">,</span> <span class="s">"MYSECRETAPIKEY"</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">httpclient</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="n">httpget</span><span class="o">,</span> <span class="n">responseHandler</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre>
+<pre><code class="highlight javascript"><span class="kd">var</span> <span class="nx">root</span> <span class="o">=</span> <span class="s1">'https://example.com'</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">apikey</span> <span class="o">=</span> <span class="s1">'MYSECRETAPIKEY'</span><span class="p">;</span>
+<span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+  <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
+  <span class="na">type</span><span class="p">:</span> <span class="s1">'GET'</span><span class="p">,</span>
+  <span class="na">url</span><span class="p">:</span> <span class="nx">root</span> <span class="o">+</span> <span class="s1">'/1.0/collections/'</span> <span class="o">+</span> <span class="nx">dbname</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s1">'apikey'</span><span class="p">:</span> <span class="nx">apikey</span>
+  <span class="p">},</span>
+  <span class="na">success</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">})</span>
 </code></pre>
 
 <blockquote>
@@ -101,26 +305,70 @@ You must replace <code class="prettyprint">meowmeowmeow</code> with your persona
 </blockquote>
 <pre><code class="highlight json"><span class="p">[</span><span class="w">
   </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fluffums"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"calico"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="w">
+    </span><span class="s2">"collection"</span><span class="p">:</span><span class="s2">"Response"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"count"</span><span class="p">:</span><span class="mi">5</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Isis"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
+    </span><span class="s2">"collection"</span><span class="p">:</span><span class="s2">"ResponseToResponse"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"count"</span><span class="p">:</span><span class="mi">7</span><span class="w">  
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"collection"</span><span class="p">:</span><span class="s2">"MainTopic"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"count"</span><span class="p">:</span><span class="mi">1</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
 
-<p>This endpoint retrieves all kittens.</p>
-<h3 id='http-request'>HTTP Request</h3>
-<p><code class="prettyprint">GET http://example.com/kittens</code></p>
-<h3 id='query-parameters'>Query Parameters</h3>
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET http://example.com/1.0/collections/:database</code></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>:database</td>
+<td>This is the unique name of the database which can be accessed using the API 1.0 databases method.</td>
+</tr>
+</tbody></table>
+
+<h2 id="get-all-documents-in-a-collection">Get All Documents In a Collection</h2>
+
+<p>Description</p>
+<pre><code class="highlight java">
+</code></pre>
+<pre><code class="highlight javascript"></code></pre>
+
+<blockquote>
+<p>The above returns JSON structured like this:</p>
+</blockquote>
+<pre><code class="highlight json"></code></pre>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p>`GET https://example.com/1.0/collections/:database/:collectionname</p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>:database</td>
+<td>This is the unique name of the database which can be accessed using the API 1.0 databases method.</td>
+</tr>
+</tbody></table>
+
+<h3 id="query-parameters">Query Parameters</h3>
+
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -129,66 +377,32 @@ You must replace <code class="prettyprint">meowmeowmeow</code> with your persona
 </tr>
 </thead><tbody>
 <tr>
-<td>include_cats</td>
-<td>false</td>
-<td>If set to true, the result will also include cats.</td>
+<td>count</td>
+<td>30</td>
+<td>The number of documents to get data for.</td>
 </tr>
 <tr>
-<td>available</td>
-<td>true</td>
-<td>If set to false, the result will include kittens that have already been adopted.</td>
+<td>start</td>
+<td>0</td>
+<td>The starting position in the view, use this to page through documents</td>
 </tr>
 </tbody></table>
 
-<p><aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside></p>
-<h2 id='get-a-specific-kitten'>Get a Specific Kitten</h2><pre><code class="highlight ruby"><span class="nb">require</span> <span class="s1">'kittn'</span>
+<h2 id="delete-a-collection">Delete a Collection</h2>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre>
-<pre><code class="highlight python"><span class="kn">import</span> <span class="nn">kittn</span>
+<h1 id="documents">Documents</h1>
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre>
-<pre><code class="highlight shell">curl <span class="s2">"http://example.com/api/kittens/3"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre>
+<h2 id="get-a-document">Get a document</h2>
 
-<blockquote>
-<p>The above command returns JSON structured like this:</p>
-</blockquote>
-<pre><code class="highlight json"><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Isis"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
+<h2 id="insert-a-document">Insert a document</h2>
 
-<p>This endpoint retrieves a specific kitten.</p>
+<h2 id="update-a-document">Update a document</h2>
 
-<p><aside class="warning">If you&rsquo;re not using an administrator API key, note that some kittens will return 403 Forbidden if they are hidden for admins only.</aside></p>
-<h3 id='http-request'>HTTP Request</h3>
-<p><code class="prettyprint">GET http://example.com/kittens/&lt;ID&gt;</code></p>
-<h3 id='url-parameters'>URL Parameters</h3>
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>ID</td>
-<td>The ID of the cat to retrieve</td>
-</tr>
-</tbody></table>
+<h2 id="delete-a-document">Delete a document</h2>
 
-          <h1 id='errors'>Errors</h1>
-<p><aside class="notice">This error section is stored in a separate file in <code class="prettyprint">includes/_errors.md</code>. Slate allows you to optionally separate out your docs into many files&hellip;just save them to the <code class="prettyprint">includes</code> folder and add them to the top of your <code class="prettyprint">index.md</code>&rsquo;s frontmatter. Files are included in the order listed.</aside></p>
+          <h1 id="errors">Errors</h1>
+
+<aside class="notice">This error section is stored in a separate file in `includes/_errors.md`. Slate allows you to optionally separate out your docs into many files&hellip;just save them to the `includes` folder and add them to the top of your `index.md`&rsquo;s frontmatter. Files are included in the order listed.</aside>
 
 <p>The Kittn API uses the following error codes:</p>
 
@@ -247,9 +461,8 @@ Remember — a happy kitten is an authenticated kitten!
       </div>
       <div class="dark-box">
           <div class="lang-selector">
-                <a href="#" data-language-name="shell">shell</a>
-                <a href="#" data-language-name="ruby">ruby</a>
-                <a href="#" data-language-name="python">python</a>
+                <a href="#" data-language-name="java">java</a>
+                <a href="#" data-language-name="javascript">javascript</a>
           </div>
       </div>
     </div>
