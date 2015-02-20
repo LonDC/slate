@@ -50,6 +50,9 @@
 
 <p>We have language bindings in Java and JavaScript (jQuery)! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
 
+<p>The video below shows how to get your API key:
+<iframe src="//player.vimeo.com/video/113910972" width="500" height="281" frameborder="0" allowfullscreen=""></iframe></p>
+
 <h1 id="authentication">Authentication</h1>
 
 <blockquote>
@@ -1159,6 +1162,1110 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 <td>The name of the file to delete (can be retrieved from _files field on any document)</td>
 </tr>
 </tbody></table>
+
+<h1 id="meta-data">Meta Data</h1>
+
+<p>When data is added to the database, we maintain a description of the fields and data types in each collection.</p>
+
+<p>You have the ability to read and update certain metadata details. An example of when you might want to do this is to update security: to mark a field as being readers or authors.</p>
+
+<h2 id="get-meta-data-for-a-collection">Get Meta Data for a collection</h2>
+
+<p>To get a list of all fields that are in a collection, use this method.</p>
+<pre><code class="highlight java"><span class="c1">//TODO: Add sample</span>
+</code></pre>
+<pre><code class="highlight javascript"><span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+  <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
+  <span class="na">type</span><span class="p">:</span> <span class="s1">'GET'</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s1">'apikey'</span><span class="p">:</span> <span class="nx">apikey</span>
+  <span class="p">},</span>
+  <span class="na">url</span><span class="p">:</span> <span class="s1">'/1.0/metadata/'</span> <span class="o">+</span> <span class="nx">dbname</span> <span class="o">+</span> <span class="s2">"/"</span> <span class="o">+</span> <span class="nx">collectionname</span><span class="p">,</span>
+  <span class="na">success</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//Do Something</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</code></pre>
+
+<blockquote>
+<p>The above returns JSON structured like this:</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+   </span><span class="s2">"_id"</span><span class="p">:</span><span class="s2">"53c8cc790e76eee06aed49ba"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"dbname"</span><span class="p">:</span><span class="s2">"dev-londc-com-demos-discussion-nsf"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"collectionname"</span><span class="p">:</span><span class="s2">"MainTopic"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"__v"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"lastimported"</span><span class="p">:</span><span class="s2">"2014-07-18T07:40:49.632Z"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"fields"</span><span class="p">:[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+         </span><span class="s2">"fieldname"</span><span class="p">:</span><span class="s2">"From"</span><span class="p">,</span><span class="w">
+         </span><span class="s2">"_id"</span><span class="p">:</span><span class="s2">"53c8cf810e76eee06aed4ad7"</span><span class="p">,</span><span class="w">
+         </span><span class="s2">"fieldtype"</span><span class="p">:</span><span class="s2">"Names"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+         </span><span class="s2">"fieldname"</span><span class="p">:</span><span class="s2">"AbbreviateFrom"</span><span class="p">,</span><span class="w">
+         </span><span class="s2">"_id"</span><span class="p">:</span><span class="s2">"53c8cf810e76eee06aed4ad6"</span><span class="p">,</span><span class="w">
+         </span><span class="s2">"fieldtype"</span><span class="p">:</span><span class="s2">"String"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+         </span><span class="s2">"fieldname"</span><span class="p">:</span><span class="s2">"Current_Status"</span><span class="p">,</span><span class="w">
+         </span><span class="s2">"_id"</span><span class="p">:</span><span class="s2">"53c8cf810e76eee06aed4ac8"</span><span class="p">,</span><span class="w">
+         </span><span class="s2">"fieldtype"</span><span class="p">:</span><span class="s2">"Number"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+         </span><span class="s2">"fieldname"</span><span class="p">:</span><span class="s2">"FilebyDate"</span><span class="p">,</span><span class="w">
+         </span><span class="s2">"_id"</span><span class="p">:</span><span class="s2">"53c8cf810e76eee06aed4ac6"</span><span class="p">,</span><span class="w">
+         </span><span class="s2">"fieldtype"</span><span class="p">:</span><span class="s2">"Date"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+         </span><span class="s2">"fieldname"</span><span class="p">:</span><span class="s2">"Editors"</span><span class="p">,</span><span class="w">
+         </span><span class="s2">"_id"</span><span class="p">:</span><span class="s2">"53c8cf810e76eee06aed4abf"</span><span class="p">,</span><span class="w">
+         </span><span class="s2">"fieldtype"</span><span class="p">:</span><span class="s2">"Authors"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+         </span><span class="s2">"fieldname"</span><span class="p">:</span><span class="s2">"readers"</span><span class="p">,</span><span class="w">
+         </span><span class="s2">"_id"</span><span class="p">:</span><span class="s2">"53c8cf810e76eee06aed4aa2"</span><span class="p">,</span><span class="w">
+         </span><span class="s2">"fieldtype"</span><span class="p">:</span><span class="s2">"Readers"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+   </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://example.com/1.0/metadata/:database/:collectionname</code></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>:database</td>
+<td>This is the unique name of the database which can be accessed using the databases service.</td>
+</tr>
+<tr>
+<td>:collectionname</td>
+<td>The name of the collection to get meta data for</td>
+</tr>
+</tbody></table>
+
+<h2 id="update-meta-data-for-a-collection">Update Meta Data for a Collection</h2>
+
+<p>You can update meta data for a collection with this method. The most common use for this will be to enable and disable readers and authors fields, thus controlling document level security.</p>
+<pre><code class="highlight java"><span class="c1">//TODO: Add a sample</span>
+</code></pre>
+<pre><code class="highlight javascript"><span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">"fields"</span><span class="p">:[</span>
+    <span class="p">{</span>
+      <span class="s2">"fieldname"</span><span class="p">:</span><span class="s2">"From"</span><span class="p">,</span>
+      <span class="s2">"fieldtype"</span><span class="p">:</span><span class="s2">"Names"</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">};</span>
+<span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+  <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
+  <span class="na">type</span><span class="p">:</span> <span class="s1">'POST'</span><span class="p">,</span>
+  <span class="na">data</span><span class="p">:</span> <span class="nx">data</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s1">'apikey'</span><span class="p">:</span> <span class="nx">apikey</span>
+  <span class="p">},</span>
+  <span class="na">url</span><span class="p">:</span> <span class="s1">'/1.0/metadata/'</span> <span class="o">+</span> <span class="nx">dbname</span> <span class="o">+</span> <span class="s2">"/"</span> <span class="o">+</span> <span class="nx">collectionname</span><span class="p">,</span>
+  <span class="na">success</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//Do Something</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</code></pre>
+
+<blockquote>
+<p>The above returns JSON structured like this:</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">POST https://example.com/1.0/collections/:database/:collectionname</code></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>:database</td>
+<td>This is the unique name of the database which can be accessed using the databases service.</td>
+</tr>
+<tr>
+<td>:collectionname</td>
+<td>The name of the collection to update meta data for</td>
+</tr>
+</tbody></table>
+
+<h2 id="reset-meta-data-for-a-collection">Reset Meta Data for a Collection</h2>
+
+<p>When data is added to the database, we maintain a description of the fields and data types in each collection. It is possible for this meta data to get out of sync with the data or become corrupt. This method will reset the meta data.</p>
+
+<p>Be aware that if you have set any readers and authors fields in the meta data that these will be reset and thus all document security will be disabled.</p>
+
+<p>Because of this potential, you must be a super user or administrator to run this method.</p>
+<pre><code class="highlight java"><span class="c1">//TODO: Add a sample</span>
+</code></pre>
+<pre><code class="highlight javascript"><span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+  <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
+  <span class="na">type</span><span class="p">:</span> <span class="s1">'GET'</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s1">'apikey'</span><span class="p">:</span> <span class="nx">apikey</span>
+  <span class="p">},</span>
+  <span class="na">url</span><span class="p">:</span> <span class="s1">'/1.0/resetmetadata/'</span> <span class="o">+</span> <span class="nx">dbname</span> <span class="o">+</span> <span class="s2">"/"</span> <span class="o">+</span> <span class="nx">collectionname</span><span class="p">,</span>
+  <span class="na">success</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//Do Something</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</code></pre>
+
+<blockquote>
+<p>The above returns JSON structured like this:</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://example.com/1.0/collections/:database/:collectionname</code></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>:database</td>
+<td>This is the unique name of the database which can be accessed using the databases service.</td>
+</tr>
+<tr>
+<td>:collectionname</td>
+<td>The name of the collection that you want to reset meta data for. By default the meta data will be built using a sampling of the first 100 documents in the collection. If all documents have exactly the same fields on them, then this number can be reduced to improve performance. To change the number of documents sampled, add a URL parameter: &ldquo;&amp;count=n&rdquo;. Likewise, if all documents do not have the same fields on them, then you can increase the sample size using the same technique. Be aware that the larger the sample size, the longer the response will take.</td>
+</tr>
+</tbody></table>
+
+<h3 id="query-parameters">Query Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>count</td>
+<td>100</td>
+<td>The number of documents to sample for field names</td>
+</tr>
+</tbody></table>
+
+<h1 id="user-details">User Details</h1>
+
+<p>You can get either your own details of the details of a different user within your organisation. To get you own details omit the :useremail url parameter.</p>
+
+<h2 id="get-your-own-user-details">Get your own user details</h2>
+<pre><code class="highlight java"><span class="c1">//TODO: Add Sample</span>
+</code></pre>
+<pre><code class="highlight javascript"><span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+  <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
+  <span class="na">type</span><span class="p">:</span> <span class="s1">'GET'</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s1">'apikey'</span><span class="p">:</span> <span class="nx">apikey</span>
+  <span class="p">},</span>
+  <span class="na">url</span><span class="p">:</span> <span class="s1">'/1.0/userdetails'</span><span class="p">,</span>
+  <span class="na">success</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//Do Something</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</code></pre>
+
+<blockquote>
+<p>The above returns JSON structured like this:</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"notesnames"</span><span class="p">:[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"notesname"</span><span class="p">:</span><span class="s2">"CN=Fred Bloggs/O=FCL"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"notesname"</span><span class="p">:</span><span class="s2">"Fred Bloggs"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"notesname"</span><span class="p">:</span><span class="s2">"DocEditors"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"group"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"apikey"</span><span class="p">:</span><span class="s2">"hwxsftXnd88KFq"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"username"</span><span class="p">:</span><span class="s2">"Fred Bloggs"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"email"</span><span class="p">:</span><span class="s2">"fred@fclonline.com"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"admin"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"superuser"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"databases"</span><span class="p">:[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"database"</span><span class="p">:</span><span class="s2">"dev-londc-com-demos-discussion-nsf"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"_id"</span><span class="p">:</span><span class="s2">"53c8cc6e0e76eee06aed497b"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"database"</span><span class="p">:</span><span class="s2">"dev-londc-com-demos-journal-nsf"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"_id"</span><span class="p">:</span><span class="s2">"53cecd0819a5ac73b57964e5"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://example.com/1.0/userdetails</code></p>
+
+<h2 id="get-other-user&#39;s-details">Get other user&rsquo;s details</h2>
+
+<p>The get another user&rsquo;s details, use this method. If you are a super user or the same user as the email address, you will be able to get the API Key, otherwise that will not be returned.</p>
+<pre><code class="highlight java"><span class="c1">//TODO: Add Sample</span>
+</code></pre>
+<pre><code class="highlight javascript"><span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+  <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
+  <span class="na">type</span><span class="p">:</span> <span class="s1">'GET'</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s1">'apikey'</span><span class="p">:</span> <span class="nx">apikey</span>
+  <span class="p">},</span>
+  <span class="na">url</span><span class="p">:</span> <span class="s1">'/1.0/userdetails/fred@bloggs.com'</span><span class="p">,</span>
+  <span class="na">success</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//Do Something</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</code></pre>
+
+<blockquote>
+<p>The above returns JSON structured like this:</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"notesnames"</span><span class="p">:[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"notesname"</span><span class="p">:</span><span class="s2">"CN=Fred Bloggs/O=FCL"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"notesname"</span><span class="p">:</span><span class="s2">"Fred Bloggs"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"notesname"</span><span class="p">:</span><span class="s2">"DocEditors"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"group"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"apikey"</span><span class="p">:</span><span class="s2">"hwxsftXnd88KFq"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"username"</span><span class="p">:</span><span class="s2">"Fred Bloggs"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"email"</span><span class="p">:</span><span class="s2">"fred@bloggs.com"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"admin"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"superuser"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"databases"</span><span class="p">:[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"database"</span><span class="p">:</span><span class="s2">"dev-londc-com-demos-discussion-nsf"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"_id"</span><span class="p">:</span><span class="s2">"53c8cc6e0e76eee06aed497b"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"database"</span><span class="p">:</span><span class="s2">"dev-londc-com-demos-journal-nsf"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"_id"</span><span class="p">:</span><span class="s2">"53cecd0819a5ac73b57964e5"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://example.com/1.0/userdetails/:email</code></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>:email</td>
+<td>The email address of the person to get</td>
+</tr>
+</tbody></table>
+
+<h2 id="add-new-user">Add New User</h2>
+
+<p>In addition to retrieving user details, you can also create users via the API. A POST to create users involves sending an organisation ID, and a collection of user objects.</p>
+
+<p>Once the API has validated the request, for each user two objects will be created: a User and an Account (the two elements maintain a 1:1 relationship, with the Account controlling a user&rsquo;s ability to log in). In addition, all users created will be linked to the passed-in organisation.</p>
+<pre><code class="highlight java"><span class="c1">//TODO: Add Sample</span>
+</code></pre>
+<pre><code class="highlight javascript"><span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="p">{</span>
+ <span class="s2">"organisation"</span><span class="p">:</span> <span class="s2">"548598c6b283ccf00e5edf43"</span><span class="p">,</span>
+ <span class="s2">"users"</span><span class="p">:</span> <span class="p">[</span>
+ <span class="p">{</span>
+ <span class="s2">"email"</span><span class="p">:</span> <span class="s2">"fbloggs@acme.com"</span><span class="p">,</span>
+ <span class="s2">"firstname"</span><span class="p">:</span> <span class="s2">"Fred"</span><span class="p">,</span>
+ <span class="s2">"lastname"</span><span class="p">:</span> <span class="s2">"Bloggs"</span><span class="p">,</span>
+ <span class="s2">"notesnames"</span><span class="p">:</span> <span class="p">[</span>
+ <span class="p">{</span>
+ <span class="s2">"notesname"</span><span class="p">:</span> <span class="s2">"test01/acme"</span>
+ <span class="p">},</span>
+ <span class="p">{</span>
+ <span class="s2">"notesname"</span><span class="p">:</span> <span class="s2">"user01/acme"</span>
+ <span class="p">}</span>
+ <span class="p">]</span>
+ <span class="p">},</span>
+ <span class="p">{</span>
+ <span class="s2">"email"</span><span class="p">:</span> <span class="s2">"jh@acme.com"</span><span class="p">,</span>
+ <span class="s2">"firstname"</span><span class="p">:</span> <span class="s2">"Jeremy"</span><span class="p">,</span>
+ <span class="s2">"lastname"</span><span class="p">:</span> <span class="s2">"Hardy"</span>
+ <span class="p">}</span>
+ <span class="p">]</span>
+<span class="p">};</span>
+<span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+  <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
+  <span class="na">type</span><span class="p">:</span> <span class="s1">'POST'</span><span class="p">,</span>
+  <span class="na">data</span><span class="p">:</span> <span class="nx">data</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s1">'apikey'</span><span class="p">:</span> <span class="nx">apikey</span>
+  <span class="p">},</span>
+  <span class="na">url</span><span class="p">:</span> <span class="s1">'/1.0/users'</span><span class="p">,</span>
+  <span class="na">success</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//Do Something</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</code></pre>
+
+<blockquote>
+<p>The above returns JSON structured like this:</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">POST https://example.com/1.0/users</code></p>
+
+<h2 id="update-users-details">Update Users details</h2>
+
+<p>The update another user&rsquo;s details, use this method. You must be a super user to use this method.</p>
+<pre><code class="highlight java"><span class="c1">//TODO: Add Sample</span>
+</code></pre>
+<pre><code class="highlight javascript"><span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">"notesnames"</span><span class="p">:</span>
+    <span class="p">[</span>
+      <span class="p">{</span><span class="s2">"notesname"</span><span class="p">:</span> <span class="s2">"CN=Fred Blogs/O=Londc"</span><span class="p">},</span>
+      <span class="p">{</span><span class="s2">"notesname"</span><span class="p">:</span> <span class="s2">"Fred Blogs/Londc"</span><span class="p">},</span>
+      <span class="p">{</span><span class="s2">"notesname"</span><span class="p">:</span> <span class="s2">"Fred Blogs"</span><span class="p">},</span>
+      <span class="p">{</span><span class="s2">"notesname"</span><span class="p">:</span> <span class="s2">"*/Londc"</span><span class="p">},</span>
+    <span class="p">]</span>
+<span class="p">};</span>
+<span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+  <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
+  <span class="na">type</span><span class="p">:</span> <span class="s1">'POST'</span><span class="p">,</span>
+  <span class="na">data</span><span class="p">:</span> <span class="nx">data</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s1">'apikey'</span><span class="p">:</span> <span class="nx">apikey</span>
+  <span class="p">},</span>
+  <span class="na">url</span><span class="p">:</span> <span class="s1">'/1.0/userdetails/fred@bloggs.com'</span><span class="p">,</span>
+  <span class="na">success</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//Do Something</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</code></pre>
+
+<blockquote>
+<p>The above returns JSON structured like this:</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">POST https://example.com/1.0/userdetails/:email</code></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>:email</td>
+<td>The email address of the person to update</td>
+</tr>
+</tbody></table>
+
+<h2 id="delete-user">Delete User</h2>
+
+<p>This method is available for super users to remove another user (you cannot delete yourself!)</p>
+<pre><code class="highlight java"><span class="c1">//TODO: Add Sample</span>
+</code></pre>
+<pre><code class="highlight javascript"><span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+  <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
+  <span class="na">type</span><span class="p">:</span> <span class="s1">'DELETE'</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s1">'apikey'</span><span class="p">:</span> <span class="nx">apikey</span>
+  <span class="p">},</span>
+  <span class="na">url</span><span class="p">:</span> <span class="s1">'/1.0/userdetails/fred@bloggs.com'</span><span class="p">,</span>
+  <span class="na">success</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//Do Something</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</code></pre>
+
+<blockquote>
+<p>The above returns JSON structured like this:</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">DELETE https://example.com/1.0/userdetails/:email</code></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>:email</td>
+<td>the email of the person to delete</td>
+</tr>
+</tbody></table>
+
+<h1 id="access-control">Access Control</h1>
+
+<h2 id="get-list-of-groups-in-organisation">Get list of groups in organisation</h2>
+<pre><code class="highlight java"><span class="c1">//TODO: Add Sample</span>
+</code></pre>
+<pre><code class="highlight javascript"><span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+  <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
+  <span class="na">type</span><span class="p">:</span> <span class="s1">'GET'</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s1">'apikey'</span><span class="p">:</span> <span class="nx">apikey</span>
+  <span class="p">},</span>
+  <span class="na">url</span><span class="p">:</span> <span class="s1">'/1.0/groups'</span><span class="p">,</span>
+  <span class="na">success</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//Do Something</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</code></pre>
+
+<blockquote>
+<p>The above returns JSON structured like this:</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">[</span><span class="s2">"Group 1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Group 2"</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://example.com/1.0/groups</code></p>
+
+<h2 id="add-multiple-users-to-group">Add multiple users to group</h2>
+<pre><code class="highlight java"><span class="c1">//TODO: Add Sample</span>
+</code></pre>
+<pre><code class="highlight javascript"><span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="p">{</span>
+<span class="s2">"groupname"</span><span class="p">:</span><span class="s2">"TestGroup"</span><span class="p">,</span>
+<span class="s2">"emails"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"fred@bloggs.com"</span><span class="p">,</span> <span class="s2">"joe@blow.com"</span><span class="p">]</span>
+<span class="p">};</span>
+<span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+  <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
+  <span class="na">type</span><span class="p">:</span> <span class="s1">'POST'</span><span class="p">,</span>
+  <span class="na">data</span><span class="p">:</span> <span class="nx">data</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s1">'apikey'</span><span class="p">:</span> <span class="nx">apikey</span>
+  <span class="p">},</span>
+  <span class="na">url</span><span class="p">:</span> <span class="s1">'/1.0/groups'</span><span class="p">,</span>
+  <span class="na">success</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//Do Something</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</code></pre>
+
+<blockquote>
+<p>The above returns JSON structured like this:</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">POST https://example.com/1.0/groups</code></p>
+
+<h2 id="add-single-user-to-group">Add single user to group</h2>
+<pre><code class="highlight java"><span class="c1">//TODO: Add Sample</span>
+</code></pre>
+<pre><code class="highlight javascript"><span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+  <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
+  <span class="na">type</span><span class="p">:</span> <span class="s1">'GET'</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s1">'apikey'</span><span class="p">:</span> <span class="nx">apikey</span>
+  <span class="p">},</span>
+  <span class="na">url</span><span class="p">:</span> <span class="s1">'/1.0/groups/fred@bloggs.com/Group1'</span><span class="p">,</span>
+  <span class="na">success</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//Do Something</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</code></pre>
+
+<blockquote>
+<p>The above returns 200 Success if the action worked</p>
+</blockquote>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://example.com/1.0/groups/:email/:groupname</code></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>:email</td>
+<td>the email of the user to add to the group</td>
+</tr>
+<tr>
+<td>:groupname</td>
+<td>the groupname to add the user to</td>
+</tr>
+</tbody></table>
+
+<h2 id="remove-user-from-group">Remove user from group</h2>
+<pre><code class="highlight java"><span class="c1">//TODO: Add Sample</span>
+</code></pre>
+<pre><code class="highlight javascript"><span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+  <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
+  <span class="na">type</span><span class="p">:</span> <span class="s1">'DELETE'</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s1">'apikey'</span><span class="p">:</span> <span class="nx">apikey</span>
+  <span class="p">},</span>
+  <span class="na">url</span><span class="p">:</span> <span class="s1">'/1.0/groups/fred@bloggs.com/Group1'</span><span class="p">,</span>
+  <span class="na">success</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//Do Something</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</code></pre>
+
+<blockquote>
+<p>The above returns 200 Success if the action worked</p>
+</blockquote>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">DELETE https://example.com/1.0/groups/:email/:groupname</code></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>:email</td>
+<td>the email of the user to remove from the group</td>
+</tr>
+<tr>
+<td>:groupname</td>
+<td>the groupname to remove the user from</td>
+</tr>
+</tbody></table>
+
+<h2 id="get-members-of-group">Get Members of Group</h2>
+<pre><code class="highlight java"><span class="c1">//TODO: Add Sample</span>
+</code></pre>
+<pre><code class="highlight javascript"><span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+  <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
+  <span class="na">type</span><span class="p">:</span> <span class="s1">'GET'</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s1">'apikey'</span><span class="p">:</span> <span class="nx">apikey</span>
+  <span class="p">},</span>
+  <span class="na">url</span><span class="p">:</span> <span class="s1">'/1.0/groups/Group1'</span><span class="p">,</span>
+  <span class="na">success</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//Do Something</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</code></pre>
+
+<blockquote>
+<p>The above returns an array of user emails</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">[</span><span class="s2">"fred@bloggs.com"</span><span class="p">,</span><span class="w"> </span><span class="s2">"joe@smith.com"</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://example.com/1.0/groups/:groupname</code></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>:groupname</td>
+<td>the groupname to get member list of</td>
+</tr>
+</tbody></table>
+
+<h2 id="remove-group">Remove Group</h2>
+<pre><code class="highlight java"><span class="c1">//TODO: Add Sample</span>
+</code></pre>
+<pre><code class="highlight javascript"><span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+  <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
+  <span class="na">type</span><span class="p">:</span> <span class="s1">'DELETE'</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s1">'apikey'</span><span class="p">:</span> <span class="nx">apikey</span>
+  <span class="p">},</span>
+  <span class="na">url</span><span class="p">:</span> <span class="s1">'/1.0/groups/Group1'</span><span class="p">,</span>
+  <span class="na">success</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//Do Something</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</code></pre>
+
+<blockquote>
+<p>The above returns 200 Success if the action worked</p>
+</blockquote>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">DELETE https://example.com/1.0/groups/:groupname</code></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>:groupname</td>
+<td>the groupname to delete</td>
+</tr>
+</tbody></table>
+
+<h2 id="list-all-users-in-organisation">List all users in organisation</h2>
+<pre><code class="highlight java"><span class="c1">//TODO: Add Sample</span>
+</code></pre>
+<pre><code class="highlight javascript"><span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+  <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
+  <span class="na">type</span><span class="p">:</span> <span class="s1">'GET'</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s1">'apikey'</span><span class="p">:</span> <span class="nx">apikey</span>
+  <span class="p">},</span>
+  <span class="na">url</span><span class="p">:</span> <span class="s1">'/1.0/users'</span><span class="p">,</span>
+  <span class="na">success</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//Do Something</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</code></pre>
+
+<blockquote>
+<p>The above returns an array of emails</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">[</span><span class="s2">"fred@bloggs.com"</span><span class="p">,</span><span class="w"> </span><span class="s2">"joe@smith.com"</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://example.com/1.0/users</code></p>
+
+<h2 id="add-user-to-database">Add user to database</h2>
+<pre><code class="highlight java"><span class="c1">//TODO: Add Sample</span>
+</code></pre>
+<pre><code class="highlight javascript"><span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+  <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
+  <span class="na">type</span><span class="p">:</span> <span class="s1">'GET'</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s1">'apikey'</span><span class="p">:</span> <span class="nx">apikey</span>
+  <span class="p">},</span>
+  <span class="na">url</span><span class="p">:</span> <span class="s1">'/1.0/userdetails/joe@bloggs.com/dev-londc-demos-discussion-nsf'</span><span class="p">,</span>
+  <span class="na">success</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//Do Something</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</code></pre>
+
+<blockquote>
+<p>The above returns 200 Success if the operation completed successfully</p>
+</blockquote>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://example.com/1.0/userdetails/:email/:database</code></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>:email</td>
+<td>the email of the user to give access to the database</td>
+</tr>
+<tr>
+<td>:database</td>
+<td>the database to give the user access to</td>
+</tr>
+</tbody></table>
+
+<h2 id="remove-user-from-database">Remove user from database</h2>
+<pre><code class="highlight java"><span class="c1">//TODO: Add Sample</span>
+</code></pre>
+<pre><code class="highlight javascript"><span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+  <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
+  <span class="na">type</span><span class="p">:</span> <span class="s1">'DELETE'</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s1">'apikey'</span><span class="p">:</span> <span class="nx">apikey</span>
+  <span class="p">},</span>
+  <span class="na">url</span><span class="p">:</span> <span class="s1">'/1.0/userdetails/joe@bloggs.com/dev-londc-demos-discussion-nsf'</span><span class="p">,</span>
+  <span class="na">success</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//Do Something</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</code></pre>
+
+<blockquote>
+<p>The above returns 200 Success if the operation completed successfully</p>
+</blockquote>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">DELETE https://example.com/1.0/userdetails/:email/:database</code></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>:email</td>
+<td>the email of the user to remove access to the database</td>
+</tr>
+<tr>
+<td>:database</td>
+<td>the database to remove the user access to</td>
+</tr>
+</tbody></table>
+
+<h1 id="utilities">Utilities</h1>
+
+<p>We provide several extra services that act as utilities to make developing applications easier.</p>
+
+<h2 id="get-list-of-distinct-values">Get List of Distinct Values</h2>
+
+<p>Similar in concept to an @DBColumn in Notes, this will return a unique list of values from a field in a collection</p>
+<pre><code class="highlight java"><span class="c1">//TODO: Add Sample</span>
+</code></pre>
+<pre><code class="highlight javascript"><span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+  <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
+  <span class="na">type</span><span class="p">:</span> <span class="s1">'GET'</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s1">'apikey'</span><span class="p">:</span> <span class="nx">apikey</span>
+  <span class="p">},</span>
+  <span class="na">url</span><span class="p">:</span> <span class="s1">'/1.0/list/dev-londc-com-demos-discussion-nsf/MainTopic/Subject'</span><span class="p">,</span>
+  <span class="na">success</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//Do Something</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</code></pre>
+
+<blockquote>
+<p>The above returns an array of items</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">[</span><span class="s2">"value one"</span><span class="p">,</span><span class="w"> </span><span class="s2">"value two"</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://example.com/1.0/list/:database/:collectionname/:fieldname</code></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>:database</td>
+<td>the database to get the value list from</td>
+</tr>
+<tr>
+<td>:collectionname</td>
+<td>the collection to get the value list from</td>
+</tr>
+<tr>
+<td>:fieldname</td>
+<td>the field to get value list from</td>
+</tr>
+</tbody></table>
+
+<h2 id="responses">Responses</h2>
+
+<p>Given a database, collection name and document id, this method will return to you a list of collection names and document ids that are responses to this document.</p>
+<pre><code class="highlight java"><span class="c1">//TODO: Add Sample</span>
+</code></pre>
+<pre><code class="highlight javascript"><span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+  <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
+  <span class="na">type</span><span class="p">:</span> <span class="s1">'GET'</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s1">'apikey'</span><span class="p">:</span> <span class="nx">apikey</span>
+  <span class="p">},</span>
+  <span class="na">url</span><span class="p">:</span> <span class="s1">'/1.0/responses/dev-londc-com-demos-discussion-nsf/MainTopic/12345678'</span><span class="p">,</span>
+  <span class="na">success</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//Do Something</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</code></pre>
+
+<blockquote>
+<p>The response object is similar to the standard collections response</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5411514d8c1fd625dc2ab8c9"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"__unid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A4D2533D7A91573E80257D1900276F8D"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"__parentid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BAB78224CA0B0FEC80257D1900276F91"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"__form"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Response"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5411514e8c1fd625dc2ab8d3"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"__unid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3411614A3E45C7FB80257D1900276F92"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"__parentid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BAB78224CA0B0FEC80257D1900276F91"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"__form"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ResponseToResponse"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5411514d8c1fd625dc2ab8c3"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"__unid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8D58E7A1EFD6899C80257D1900276F8E"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"__parentid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A4D2533D7A91573E80257D1900276F8D"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"__form"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ResponseToResponse"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://example.com/1.0/responses/:database/:collectionname/:unid</code></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>:database</td>
+<td>This is the unique name of the database which can be accessed using the databases service.</td>
+</tr>
+<tr>
+<td>:collectionname</td>
+<td>the name of the collection that contains the document</td>
+</tr>
+<tr>
+<td>:unid</td>
+<td>the document to get a list of responses for</td>
+</tr>
+</tbody></table>
+
+<h3 id="response-properties">Response Properties</h3>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>_id</td>
+<td>the internal reference for the document</td>
+</tr>
+<tr>
+<td>__unid</td>
+<td>the unid of the response document</td>
+</tr>
+<tr>
+<td>__parentid</td>
+<td>the parentid of the document, this may not be the same as the :unid parameter as this method returns response to responses</td>
+</tr>
+<tr>
+<td>__form</td>
+<td>the collection of the response document</td>
+</tr>
+</tbody></table>
+
+<h2 id="export-to-pdf">Export to PDF</h2>
+
+<p>Given a database, collection name and document id, this method will return PDF with all fields on the document.</p>
+<pre><code class="highlight java"><span class="c1">//TODO: Add Sample</span>
+</code></pre>
+<pre><code class="highlight javascript"><span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+  <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
+  <span class="na">type</span><span class="p">:</span> <span class="s1">'GET'</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s1">'apikey'</span><span class="p">:</span> <span class="nx">apikey</span>
+  <span class="p">},</span>
+  <span class="na">url</span><span class="p">:</span> <span class="s1">'/1.0/pdf/dev-londc-com-demos-discussion-nsf/MainTopic/12345678'</span><span class="p">,</span>
+  <span class="na">success</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//Do Something</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</code></pre>
+
+<blockquote>
+<p>The above returns a binary stream of the PDF document</p>
+</blockquote>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://example.com/1.0/pdf/:database/:collectionname/:unid</code></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>:database</td>
+<td>This is the unique name of the database which can be accessed using the databases service.</td>
+</tr>
+<tr>
+<td>:collectionname</td>
+<td>the name of the collection to get the document from</td>
+</tr>
+<tr>
+<td>:unid</td>
+<td>the unid of the document to export to PDF</td>
+</tr>
+</tbody></table>
+
+<h2 id="export-to-excel">Export to Excel</h2>
+
+<p>Given a database and collection name, this method will return an Excel spreadsheet list of documents in the collection. The response will contain a list of documents from the collection, you can control how many documents and where in the collection to get them from using URL parameters.</p>
+
+<p>The count of the documents have document level security applied to them, so if there are 100 documents in the collection but the user can see only 10, then the count will be 10.</p>
+<pre><code class="highlight java"><span class="c1">//TODO: Add Sample</span>
+</code></pre>
+<pre><code class="highlight javascript"><span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+  <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
+  <span class="na">type</span><span class="p">:</span> <span class="s1">'GET'</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s1">'apikey'</span><span class="p">:</span> <span class="nx">apikey</span>
+  <span class="p">},</span>
+  <span class="na">url</span><span class="p">:</span> <span class="s1">'/1.0/excel/dev-londc-com-demos-discussion-nsf/MainTopic'</span><span class="p">,</span>
+  <span class="na">success</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//Do Something</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</code></pre>
+
+<blockquote>
+<p>The above returns a binary stream of the PDF document</p>
+</blockquote>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://example.com/1.0/excel/:database/:collectionname</code></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>:database</td>
+<td>This is the unique name of the database which can be accessed using the databases service.</td>
+</tr>
+<tr>
+<td>:collectionname</td>
+<td>the name of the collection to export</td>
+</tr>
+</tbody></table>
+
+<h3 id="query-parameters">Query Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>count</td>
+<td>500</td>
+<td>The number of documents to get data for.</td>
+</tr>
+<tr>
+<td>start</td>
+<td>0</td>
+<td>The starting position in the view</td>
+</tr>
+</tbody></table>
+
+<h1 id="audit-trail">Audit Trail</h1>
+
+<h2 id="get-all-logs">Get All Logs</h2>
+
+<h2 id="search-logs">Search Logs</h2>
+
+<h2 id="get-single-database-logs">Get Single Database Logs</h2>
+
+<h2 id="search-single-database-logs">Search Single Database Logs</h2>
+
+<h2 id="get-single-collection-logs">Get Single Collection logs</h2>
+
+<h2 id="search-single-collection-logs">Search Single Collection Logs</h2>
+
+<h2 id="get-single-document-logs">Get Single Document Logs</h2>
+
+<h2 id="search-single-document-logs">Search Single Document Logs</h2>
 
           <h1 id="errors">Errors</h1>
 
