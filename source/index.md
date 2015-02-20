@@ -1,14 +1,12 @@
 ---
-title: API Reference
+title: LDC Via API Reference
 
 language_tabs:
-  - shell
-  - ruby
-  - python
+  - java
+  - javascript
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
-  - <a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a>
+  - <a href='http://ldcvia.com'>Sign Up for a trial account</a>
 
 includes:
   - errors
@@ -18,151 +16,335 @@ search: true
 
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+Welcome to the LDC Via API! You can use our API to access LDC Via API endpoints, this allows you to access and modify documents within databases in your organisation.
 
-We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
-
-This example API documentation page was created with [Slate](http://github.com/tripit/slate). Feel free to edit it and use it as a base for your own API's documentation.
+We have language bindings in Java and JavaScript (jQuery)! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
 
 # Authentication
 
-> To authorize, use this code:
+> To authorize, always pass the 'apikey' header:
 
-```ruby
-require 'kittn'
+```java
+package com.ldcvia.rest;
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
+
+import com.ibm.commons.util.io.json.JsonException;
+import com.ibm.commons.util.io.json.JsonJavaArray;
+import com.ibm.commons.util.io.json.JsonJavaFactory;
+import com.ibm.commons.util.io.json.JsonJavaObject;
+import com.ibm.commons.util.io.json.JsonParser;
+import com.ibm.xsp.extlib.util.ExtLibUtil;
+
+/**
+ * Get a list of databases that the current user has access to
+ *  
+ * @return
+ * @throws ClientProtocolException
+ * @throws IOException
+ * @throws JsonException
+ */
+public JsonJavaArray getDatabases() throws ClientProtocolException, IOException, JsonException{
+	String responseBody = loadURL("/1.0/databases");
+	JsonJavaFactory factory = JsonJavaFactory.instanceEx;
+	JsonJavaObject json = (JsonJavaObject) JsonParser.fromJson(factory, responseBody);
+
+	return json.getAsArray("databases");
+}
+
+/**
+ * Helper method to request a URL from the LDC Via service
+ * @param url
+ * @return
+ * @throws ClientProtocolException
+ * @throws IOException
+ */
+private String loadURL(String url) throws ClientProtocolException, IOException {
+	CloseableHttpClient httpclient = HttpClients.createDefault();
+	HttpGet httpget = new HttpGet(this.baseurl + url);
+
+	// Create a custom response handler
+	ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
+
+		public String handleResponse(final HttpResponse response) throws ClientProtocolException, IOException {
+			int status = response.getStatusLine().getStatusCode();
+			if (status >= 200 && status < 300) {
+				HttpEntity entity = response.getEntity();
+				return entity != null ? EntityUtils.toString(entity) : null;
+			} else {
+				throw new ClientProtocolException("Unexpected response status: " + status);
+			}
+		}
+
+	};
+	httpget.addHeader("apikey", "MYSECRETAPIKEY");
+	return httpclient.execute(httpget, responseHandler);
+}
+
 ```
 
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
+```javascript
+$.ajax({
+    dataType: 'json',
+    type: 'GET',
+    headers: { 'apikey': 'MYSECRETAPIKEY' },
+    url: '/1.0/databases',
+    success: function(data){
+      //Do something
+    }
+  });
 ```
 
-```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
-```
+> Make sure to replace `MYSECRETAPIKEY` with your API key.
 
-> Make sure to replace `meowmeowmeow` with your API key.
+Each user in the application is assigned an API Key when they are registered. This key is unique and should be considered a secret (i.e. do not share your key with anyone else). Your API Key is required for all interactions with the API, without the key, or with an incorrect key you will not be able to access the API.
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
-
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
-
-`Authorization: meowmeowmeow`
+`apikey: INSERTYOURAPIKEYHERE`
 
 <aside class="notice">
-You must replace `meowmeowmeow` with your personal API key.
+You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 </aside>
 
-# Kittens
+# Databases
 
-## Get All Kittens
+This is probably the simplest API method that we offer, it provides a simple list of databases that a user has access to.
 
-```ruby
-require 'kittn'
+## Get All Databases
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
+```java
+/**
+ * Get a list of databases that the current user has access to
+ *  
+ * @return
+ * @throws ClientProtocolException
+ * @throws IOException
+ * @throws JsonException
+ */
+public JsonJavaArray getDatabases() throws ClientProtocolException, IOException, JsonException{
+	String responseBody = loadURL("/1.0/databases");
+	JsonJavaFactory factory = JsonJavaFactory.instanceEx;
+	JsonJavaObject json = (JsonJavaObject) JsonParser.fromJson(factory, responseBody);
+
+	return json.getAsArray("databases");
+}
+
+/**
+ * Helper method to request a URL from the LDC Via service
+ * @param url
+ * @return
+ * @throws ClientProtocolException
+ * @throws IOException
+ */
+private String loadURL(String url) throws ClientProtocolException, IOException {
+	CloseableHttpClient httpclient = HttpClients.createDefault();
+	HttpGet httpget = new HttpGet(this.baseurl + url);
+
+	// Create a custom response handler
+	ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
+
+		public String handleResponse(final HttpResponse response) throws ClientProtocolException, IOException {
+			int status = response.getStatusLine().getStatusCode();
+			if (status >= 200 && status < 300) {
+				HttpEntity entity = response.getEntity();
+				return entity != null ? EntityUtils.toString(entity) : null;
+			} else {
+				throw new ClientProtocolException("Unexpected response status: " + status);
+			}
+		}
+
+	};
+	httpget.addHeader("apikey", "MYSECRETAPIKEY");
+	return httpclient.execute(httpget, responseHandler);
+}
 ```
 
-```python
-import kittn
+```javascript
+var root = 'https://example.com';
+  var apikey = 'MYSECRETAPIKEY';
+  $.ajax({
+    dataType: 'json',
+    type: 'GET',
+    url: root + '/1.0/databases',
+    data: data,
+    headers: {
+      'apikey': apikey
+    },
+    success: function(res) {
+      console.log(res);
+    }
+  })
+```
+> The above command returns JSON structured like this:
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
+```json
+{
+  "databases":[
+    "acme-com-discussion",
+    "acme-com-discussion2"
+  ]
+}
 ```
 
-```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
+This endpoint retrieves all databases that you have access to.
+
+### HTTP Request
+
+`GET http://example.com/api/1.0/databases`
+
+# Collections
+
+## Get All Collections in a Database
+Given a database name, this method will return a list of all collections in the database along with a count of documents in each collection.
+
+The counts of the documents have document level security applied to them, so if there are 100 documents in the collection but the user can see only 10, then the count will be 10.
+
+```java
+/**
+ * Gets a list of collections for the given database
+ * Each element contains two properties: collection and count. Count is relative to the api key used to get the collection list
+ * @param dbname
+ * @return
+ * @throws ClientProtocolException
+ * @throws IOException
+ * @throws JsonException
+ */
+@SuppressWarnings("unchecked")
+public ArrayList getCollections(String dbname) throws ClientProtocolException, IOException, JsonException{
+	String responseBody = loadURL("/1.0/collections/" + dbname);
+
+	JsonJavaFactory factory = JsonJavaFactory.instanceEx;
+	ArrayList list = (ArrayList) JsonParser.fromJson(factory, responseBody);
+	Collections.sort(list, new CollectionComparator());
+	return list;
+}
+
+/**
+ * Helper method to request a URL from the LDC Via service
+ * @param url
+ * @return
+ * @throws ClientProtocolException
+ * @throws IOException
+ */
+private String loadURL(String url) throws ClientProtocolException, IOException {
+	CloseableHttpClient httpclient = HttpClients.createDefault();
+	HttpGet httpget = new HttpGet(this.baseurl + url);
+
+	// Create a custom response handler
+	ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
+
+		public String handleResponse(final HttpResponse response) throws ClientProtocolException, IOException {
+			int status = response.getStatusLine().getStatusCode();
+			if (status >= 200 && status < 300) {
+				HttpEntity entity = response.getEntity();
+				return entity != null ? EntityUtils.toString(entity) : null;
+			} else {
+				throw new ClientProtocolException("Unexpected response status: " + status);
+			}
+		}
+
+	};
+	httpget.addHeader("apikey", "MYSECRETAPIKEY");
+	return httpclient.execute(httpget, responseHandler);
+}
 ```
 
+```javascript
+var root = 'https://example.com';
+var apikey = 'MYSECRETAPIKEY';
+$.ajax({
+  dataType: 'json',
+  type: 'GET',
+  url: root + '/1.0/collections/' + dbname,
+  headers: {
+    'apikey': apikey
+  },
+  success: function(res) {
+    console.log(res);
+  }
+})
+```
 > The above command returns JSON structured like this:
 
 ```json
 [
   {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
+    "collection":"Response",
+    "count":5
   },
   {
-    "id": 2,
-    "name": "Isis",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
+    "collection":"ResponseToResponse",
+    "count":7  
+  },
+  {
+    "collection":"MainTopic",
+    "count":1
   }
 ]
 ```
 
-This endpoint retrieves all kittens.
-
 ### HTTP Request
 
-`GET http://example.com/kittens`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/3"
-  -H "Authorization: meowmeowmeow"
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 2,
-  "name": "Isis",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
-}
-```
-
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">If you're not using an administrator API key, note that some kittens will return 403 Forbidden if they are hidden for admins only.</aside>
-
-### HTTP Request
-
-`GET http://example.com/kittens/<ID>`
+`GET http://example.com/1.0/collections/:database`
 
 ### URL Parameters
 
 Parameter | Description
 --------- | -----------
-ID | The ID of the cat to retrieve
+:database | This is the unique name of the database which can be accessed using the API 1.0 databases method.
 
+## Get All Documents In a Collection
+
+Description
+
+```java
+
+```
+
+```javascript
+```
+
+> The above returns JSON structured like this:
+
+```json
+```
+
+### HTTP Request
+`GET https://example.com/1.0/collections/:database/:collectionname
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+:database | This is the unique name of the database which can be accessed using the API 1.0 databases method.
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+count | 30 | The number of documents to get data for.
+start | 0 | The starting position in the view, use this to page through documents
+
+
+## Delete a Collection
+
+# Documents
+
+## Get a document
+
+## Insert a document
+
+## Update a document
+
+## Delete a document
