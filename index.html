@@ -2251,21 +2251,643 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h1 id="audit-trail">Audit Trail</h1>
 
+<p>Every single operation against our API is recorded in our logs. We provide a set of APIs to access those logs for further analysis.</p>
+
 <h2 id="get-all-logs">Get All Logs</h2>
+
+<p>When you want to get a count of activity for your entire environment, use the /activity service. If you want to get detailed logs of activity, then you will need to provide either a database, a database and collection or a database, collection and document id. In all cases, if you issue a GET request then you will be returned all records for that scope.</p>
+<pre><code class="highlight java"><span class="c1">//TODO: Add Sample</span>
+</code></pre>
+<pre><code class="highlight javascript"><span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+  <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
+  <span class="na">type</span><span class="p">:</span> <span class="s1">'GET'</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s1">'apikey'</span><span class="p">:</span> <span class="nx">apikey</span>
+  <span class="p">},</span>
+  <span class="na">url</span><span class="p">:</span> <span class="s1">'/1.0/activity'</span><span class="p">,</span>
+  <span class="na">success</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//Do Something</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</code></pre>
+
+<blockquote>
+<p>The response object is an object with of counts of logs per database</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+</span><span class="s2">"testdb"</span><span class="p">:</span><span class="mi">1196</span><span class="p">,</span><span class="w">
+</span><span class="s2">"192-168-0-13-unpsampler-nsf"</span><span class="p">:</span><span class="mi">39</span><span class="p">,</span><span class="w">
+</span><span class="s2">"dev-londc-com-demos-journal-nsf"</span><span class="p">:</span><span class="mi">43</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://example.com/1.0/activity</code></p>
 
 <h2 id="search-logs">Search Logs</h2>
 
+<p>If you want to further filter the logs to a specific date range or only contain certain messages, for example, then all of the above methods can also be used with POST requests. The responses will be the same format as above. To restrict the logs you can add all of some of the following criteria in a JSON post.</p>
+
+<p>When you want to get a count of activity for your entire environment, use the /activity service. If you want to get detailed logs of activity, then you will need to provide either a database, a database and collection or a database, collection and document id. In all cases, if you issue a GET request then you will be returned all records for that scope.</p>
+<pre><code class="highlight java"><span class="c1">//TODO: Add Sample</span>
+</code></pre>
+<pre><code class="highlight javascript"><span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">"startdate"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"year"</span><span class="p">:</span> <span class="mi">2014</span><span class="p">,</span> <span class="s2">"month"</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">"day"</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+  <span class="s2">"enddate"</span><span class="err">:</span> <span class="p">{</span><span class="s2">"year"</span><span class="err">:</span> <span class="mi">2014</span><span class="p">,</span> <span class="s2">"month"</span><span class="err">:</span> <span class="mi">7</span><span class="p">,</span> <span class="s2">"day"</span><span class="err">:</span> <span class="mi">1</span><span class="p">},</span>
+  <span class="s2">"filters"</span><span class="err">:</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s2">"operator"</span><span class="p">:</span> <span class="s2">"equals"</span><span class="p">,</span> <span class="s2">"field"</span><span class="p">:</span> <span class="s2">"level"</span><span class="p">,</span> <span class="s2">"value"</span><span class="p">:</span> <span class="s2">"info"</span><span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+<span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+  <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
+  <span class="na">type</span><span class="p">:</span> <span class="s1">'POST'</span><span class="p">,</span>
+  <span class="na">data</span><span class="p">:</span> <span class="nx">data</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s1">'apikey'</span><span class="p">:</span> <span class="nx">apikey</span>
+  <span class="p">},</span>
+  <span class="na">url</span><span class="p">:</span> <span class="s1">'/1.0/activity'</span><span class="p">,</span>
+  <span class="na">success</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//Do Something</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</code></pre>
+
+<blockquote>
+<p>The response object is an object with of counts of logs per database</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+</span><span class="s2">"testdb"</span><span class="p">:</span><span class="mi">200</span><span class="p">,</span><span class="w">
+</span><span class="s2">"192-168-0-13-unpsampler-nsf"</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span><span class="w">
+</span><span class="s2">"dev-londc-com-demos-journal-nsf"</span><span class="p">:</span><span class="mi">0</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">POST https://example.com/1.0/activity</code></p>
+
 <h2 id="get-single-database-logs">Get Single Database Logs</h2>
+
+<p>To filter logs at a database level, add the database name to the URL structure</p>
+<pre><code class="highlight java"><span class="c1">//TODO: Add Sample</span>
+</code></pre>
+<pre><code class="highlight javascript"><span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+  <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
+  <span class="na">type</span><span class="p">:</span> <span class="s1">'GET'</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s1">'apikey'</span><span class="p">:</span> <span class="nx">apikey</span>
+  <span class="p">},</span>
+  <span class="na">url</span><span class="p">:</span> <span class="s1">'/1.0/activity/dev-londc-com-demos-discussion-nsf?start=0&amp;count=2'</span><span class="p">,</span>
+  <span class="na">success</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//Do Something</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</code></pre>
+
+<blockquote>
+<p>The above returns JSON structured like this:</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+</span><span class="s2">"count"</span><span class="p">:</span><span class="mi">3901</span><span class="p">,</span><span class="w">
+</span><span class="s2">"docs"</span><span class="p">:[</span><span class="w">
+</span><span class="p">{</span><span class="w">
+</span><span class="s2">"_id"</span><span class="p">:</span><span class="s2">"53f22101edf3aa08da052184"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"source"</span><span class="p">:</span><span class="s2">"api.v1.js"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"db"</span><span class="p">:</span><span class="s2">"dev-londc-com-demos-discussion-nsf"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"collection"</span><span class="p">:</span><span class="s2">"MainTopic"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"timestamp"</span><span class="p">:</span><span class="s2">"2014-08-18T15:51:29.205Z"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"level"</span><span class="p">:</span><span class="s2">"info"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"message"</span><span class="p">:</span><span class="s2">"Get Collection"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"user"</span><span class="p">:</span><span class="s2">"support@londc.com"</span><span class="w">
+</span><span class="p">},</span><span class="w">
+</span><span class="p">{</span><span class="w">
+</span><span class="s2">"_id"</span><span class="p">:</span><span class="s2">"53f22101edf3aa08da052189"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"source"</span><span class="p">:</span><span class="s2">"api.v1.js"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"db"</span><span class="p">:</span><span class="s2">"dev-londc-com-demos-discussion-nsf"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"collection"</span><span class="p">:</span><span class="s2">"MainTopic"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"timestamp"</span><span class="p">:</span><span class="s2">"2014-08-18T15:51:29.307Z"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"level"</span><span class="p">:</span><span class="s2">"info"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"message"</span><span class="p">:</span><span class="s2">"Get Collection"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"user"</span><span class="p">:</span><span class="s2">"support@londc.com"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span><span class="p">]}</span><span class="w">
+</span></code></pre>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://example.com/1.0/activity/:database</code></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>:database</td>
+<td>This is the unique name of the database which can be accessed using the databases service.</td>
+</tr>
+</tbody></table>
+
+<h3 id="query-parameters">Query Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>count</td>
+<td>30</td>
+<td>The number of documents to get data for.</td>
+</tr>
+<tr>
+<td>start</td>
+<td>0</td>
+<td>the position in the results to start at</td>
+</tr>
+</tbody></table>
 
 <h2 id="search-single-database-logs">Search Single Database Logs</h2>
 
+<p>To further filter logs at a database level, add the database name to the URL structure and then POST whatever filters are required</p>
+<pre><code class="highlight java"><span class="c1">//TODO: Add Sample</span>
+</code></pre>
+<pre><code class="highlight javascript"><span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">"startdate"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"year"</span><span class="p">:</span> <span class="mi">2014</span><span class="p">,</span> <span class="s2">"month"</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">"day"</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+  <span class="s2">"enddate"</span><span class="err">:</span> <span class="p">{</span><span class="s2">"year"</span><span class="err">:</span> <span class="mi">2014</span><span class="p">,</span> <span class="s2">"month"</span><span class="err">:</span> <span class="mi">7</span><span class="p">,</span> <span class="s2">"day"</span><span class="err">:</span> <span class="mi">1</span><span class="p">},</span>
+  <span class="s2">"filters"</span><span class="err">:</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s2">"operator"</span><span class="p">:</span> <span class="s2">"equals"</span><span class="p">,</span> <span class="s2">"field"</span><span class="p">:</span> <span class="s2">"level"</span><span class="p">,</span> <span class="s2">"value"</span><span class="p">:</span> <span class="s2">"info"</span><span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+<span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+  <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
+  <span class="na">type</span><span class="p">:</span> <span class="s1">'POST'</span><span class="p">,</span>
+  <span class="na">data</span><span class="p">:</span> <span class="nx">data</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s1">'apikey'</span><span class="p">:</span> <span class="nx">apikey</span>
+  <span class="p">},</span>
+  <span class="na">url</span><span class="p">:</span> <span class="s1">'/1.0/activity'</span><span class="p">,</span>
+  <span class="na">success</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//Do Something</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</code></pre>
+
+<blockquote>
+<p>The above returns JSON structured like this:</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+</span><span class="s2">"count"</span><span class="p">:</span><span class="mi">205</span><span class="p">,</span><span class="w">
+</span><span class="s2">"docs"</span><span class="p">:[</span><span class="w">
+</span><span class="p">{</span><span class="w">
+</span><span class="s2">"_id"</span><span class="p">:</span><span class="s2">"53f22101edf3aa08da052184"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"source"</span><span class="p">:</span><span class="s2">"api.v1.js"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"db"</span><span class="p">:</span><span class="s2">"dev-londc-com-demos-discussion-nsf"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"collection"</span><span class="p">:</span><span class="s2">"MainTopic"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"timestamp"</span><span class="p">:</span><span class="s2">"2014-06-18T15:51:29.205Z"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"level"</span><span class="p">:</span><span class="s2">"info"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"message"</span><span class="p">:</span><span class="s2">"Get Collection"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"user"</span><span class="p">:</span><span class="s2">"support@londc.com"</span><span class="w">
+</span><span class="p">},</span><span class="w">
+</span><span class="p">{</span><span class="w">
+</span><span class="s2">"_id"</span><span class="p">:</span><span class="s2">"53f22101edf3aa08da052189"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"source"</span><span class="p">:</span><span class="s2">"api.v1.js"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"db"</span><span class="p">:</span><span class="s2">"dev-londc-com-demos-discussion-nsf"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"collection"</span><span class="p">:</span><span class="s2">"MainTopic"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"timestamp"</span><span class="p">:</span><span class="s2">"2014-06-18T15:51:29.307Z"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"level"</span><span class="p">:</span><span class="s2">"info"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"message"</span><span class="p">:</span><span class="s2">"Get Collection"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"user"</span><span class="p">:</span><span class="s2">"support@londc.com"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span><span class="p">]}</span><span class="w">
+</span></code></pre>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://example.com/1.0/activity/:database</code></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>:database</td>
+<td>This is the unique name of the database which can be accessed using the databases service.</td>
+</tr>
+</tbody></table>
+
+<h3 id="query-parameters">Query Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>count</td>
+<td>30</td>
+<td>The number of documents to get data for.</td>
+</tr>
+<tr>
+<td>start</td>
+<td>0</td>
+<td>the position in the results to start at</td>
+</tr>
+</tbody></table>
+
 <h2 id="get-single-collection-logs">Get Single Collection logs</h2>
+
+<p>To filter logs at a collection level, add the database name and collection name to the URL structure</p>
+<pre><code class="highlight java"><span class="c1">//TODO: Add Sample</span>
+</code></pre>
+<pre><code class="highlight javascript"><span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+  <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
+  <span class="na">type</span><span class="p">:</span> <span class="s1">'GET'</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s1">'apikey'</span><span class="p">:</span> <span class="nx">apikey</span>
+  <span class="p">},</span>
+  <span class="na">url</span><span class="p">:</span> <span class="s1">'/1.0/activity/dev-londc-com-demos-discussion-nsf/MainTopic?start=0&amp;count=2'</span><span class="p">,</span>
+  <span class="na">success</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//Do Something</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</code></pre>
+
+<blockquote>
+<p>The above returns JSON structured like this:</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+</span><span class="s2">"count"</span><span class="p">:</span><span class="mi">3901</span><span class="p">,</span><span class="w">
+</span><span class="s2">"docs"</span><span class="p">:[</span><span class="w">
+</span><span class="p">{</span><span class="w">
+</span><span class="s2">"_id"</span><span class="p">:</span><span class="s2">"53f22101edf3aa08da052184"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"source"</span><span class="p">:</span><span class="s2">"api.v1.js"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"db"</span><span class="p">:</span><span class="s2">"dev-londc-com-demos-discussion-nsf"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"collection"</span><span class="p">:</span><span class="s2">"MainTopic"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"timestamp"</span><span class="p">:</span><span class="s2">"2014-08-18T15:51:29.205Z"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"level"</span><span class="p">:</span><span class="s2">"info"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"message"</span><span class="p">:</span><span class="s2">"Get Collection"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"user"</span><span class="p">:</span><span class="s2">"support@londc.com"</span><span class="w">
+</span><span class="p">},</span><span class="w">
+</span><span class="p">{</span><span class="w">
+</span><span class="s2">"_id"</span><span class="p">:</span><span class="s2">"53f22101edf3aa08da052189"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"source"</span><span class="p">:</span><span class="s2">"api.v1.js"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"db"</span><span class="p">:</span><span class="s2">"dev-londc-com-demos-discussion-nsf"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"collection"</span><span class="p">:</span><span class="s2">"MainTopic"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"timestamp"</span><span class="p">:</span><span class="s2">"2014-08-18T15:51:29.307Z"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"level"</span><span class="p">:</span><span class="s2">"info"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"message"</span><span class="p">:</span><span class="s2">"Get Collection"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"user"</span><span class="p">:</span><span class="s2">"support@londc.com"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span><span class="p">]}</span><span class="w">
+</span></code></pre>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://example.com/1.0/activity/:database/:collectionname</code></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>:database</td>
+<td>This is the unique name of the database which can be accessed using the databases service.</td>
+</tr>
+<tr>
+<td>:collectionname</td>
+<td>The name of the collection to get data for</td>
+</tr>
+</tbody></table>
+
+<h3 id="query-parameters">Query Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>count</td>
+<td>30</td>
+<td>The number of documents to get data for.</td>
+</tr>
+<tr>
+<td>start</td>
+<td>0</td>
+<td>the position in the results to start at</td>
+</tr>
+</tbody></table>
 
 <h2 id="search-single-collection-logs">Search Single Collection Logs</h2>
 
+<p>To further filter logs at a collection level, add the database name and collection name to the URL structure and then POST whatever filters are required</p>
+<pre><code class="highlight java"><span class="c1">//TODO: Add Sample</span>
+</code></pre>
+<pre><code class="highlight javascript"><span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">"startdate"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"year"</span><span class="p">:</span> <span class="mi">2014</span><span class="p">,</span> <span class="s2">"month"</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">"day"</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+  <span class="s2">"enddate"</span><span class="err">:</span> <span class="p">{</span><span class="s2">"year"</span><span class="err">:</span> <span class="mi">2014</span><span class="p">,</span> <span class="s2">"month"</span><span class="err">:</span> <span class="mi">7</span><span class="p">,</span> <span class="s2">"day"</span><span class="err">:</span> <span class="mi">1</span><span class="p">},</span>
+  <span class="s2">"filters"</span><span class="err">:</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s2">"operator"</span><span class="p">:</span> <span class="s2">"equals"</span><span class="p">,</span> <span class="s2">"field"</span><span class="p">:</span> <span class="s2">"level"</span><span class="p">,</span> <span class="s2">"value"</span><span class="p">:</span> <span class="s2">"info"</span><span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+<span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+  <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
+  <span class="na">type</span><span class="p">:</span> <span class="s1">'POST'</span><span class="p">,</span>
+  <span class="na">data</span><span class="p">:</span> <span class="nx">data</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s1">'apikey'</span><span class="p">:</span> <span class="nx">apikey</span>
+  <span class="p">},</span>
+  <span class="na">url</span><span class="p">:</span> <span class="s1">'/1.0/activity/dev-londc-com-demos-discussion-nsf/MainTopic?start=0&amp;count=2'</span><span class="p">,</span>
+  <span class="na">success</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//Do Something</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</code></pre>
+
+<blockquote>
+<p>The above returns JSON structured like this:</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+</span><span class="s2">"count"</span><span class="p">:</span><span class="mi">205</span><span class="p">,</span><span class="w">
+</span><span class="s2">"docs"</span><span class="p">:[</span><span class="w">
+</span><span class="p">{</span><span class="w">
+</span><span class="s2">"_id"</span><span class="p">:</span><span class="s2">"53f22101edf3aa08da052184"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"source"</span><span class="p">:</span><span class="s2">"api.v1.js"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"db"</span><span class="p">:</span><span class="s2">"dev-londc-com-demos-discussion-nsf"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"collection"</span><span class="p">:</span><span class="s2">"MainTopic"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"timestamp"</span><span class="p">:</span><span class="s2">"2014-06-18T15:51:29.205Z"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"level"</span><span class="p">:</span><span class="s2">"info"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"message"</span><span class="p">:</span><span class="s2">"Get Collection"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"user"</span><span class="p">:</span><span class="s2">"support@londc.com"</span><span class="w">
+</span><span class="p">},</span><span class="w">
+</span><span class="p">{</span><span class="w">
+</span><span class="s2">"_id"</span><span class="p">:</span><span class="s2">"53f22101edf3aa08da052189"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"source"</span><span class="p">:</span><span class="s2">"api.v1.js"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"db"</span><span class="p">:</span><span class="s2">"dev-londc-com-demos-discussion-nsf"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"collection"</span><span class="p">:</span><span class="s2">"MainTopic"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"timestamp"</span><span class="p">:</span><span class="s2">"2014-06-18T15:51:29.307Z"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"level"</span><span class="p">:</span><span class="s2">"info"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"message"</span><span class="p">:</span><span class="s2">"Get Collection"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"user"</span><span class="p">:</span><span class="s2">"support@londc.com"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span><span class="p">]}</span><span class="w">
+</span></code></pre>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://example.com/1.0/activity/:database/:collectionname</code></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>:database</td>
+<td>This is the unique name of the database which can be accessed using the databases service.</td>
+</tr>
+<tr>
+<td>:collectionname</td>
+<td>The name of the collection to look for logs of</td>
+</tr>
+</tbody></table>
+
+<h3 id="query-parameters">Query Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>count</td>
+<td>30</td>
+<td>The number of documents to get data for.</td>
+</tr>
+<tr>
+<td>start</td>
+<td>0</td>
+<td>the position in the results to start at</td>
+</tr>
+</tbody></table>
+
 <h2 id="get-single-document-logs">Get Single Document Logs</h2>
 
+<p>To filter logs at a document level, add the database name, collection name and document unid to the URL structure</p>
+<pre><code class="highlight java"><span class="c1">//TODO: Add Sample</span>
+</code></pre>
+<pre><code class="highlight javascript"><span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+  <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
+  <span class="na">type</span><span class="p">:</span> <span class="s1">'GET'</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s1">'apikey'</span><span class="p">:</span> <span class="nx">apikey</span>
+  <span class="p">},</span>
+  <span class="na">url</span><span class="p">:</span> <span class="s1">'/1.0/activity/dev-londc-com-demos-discussion-nsf/MainTopic/CBF71C6B10257F5C80257D1900261D7A?start=0&amp;count=2'</span><span class="p">,</span>
+  <span class="na">success</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//Do Something</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</code></pre>
+
+<blockquote>
+<p>The above returns JSON structured like this:</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">308</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54e59614a969c4da7049c85d"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"collection"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MainTopic"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"document"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CBF71C6B10257F5C80257D1900261D7A"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-19T07:51:48.826Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"level"</span><span class="p">:</span><span class="w"> </span><span class="s2">"info"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Get Response Heirarchy"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"user"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fred@ldcvia.com"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54e59614a969c4da7049c85c"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"collection"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MainTopic"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"document"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CBF71C6B10257F5C80257D1900261D7A"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-19T07:51:48.807Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"level"</span><span class="p">:</span><span class="w"> </span><span class="s2">"info"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Get Document"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"user"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fred@ldcvia.com"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://example.com/1.0/activity/:database/:collectionname/:unid</code></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>:database</td>
+<td>This is the unique name of the database which can be accessed using the databases service.</td>
+</tr>
+<tr>
+<td>:collectionname</td>
+<td>The name of the collection to get the document from</td>
+</tr>
+<tr>
+<td>:unid</td>
+<td>The unid of the document to get logs for</td>
+</tr>
+</tbody></table>
+
+<h3 id="query-parameters">Query Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>count</td>
+<td>30</td>
+<td>The number of documents to get data for.</td>
+</tr>
+<tr>
+<td>start</td>
+<td>0</td>
+<td>the position in the results to start at</td>
+</tr>
+</tbody></table>
+
 <h2 id="search-single-document-logs">Search Single Document Logs</h2>
+
+<p>To further filter logs at a document level, add the database name, collection name and document unid to the URL structure and then POST whatever filters are required</p>
+<pre><code class="highlight java"><span class="c1">//TODO: Add Sample</span>
+</code></pre>
+<pre><code class="highlight javascript"><span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">"startdate"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"year"</span><span class="p">:</span> <span class="mi">2015</span><span class="p">,</span> <span class="s2">"month"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">"day"</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+  <span class="s2">"enddate"</span><span class="err">:</span> <span class="p">{</span><span class="s2">"year"</span><span class="err">:</span> <span class="mi">2014</span><span class="p">,</span> <span class="s2">"month"</span><span class="err">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">"day"</span><span class="err">:</span> <span class="mi">1</span><span class="p">},</span>
+  <span class="s2">"filters"</span><span class="err">:</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s2">"operator"</span><span class="p">:</span> <span class="s2">"equals"</span><span class="p">,</span> <span class="s2">"field"</span><span class="p">:</span> <span class="s2">"level"</span><span class="p">,</span> <span class="s2">"value"</span><span class="p">:</span> <span class="s2">"info"</span><span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+<span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+  <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
+  <span class="na">type</span><span class="p">:</span> <span class="s1">'POST'</span><span class="p">,</span>
+  <span class="na">data</span><span class="p">:</span> <span class="nx">data</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s1">'apikey'</span><span class="p">:</span> <span class="nx">apikey</span>
+  <span class="p">},</span>
+  <span class="na">url</span><span class="p">:</span> <span class="s1">'/1.0/activity/dev-londc-com-demos-discussion-nsf/MainTopic/CBF71C6B10257F5C80257D1900261D7A?start=0&amp;count=2'</span><span class="p">,</span>
+  <span class="na">success</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//Do Something</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</code></pre>
+
+<blockquote>
+<p>The above returns JSON structured like this:</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">308</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54e59614a969c4da7049c85d"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"collection"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MainTopic"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"document"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CBF71C6B10257F5C80257D1900261D7A"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-19T07:51:48.826Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"level"</span><span class="p">:</span><span class="w"> </span><span class="s2">"info"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Get Response Heirarchy"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"user"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fred@ldcvia.com"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54e59614a969c4da7049c85c"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"collection"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MainTopic"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"document"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CBF71C6B10257F5C80257D1900261D7A"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-19T07:51:48.807Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"level"</span><span class="p">:</span><span class="w"> </span><span class="s2">"info"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Get Document"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"user"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fred@ldcvia.com"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://example.com/1.0/activity/:database/:collectionname/:unid</code></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>:database</td>
+<td>This is the unique name of the database which can be accessed using the databases service.</td>
+</tr>
+<tr>
+<td>:collectionname</td>
+<td>The name of the collection containing the document to look for logs of</td>
+</tr>
+<tr>
+<td>:unid</td>
+<td>The unid of the document to look for logs of</td>
+</tr>
+</tbody></table>
+
+<h3 id="query-parameters">Query Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>count</td>
+<td>30</td>
+<td>The number of documents to get data for.</td>
+</tr>
+<tr>
+<td>start</td>
+<td>0</td>
+<td>the position in the results to start at</td>
+</tr>
+</tbody></table>
 
           <h1 id="errors">Errors</h1>
 
@@ -2309,7 +2931,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 </tr>
 <tr>
 <td>503</td>
-<td>Service Unavailable &ndash; We&rsquo;re temporarially offline for maintanance. Please try again later.</td>
+<td>Service Unavailable &ndash; We&rsquo;re temporarily offline for maintenance. Please try again later.</td>
 </tr>
 </tbody></table>
 
