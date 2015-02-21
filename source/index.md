@@ -1876,19 +1876,512 @@ count | 500 | The number of documents to get data for.
 start | 0 | The starting position in the view
 
 # Audit Trail
+Every single operation against our API is recorded in our logs. We provide a set of APIs to access those logs for further analysis.
 
 ## Get All Logs
+When you want to get a count of activity for your entire environment, use the /activity service. If you want to get detailed logs of activity, then you will need to provide either a database, a database and collection or a database, collection and document id. In all cases, if you issue a GET request then you will be returned all records for that scope.
+
+```java
+//TODO: Add Sample
+```
+
+```javascript
+$.ajax({
+  dataType: 'json',
+  type: 'GET',
+  headers: {
+    'apikey': apikey
+  },
+  url: '/1.0/activity',
+  success: function(res) {
+    //Do Something
+  }
+})
+```
+
+> The response object is an object with of counts of logs per database
+
+```json
+{
+"testdb":1196,
+"192-168-0-13-unpsampler-nsf":39,
+"dev-londc-com-demos-journal-nsf":43
+}
+```
+
+### HTTP Request
+`GET https://example.com/1.0/activity`
 
 ## Search Logs
+If you want to further filter the logs to a specific date range or only contain certain messages, for example, then all of the above methods can also be used with POST requests. The responses will be the same format as above. To restrict the logs you can add all of some of the following criteria in a JSON post.
+
+When you want to get a count of activity for your entire environment, use the /activity service. If you want to get detailed logs of activity, then you will need to provide either a database, a database and collection or a database, collection and document id. In all cases, if you issue a GET request then you will be returned all records for that scope.
+
+```java
+//TODO: Add Sample
+```
+
+```javascript
+var data = {
+  "startdate": {"year": 2014, "month": 6, "day": 1},
+  "enddate": {"year": 2014, "month": 7, "day": 1},
+  "filters": [
+    {"operator": "equals", "field": "level", "value": "info"}
+  ]
+}
+$.ajax({
+  dataType: 'json',
+  type: 'POST',
+  data: data,
+  headers: {
+    'apikey': apikey
+  },
+  url: '/1.0/activity',
+  success: function(res) {
+    //Do Something
+  }
+})
+```
+
+> The response object is an object with of counts of logs per database
+
+```json
+{
+"testdb":200,
+"192-168-0-13-unpsampler-nsf":10,
+"dev-londc-com-demos-journal-nsf":0
+}
+```
+
+### HTTP Request
+`POST https://example.com/1.0/activity`
 
 ## Get Single Database Logs
 
+To filter logs at a database level, add the database name to the URL structure
+
+```java
+//TODO: Add Sample
+```
+
+```javascript
+$.ajax({
+  dataType: 'json',
+  type: 'GET',
+  headers: {
+    'apikey': apikey
+  },
+  url: '/1.0/activity/dev-londc-com-demos-discussion-nsf?start=0&count=2',
+  success: function(res) {
+    //Do Something
+  }
+})
+```
+
+> The above returns JSON structured like this:
+
+```json
+{
+"count":3901,
+"docs":[
+{
+"_id":"53f22101edf3aa08da052184",
+"source":"api.v1.js",
+"db":"dev-londc-com-demos-discussion-nsf",
+"collection":"MainTopic",
+"timestamp":"2014-08-18T15:51:29.205Z",
+"level":"info",
+"message":"Get Collection",
+"user":"support@londc.com"
+},
+{
+"_id":"53f22101edf3aa08da052189",
+"source":"api.v1.js",
+"db":"dev-londc-com-demos-discussion-nsf",
+"collection":"MainTopic",
+"timestamp":"2014-08-18T15:51:29.307Z",
+"level":"info",
+"message":"Get Collection",
+"user":"support@londc.com"
+}
+]}
+```
+
+### HTTP Request
+`GET https://example.com/1.0/activity/:database`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+:database | This is the unique name of the database which can be accessed using the databases service.
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+count | 30 | The number of documents to get data for.
+start | 0 | the position in the results to start at
+
+
 ## Search Single Database Logs
+
+To further filter logs at a database level, add the database name to the URL structure and then POST whatever filters are required
+
+```java
+//TODO: Add Sample
+```
+
+```javascript
+var data = {
+  "startdate": {"year": 2014, "month": 6, "day": 1},
+  "enddate": {"year": 2014, "month": 7, "day": 1},
+  "filters": [
+    {"operator": "equals", "field": "level", "value": "info"}
+  ]
+}
+$.ajax({
+  dataType: 'json',
+  type: 'POST',
+  data: data,
+  headers: {
+    'apikey': apikey
+  },
+  url: '/1.0/activity',
+  success: function(res) {
+    //Do Something
+  }
+})
+```
+
+> The above returns JSON structured like this:
+
+```json
+{
+"count":205,
+"docs":[
+{
+"_id":"53f22101edf3aa08da052184",
+"source":"api.v1.js",
+"db":"dev-londc-com-demos-discussion-nsf",
+"collection":"MainTopic",
+"timestamp":"2014-06-18T15:51:29.205Z",
+"level":"info",
+"message":"Get Collection",
+"user":"support@londc.com"
+},
+{
+"_id":"53f22101edf3aa08da052189",
+"source":"api.v1.js",
+"db":"dev-londc-com-demos-discussion-nsf",
+"collection":"MainTopic",
+"timestamp":"2014-06-18T15:51:29.307Z",
+"level":"info",
+"message":"Get Collection",
+"user":"support@londc.com"
+}
+]}
+```
+
+### HTTP Request
+`GET https://example.com/1.0/activity/:database`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+:database | This is the unique name of the database which can be accessed using the databases service.
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+count | 30 | The number of documents to get data for.
+start | 0 | the position in the results to start at
 
 ## Get Single Collection logs
 
+To filter logs at a collection level, add the database name and collection name to the URL structure
+
+```java
+//TODO: Add Sample
+```
+
+```javascript
+$.ajax({
+  dataType: 'json',
+  type: 'GET',
+  headers: {
+    'apikey': apikey
+  },
+  url: '/1.0/activity/dev-londc-com-demos-discussion-nsf/MainTopic?start=0&count=2',
+  success: function(res) {
+    //Do Something
+  }
+})
+```
+
+> The above returns JSON structured like this:
+
+```json
+{
+"count":3901,
+"docs":[
+{
+"_id":"53f22101edf3aa08da052184",
+"source":"api.v1.js",
+"db":"dev-londc-com-demos-discussion-nsf",
+"collection":"MainTopic",
+"timestamp":"2014-08-18T15:51:29.205Z",
+"level":"info",
+"message":"Get Collection",
+"user":"support@londc.com"
+},
+{
+"_id":"53f22101edf3aa08da052189",
+"source":"api.v1.js",
+"db":"dev-londc-com-demos-discussion-nsf",
+"collection":"MainTopic",
+"timestamp":"2014-08-18T15:51:29.307Z",
+"level":"info",
+"message":"Get Collection",
+"user":"support@londc.com"
+}
+]}
+```
+
+### HTTP Request
+`GET https://example.com/1.0/activity/:database/:collectionname`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+:database | This is the unique name of the database which can be accessed using the databases service.
+:collectionname | The name of the collection to get data for
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+count | 30 | The number of documents to get data for.
+start | 0 | the position in the results to start at
+
 ## Search Single Collection Logs
 
+To further filter logs at a collection level, add the database name and collection name to the URL structure and then POST whatever filters are required
+
+```java
+//TODO: Add Sample
+```
+
+```javascript
+var data = {
+  "startdate": {"year": 2014, "month": 6, "day": 1},
+  "enddate": {"year": 2014, "month": 7, "day": 1},
+  "filters": [
+    {"operator": "equals", "field": "level", "value": "info"}
+  ]
+}
+$.ajax({
+  dataType: 'json',
+  type: 'POST',
+  data: data,
+  headers: {
+    'apikey': apikey
+  },
+  url: '/1.0/activity/dev-londc-com-demos-discussion-nsf/MainTopic?start=0&count=2',
+  success: function(res) {
+    //Do Something
+  }
+})
+```
+
+> The above returns JSON structured like this:
+
+```json
+{
+"count":205,
+"docs":[
+{
+"_id":"53f22101edf3aa08da052184",
+"source":"api.v1.js",
+"db":"dev-londc-com-demos-discussion-nsf",
+"collection":"MainTopic",
+"timestamp":"2014-06-18T15:51:29.205Z",
+"level":"info",
+"message":"Get Collection",
+"user":"support@londc.com"
+},
+{
+"_id":"53f22101edf3aa08da052189",
+"source":"api.v1.js",
+"db":"dev-londc-com-demos-discussion-nsf",
+"collection":"MainTopic",
+"timestamp":"2014-06-18T15:51:29.307Z",
+"level":"info",
+"message":"Get Collection",
+"user":"support@londc.com"
+}
+]}
+```
+
+### HTTP Request
+`GET https://example.com/1.0/activity/:database/:collectionname`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+:database | This is the unique name of the database which can be accessed using the databases service.
+:collectionname | The name of the collection to look for logs of
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+count | 30 | The number of documents to get data for.
+start | 0 | the position in the results to start at
+
 ## Get Single Document Logs
+To filter logs at a document level, add the database name, collection name and document unid to the URL structure
+
+```java
+//TODO: Add Sample
+```
+
+```javascript
+$.ajax({
+  dataType: 'json',
+  type: 'GET',
+  headers: {
+    'apikey': apikey
+  },
+  url: '/1.0/activity/dev-londc-com-demos-discussion-nsf/MainTopic/CBF71C6B10257F5C80257D1900261D7A?start=0&count=2',
+  success: function(res) {
+    //Do Something
+  }
+})
+```
+
+> The above returns JSON structured like this:
+
+```json
+{
+  "count": 308,
+  "data": [
+    {
+      "_id": "54e59614a969c4da7049c85d",
+      "collection": "MainTopic",
+      "document": "CBF71C6B10257F5C80257D1900261D7A",
+      "timestamp": "2015-02-19T07:51:48.826Z",
+      "level": "info",
+      "message": "Get Response Heirarchy",
+      "user": "fred@ldcvia.com"
+    },
+    {
+      "_id": "54e59614a969c4da7049c85c",
+      "collection": "MainTopic",
+      "document": "CBF71C6B10257F5C80257D1900261D7A",
+      "timestamp": "2015-02-19T07:51:48.807Z",
+      "level": "info",
+      "message": "Get Document",
+      "user": "fred@ldcvia.com"
+    }
+  ]
+}
+```
+
+### HTTP Request
+`GET https://example.com/1.0/activity/:database/:collectionname/:unid`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+:database | This is the unique name of the database which can be accessed using the databases service.
+:collectionname | The name of the collection to get the document from
+:unid | The unid of the document to get logs for
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+count | 30 | The number of documents to get data for.
+start | 0 | the position in the results to start at
 
 ## Search Single Document Logs
+
+To further filter logs at a document level, add the database name, collection name and document unid to the URL structure and then POST whatever filters are required
+
+```java
+//TODO: Add Sample
+```
+
+```javascript
+var data = {
+  "startdate": {"year": 2015, "month": 2, "day": 1},
+  "enddate": {"year": 2014, "month": 3, "day": 1},
+  "filters": [
+    {"operator": "equals", "field": "level", "value": "info"}
+  ]
+}
+$.ajax({
+  dataType: 'json',
+  type: 'POST',
+  data: data,
+  headers: {
+    'apikey': apikey
+  },
+  url: '/1.0/activity/dev-londc-com-demos-discussion-nsf/MainTopic/CBF71C6B10257F5C80257D1900261D7A?start=0&count=2',
+  success: function(res) {
+    //Do Something
+  }
+})
+```
+
+> The above returns JSON structured like this:
+
+```json
+{
+  "count": 308,
+  "data": [
+    {
+      "_id": "54e59614a969c4da7049c85d",
+      "collection": "MainTopic",
+      "document": "CBF71C6B10257F5C80257D1900261D7A",
+      "timestamp": "2015-02-19T07:51:48.826Z",
+      "level": "info",
+      "message": "Get Response Heirarchy",
+      "user": "fred@ldcvia.com"
+    },
+    {
+      "_id": "54e59614a969c4da7049c85c",
+      "collection": "MainTopic",
+      "document": "CBF71C6B10257F5C80257D1900261D7A",
+      "timestamp": "2015-02-19T07:51:48.807Z",
+      "level": "info",
+      "message": "Get Document",
+      "user": "fred@ldcvia.com"
+    }
+  ]
+}
+```
+
+### HTTP Request
+`GET https://example.com/1.0/activity/:database/:collectionname/:unid`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+:database | This is the unique name of the database which can be accessed using the databases service.
+:collectionname | The name of the collection containing the document to look for logs of
+:unid | The unid of the document to look for logs of
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+count | 30 | The number of documents to get data for.
+start | 0 | the position in the results to start at
