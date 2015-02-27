@@ -1875,6 +1875,64 @@ Parameter | Default | Description
 count | 500 | The number of documents to get data for.
 start | 0 | The starting position in the view
 
+
+## DocLinks
+Given a database, collection, document and field name, this service will parse the field (it must be a rich text field) and return details of any doclinks that are contained within.
+
+The count of the documents have document level security applied to them, so if there are 100 documents in the collection but the user can see only 10, then the count will be 10.
+
+```java
+//TODO: Add Sample
+```
+
+```javascript
+$.ajax({
+  dataType: 'json',
+  type: 'GET',
+  headers: {
+    'apikey': apikey
+  },
+  url: '/1.0/doclink/dev-londc-com-demos-discussion-nsf/MainTopic/12345678012345456',
+  success: function(res) {
+    //Do Something
+  }
+})
+```
+
+> The above returns a JSON object with the parsed doc links (or an empty array if no doc links were found). There are three possible formats, for database links, view links and document links. If the document link is linking to a document in the same database the object will contain the notes:// url and also the apiurl to get the related document. If the document is in a different database then the object will just contain the notes url.
+
+```json
+[
+  {
+    "notesurl": "Notes://Mixed2/80257AC50035BEE2/9B03730C11B24C94852565E20060BED0/BC9F435105F5F9A880257C3100401F50",
+    "type": "doclink",
+    "documentid": "BC9F435105F5F9A880257C3100401F50",
+    "apiurl": "/1.0/document/dev-londc-com-teamstudio-widgets-teamroom-nsf/Response/BC9F435105F5F9A880257C3100401F50"
+  },
+  {
+    "notesurl": "Notes://Mixed2/80257AC50035BEE2/9B03730C11B24C94852565E20060BED0",
+    "type": "viewlink"
+  },
+  {
+    "notesurl": "Notes://Mixed2/80257AC50035BEE2",
+    "type": "dblink"
+  }
+]
+```
+
+### HTTP Request
+`GET https://example.com/1.0/doclink/:database/:collectionname/:unid/:fieldname`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+:database | This is the unique name of the database which can be accessed using the databases service.
+:collectionname | the name of the collection to export
+:unid | The unid of the document
+:fieldname | The fieldname to parse for doclinks
+
+
 # Audit Trail
 Every single operation against our API is recorded in our logs. We provide a set of APIs to access those logs for further analysis.
 
