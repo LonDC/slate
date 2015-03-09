@@ -1081,7 +1081,7 @@ $.ajax({
 ```
 
 ### HTTP Request
-`POST https://example.com/1.0/collections/:database/:collectionname`
+`POST https://example.com/1.0/metadata/:database/:collectionname`
 
 ### URL Parameters
 
@@ -1123,7 +1123,7 @@ $.ajax({
 ```
 
 ### HTTP Request
-`GET https://example.com/1.0/collections/:database/:collectionname`
+`GET https://example.com/1.0/resetmetadata/:database/:collectionname`
 
 ### URL Parameters
 
