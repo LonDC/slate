@@ -1836,6 +1836,12 @@ Parameter | Description
 :collectionname | the name of the collection that contains the document
 :unid | the document to get a list of responses for
 
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+:expand | false | If set to true you will be returned an array of documents instead of an array of UNIDs. This can affect performance
+
 ### Response Properties
 Property | Description
 -------- | -----------
