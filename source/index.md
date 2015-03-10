@@ -120,6 +120,51 @@ Each user in the application is assigned an API Key when they are registered. Th
 You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 </aside>
 
+## Login
+
+We provide a simple login API to which you can pass a username and password, if they are valid then the matching API key will be returned with which you will be able to perform operations against the rest of the API.
+
+```java
+//TODO: Insert sampler here
+```
+
+```javascript
+var data = {'username': "fred@bloggs.com", 'password': 'SuperSecretPassword'};
+var root = 'https://example.com';
+  $.ajax({
+    dataType: 'json',
+    type: 'POST',
+    url: root + '/1.0/login',
+    data: data,
+    success: function(res) {
+      console.log(res);
+    }
+  })
+```
+> The above command returns JSON structured like this:
+
+```json
+{
+  "apikey":"d656cafda863458c78219760cb0ef4d1",
+  "email":"fred@bloggs.com",
+  "roles":{"account":"54be76b40f0f0ce80fe9b21e"},
+  "notesnames":[],
+  "databases":
+    [
+      {"database":"dev-londc-com-teamroom-nsf","_id":"54be770c0f0f0ce80fe9b220"},
+      {"database":"dev-londc-com-teamroom-nsf","_id":"54be7ce40f0f0ce80fe9b221"},
+      {"database":"dev-londc-com-teamroom-nsf","_id":"54c66b660f0f0ce80fe9b24b"},
+      {"database":"dev-londc-com-teamroom-nsf","_id":"54d13776b8fcbdac0bee24f5"}
+    ]
+}
+```
+
+This endpoint retrieves all databases that you have access to.
+
+### HTTP Request
+
+`POST http://example.com/api/1.0/login`
+
 # Databases
 
 This is probably the simplest API method that we offer, it provides a simple list of databases that a user has access to.
@@ -902,7 +947,7 @@ window.open("https://example.com/1.0/attachment/:database/:collectionname/:unid/
 > If the file exists (and you are allowed to access it), then the file will be sent as a binary stream to the requestor. If the file does not exists (or you are not allowed to access it) then an error will be returned.
 
 ### HTTP Request
-`GET https://example.com/1.0/collections/:database/:collectionname/:unid/:filename`
+`GET https://example.com/1.0/attachment/:database/:collectionname/:unid/:filename`
 
 ### URL Parameters
 
@@ -950,7 +995,7 @@ $.ajax({
 ```
 
 ### HTTP Request
-`DELETE https://example.com/1.0/collections/:database/:collectionname/:unid/:filename`
+`DELETE https://example.com/1.0/attachment/:database/:collectionname/:unid/:filename`
 
 ### URL Parameters
 
