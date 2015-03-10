@@ -150,6 +150,48 @@
 You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 </aside>
 
+<h2 id="login">Login</h2>
+
+<p>We provide a simple login API to which you can pass a username and password, if they are valid then the matching API key will be returned with which you will be able to perform operations against the rest of the API.</p>
+<pre><code class="highlight java"><span class="c1">//TODO: Insert sampler here</span>
+</code></pre>
+<pre><code class="highlight javascript"><span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'username'</span><span class="p">:</span> <span class="s2">"fred@bloggs.com"</span><span class="p">,</span> <span class="s1">'password'</span><span class="p">:</span> <span class="s1">'SuperSecretPassword'</span><span class="p">};</span>
+<span class="kd">var</span> <span class="nx">root</span> <span class="o">=</span> <span class="s1">'https://example.com'</span><span class="p">;</span>
+  <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+    <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
+    <span class="na">type</span><span class="p">:</span> <span class="s1">'POST'</span><span class="p">,</span>
+    <span class="na">url</span><span class="p">:</span> <span class="nx">root</span> <span class="o">+</span> <span class="s1">'/1.0/login'</span><span class="p">,</span>
+    <span class="na">data</span><span class="p">:</span> <span class="nx">data</span><span class="p">,</span>
+    <span class="na">success</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">})</span>
+</code></pre>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"apikey"</span><span class="p">:</span><span class="s2">"d656cafda863458c78219760cb0ef4d1"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"email"</span><span class="p">:</span><span class="s2">"fred@bloggs.com"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"roles"</span><span class="p">:{</span><span class="s2">"account"</span><span class="p">:</span><span class="s2">"54be76b40f0f0ce80fe9b21e"</span><span class="p">},</span><span class="w">
+  </span><span class="s2">"notesnames"</span><span class="p">:[],</span><span class="w">
+  </span><span class="s2">"databases"</span><span class="p">:</span><span class="w">
+    </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="s2">"database"</span><span class="p">:</span><span class="s2">"dev-londc-com-teamroom-nsf"</span><span class="p">,</span><span class="s2">"_id"</span><span class="p">:</span><span class="s2">"54be770c0f0f0ce80fe9b220"</span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="s2">"database"</span><span class="p">:</span><span class="s2">"dev-londc-com-teamroom-nsf"</span><span class="p">,</span><span class="s2">"_id"</span><span class="p">:</span><span class="s2">"54be7ce40f0f0ce80fe9b221"</span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="s2">"database"</span><span class="p">:</span><span class="s2">"dev-londc-com-teamroom-nsf"</span><span class="p">,</span><span class="s2">"_id"</span><span class="p">:</span><span class="s2">"54c66b660f0f0ce80fe9b24b"</span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="s2">"database"</span><span class="p">:</span><span class="s2">"dev-londc-com-teamroom-nsf"</span><span class="p">,</span><span class="s2">"_id"</span><span class="p">:</span><span class="s2">"54d13776b8fcbdac0bee24f5"</span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>This endpoint retrieves all databases that you have access to.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">POST http://example.com/api/1.0/login</code></p>
+
 <h1 id="databases">Databases</h1>
 
 <p>This is probably the simplest API method that we offer, it provides a simple list of databases that a user has access to.</p>
@@ -1073,7 +1115,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET https://example.com/1.0/collections/:database/:collectionname/:unid/:filename</code></p>
+<p><code class="prettyprint">GET https://example.com/1.0/attachment/:database/:collectionname/:unid/:filename</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
@@ -1135,7 +1177,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">DELETE https://example.com/1.0/collections/:database/:collectionname/:unid/:filename</code></p>
+<p><code class="prettyprint">DELETE https://example.com/1.0/attachment/:database/:collectionname/:unid/:filename</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
@@ -1288,7 +1330,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">POST https://example.com/1.0/collections/:database/:collectionname</code></p>
+<p><code class="prettyprint">POST https://example.com/1.0/metadata/:database/:collectionname</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
@@ -1338,7 +1380,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET https://example.com/1.0/collections/:database/:collectionname</code></p>
+<p><code class="prettyprint">GET https://example.com/1.0/resetmetadata/:database/:collectionname</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
