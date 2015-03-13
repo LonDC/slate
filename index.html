@@ -156,7 +156,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 <pre><code class="highlight java"><span class="c1">//TODO: Insert sampler here</span>
 </code></pre>
 <pre><code class="highlight javascript"><span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'username'</span><span class="p">:</span> <span class="s2">"fred@bloggs.com"</span><span class="p">,</span> <span class="s1">'password'</span><span class="p">:</span> <span class="s1">'SuperSecretPassword'</span><span class="p">};</span>
-<span class="kd">var</span> <span class="nx">root</span> <span class="o">=</span> <span class="s1">'https://example.com'</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">root</span> <span class="o">=</span> <span class="s1">'https://ldcvia.com'</span><span class="p">;</span>
   <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
     <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
     <span class="na">type</span><span class="p">:</span> <span class="s1">'POST'</span><span class="p">,</span>
@@ -190,7 +190,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">POST http://example.com/api/1.0/login</code></p>
+<p><code class="prettyprint">POST http://ldcvia.com/api/1.0/login</code></p>
 
 <h1 id="databases">Databases</h1>
 
@@ -242,7 +242,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
     <span class="k">return</span> <span class="n">httpclient</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="n">httpget</span><span class="o">,</span> <span class="n">responseHandler</span><span class="o">);</span>
 <span class="o">}</span>
 </code></pre>
-<pre><code class="highlight javascript"><span class="kd">var</span> <span class="nx">root</span> <span class="o">=</span> <span class="s1">'https://example.com'</span><span class="p">;</span>
+<pre><code class="highlight javascript"><span class="kd">var</span> <span class="nx">root</span> <span class="o">=</span> <span class="s1">'https://ldcvia.com'</span><span class="p">;</span>
   <span class="kd">var</span> <span class="nx">apikey</span> <span class="o">=</span> <span class="s1">'MYSECRETAPIKEY'</span><span class="p">;</span>
   <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
     <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
@@ -273,7 +273,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET http://example.com/api/1.0/databases</code></p>
+<p><code class="prettyprint">GET http://ldcvia.com/api/1.0/databases</code></p>
 
 <h2 id="delete-entire-database">Delete Entire Database</h2>
 
@@ -308,7 +308,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">DELETE https://example.com/1.0/collections/:database/:collectionname</code></p>
+<p><code class="prettyprint">DELETE https://ldcvia.com/1.0/collections/:database/:collectionname</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
@@ -325,6 +325,8 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 </tbody></table>
 
 <h1 id="collections">Collections</h1>
+
+<p>A collection in LDC Via is a group of documents that are all of the same type. In Notes and Domino terms it&rsquo;s very similar to a view. As an example, if we were to migrate a Discussion database from Notes to LDC Via, you would end up with three collections: MainTopic, Response and ResponseToResponse. There is nothing to stop documents in the same collection having different fields on them, but when we maintain meta data at a collection level we assume that all documents in the same collection could have the same fields on them.</p>
 
 <h2 id="get-all-collections-in-a-database">Get All Collections in a Database</h2>
 
@@ -379,7 +381,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
     <span class="k">return</span> <span class="n">httpclient</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="n">httpget</span><span class="o">,</span> <span class="n">responseHandler</span><span class="o">);</span>
 <span class="o">}</span>
 </code></pre>
-<pre><code class="highlight javascript"><span class="kd">var</span> <span class="nx">root</span> <span class="o">=</span> <span class="s1">'https://example.com'</span><span class="p">;</span>
+<pre><code class="highlight javascript"><span class="kd">var</span> <span class="nx">root</span> <span class="o">=</span> <span class="s1">'https://ldcvia.com'</span><span class="p">;</span>
 <span class="kd">var</span> <span class="nx">apikey</span> <span class="o">=</span> <span class="s1">'MYSECRETAPIKEY'</span><span class="p">;</span>
 <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
   <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
@@ -415,7 +417,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET http://example.com/1.0/collections/:database</code></p>
+<p><code class="prettyprint">GET http://ldcvia.com/1.0/collections/:database</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
@@ -453,7 +455,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
     <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="na">getAsArray</span><span class="o">(</span><span class="s">"data"</span><span class="o">);</span>
 <span class="o">}</span>
 </code></pre>
-<pre><code class="highlight javascript"><span class="kd">var</span> <span class="nx">root</span> <span class="o">=</span> <span class="s1">'https://example.com'</span><span class="p">;</span>
+<pre><code class="highlight javascript"><span class="kd">var</span> <span class="nx">root</span> <span class="o">=</span> <span class="s1">'https://ldcvia.com'</span><span class="p">;</span>
 <span class="kd">var</span> <span class="nx">apikey</span> <span class="o">=</span> <span class="s1">'MYSECRETAPIKEY'</span><span class="p">;</span>
 <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
   <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
@@ -494,7 +496,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET https://example.com/1.0/collections/:database/:collectionname</code></p>
+<p><code class="prettyprint">GET https://ldcvia.com/1.0/collections/:database/:collectionname</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
@@ -599,7 +601,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">DELETE https://example.com/1.0/collections/:database/:collectionname</code></p>
+<p><code class="prettyprint">DELETE https://ldcvia.com/1.0/collections/:database/:collectionname</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
@@ -679,7 +681,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">POST https://example.com/1.0/collections/:database/:collectionname</code></p>
+<p><code class="prettyprint">POST https://ldcvia.com/1.0/collections/:database/:collectionname</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
@@ -751,6 +753,8 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 </tbody></table>
 
 <h1 id="documents">Documents</h1>
+
+<p>A document is a group of fields that are related to each other. Not all documents the same, but it is a fair assumption that all documents in the same collection will have the same group of fields on them.</p>
 
 <h2 id="get-a-document">Get a document</h2>
 
@@ -834,7 +838,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET https://example.com/1.0/document/:database/:collectionname/:unid</code></p>
+<p><code class="prettyprint">GET https://ldcvia.com/1.0/document/:database/:collectionname/:unid</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
@@ -929,7 +933,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">PUT https://example.com/1.0/document/:database/:collectionname/:unid</code></p>
+<p><code class="prettyprint">PUT https://ldcvia.com/1.0/document/:database/:collectionname/:unid</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
@@ -1021,7 +1025,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">POST https://example.com/1.0/document/:database/:collectionname/:unid</code></p>
+<p><code class="prettyprint">POST https://ldcvia.com/1.0/document/:database/:collectionname/:unid</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
@@ -1079,7 +1083,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">DELETE https://example.com/1.0/document/:database/:collectionname/:unid</code></p>
+<p><code class="prettyprint">DELETE https://ldcvia.com/1.0/document/:database/:collectionname/:unid</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
@@ -1103,6 +1107,26 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 </tr>
 </tbody></table>
 
+<h2 id="reserved-field-names">Reserved Field Names</h2>
+
+<p>We do have several reserved field names in LDC Via that you should avoid modifying (your changes will be ignored), though the fields can be useful when reading data (__unid in particular):</p>
+
+<ul>
+<li>__heirarchy</li>
+<li>__unid</li>
+<li>__form</li>
+<li>__created</li>
+<li>__modified</li>
+<li>_files</li>
+<li>fieldnames appended with the value &rsquo;__parsed&rsquo;</li>
+<li>__role</li>
+<li>__parentid</li>
+<li>__readerrole</li>
+<li>__authorrole</li>
+<li>__deleted</li>
+<li>_id</li>
+</ul>
+
 <h1 id="file-attachments">File Attachments</h1>
 
 <p>Given a database name, collection name, document id and attachment name, you can either download the attachment or delete it from the database. To insert new attachments, use the document PUT or POST methods.</p>
@@ -1110,7 +1134,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 <h2 id="get-a-file-attachment">Get a File Attachment</h2>
 <pre><code class="highlight java"><span class="c1">//TODO: We need sample code here</span>
 </code></pre>
-<pre><code class="highlight javascript"><span class="nb">window</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s2">"https://example.com/1.0/attachment/:database/:collectionname/:unid/:filename"</span><span class="p">);</span>
+<pre><code class="highlight javascript"><span class="nb">window</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s2">"https://ldcvia.com/1.0/attachment/:database/:collectionname/:unid/:filename"</span><span class="p">);</span>
 </code></pre>
 
 <blockquote>
@@ -1119,7 +1143,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET https://example.com/1.0/attachment/:database/:collectionname/:unid/:filename</code></p>
+<p><code class="prettyprint">GET https://ldcvia.com/1.0/attachment/:database/:collectionname/:unid/:filename</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
@@ -1181,7 +1205,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">DELETE https://example.com/1.0/attachment/:database/:collectionname/:unid/:filename</code></p>
+<p><code class="prettyprint">DELETE https://ldcvia.com/1.0/attachment/:database/:collectionname/:unid/:filename</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
@@ -1279,7 +1303,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET https://example.com/1.0/metadata/:database/:collectionname</code></p>
+<p><code class="prettyprint">GET https://ldcvia.com/1.0/metadata/:database/:collectionname</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
@@ -1334,7 +1358,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">POST https://example.com/1.0/metadata/:database/:collectionname</code></p>
+<p><code class="prettyprint">POST https://ldcvia.com/1.0/metadata/:database/:collectionname</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
@@ -1384,7 +1408,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET https://example.com/1.0/resetmetadata/:database/:collectionname</code></p>
+<p><code class="prettyprint">GET https://ldcvia.com/1.0/resetmetadata/:database/:collectionname</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
@@ -1476,7 +1500,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET https://example.com/1.0/userdetails</code></p>
+<p><code class="prettyprint">GET https://ldcvia.com/1.0/userdetails</code></p>
 
 <h2 id="get-other-user&#39;s-details">Get other user&rsquo;s details</h2>
 
@@ -1532,7 +1556,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET https://example.com/1.0/userdetails/:email</code></p>
+<p><code class="prettyprint">GET https://ldcvia.com/1.0/userdetails/:email</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
@@ -1602,7 +1626,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">POST https://example.com/1.0/users</code></p>
+<p><code class="prettyprint">POST https://ldcvia.com/1.0/users</code></p>
 
 <h2 id="update-users-details">Update Users details</h2>
 
@@ -1642,7 +1666,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">POST https://example.com/1.0/userdetails/:email</code></p>
+<p><code class="prettyprint">POST https://ldcvia.com/1.0/userdetails/:email</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
@@ -1684,7 +1708,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">DELETE https://example.com/1.0/userdetails/:email</code></p>
+<p><code class="prettyprint">DELETE https://ldcvia.com/1.0/userdetails/:email</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
@@ -1726,7 +1750,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET https://example.com/1.0/groups</code></p>
+<p><code class="prettyprint">GET https://ldcvia.com/1.0/groups</code></p>
 
 <h2 id="add-multiple-users-to-group">Add multiple users to group</h2>
 <pre><code class="highlight java"><span class="c1">//TODO: Add Sample</span>
@@ -1757,7 +1781,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">POST https://example.com/1.0/groups</code></p>
+<p><code class="prettyprint">POST https://ldcvia.com/1.0/groups</code></p>
 
 <h2 id="add-single-user-to-group">Add single user to group</h2>
 <pre><code class="highlight java"><span class="c1">//TODO: Add Sample</span>
@@ -1781,7 +1805,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET https://example.com/1.0/groups/:email/:groupname</code></p>
+<p><code class="prettyprint">GET https://ldcvia.com/1.0/groups/:email/:groupname</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
@@ -1823,7 +1847,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">DELETE https://example.com/1.0/groups/:email/:groupname</code></p>
+<p><code class="prettyprint">DELETE https://ldcvia.com/1.0/groups/:email/:groupname</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
@@ -1867,7 +1891,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET https://example.com/1.0/groups/:groupname</code></p>
+<p><code class="prettyprint">GET https://ldcvia.com/1.0/groups/:groupname</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
@@ -1905,7 +1929,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">DELETE https://example.com/1.0/groups/:groupname</code></p>
+<p><code class="prettyprint">DELETE https://ldcvia.com/1.0/groups/:groupname</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
@@ -1945,7 +1969,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET https://example.com/1.0/users</code></p>
+<p><code class="prettyprint">GET https://ldcvia.com/1.0/users</code></p>
 
 <h2 id="add-user-to-database">Add user to database</h2>
 <pre><code class="highlight java"><span class="c1">//TODO: Add Sample</span>
@@ -1969,7 +1993,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET https://example.com/1.0/userdetails/:email/:database</code></p>
+<p><code class="prettyprint">GET https://ldcvia.com/1.0/userdetails/:email/:database</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
@@ -2011,7 +2035,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">DELETE https://example.com/1.0/userdetails/:email/:database</code></p>
+<p><code class="prettyprint">DELETE https://ldcvia.com/1.0/userdetails/:email/:database</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
@@ -2061,7 +2085,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET https://example.com/1.0/list/:database/:collectionname/:fieldname</code></p>
+<p><code class="prettyprint">GET https://ldcvia.com/1.0/list/:database/:collectionname/:fieldname</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
@@ -2130,7 +2154,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET https://example.com/1.0/responses/:database/:collectionname/:unid</code></p>
+<p><code class="prettyprint">GET https://ldcvia.com/1.0/responses/:database/:collectionname/:unid</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
@@ -2220,7 +2244,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET https://example.com/1.0/pdf/:database/:collectionname/:unid</code></p>
+<p><code class="prettyprint">GET https://ldcvia.com/1.0/pdf/:database/:collectionname/:unid</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
@@ -2270,7 +2294,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET https://example.com/1.0/excel/:database/:collectionname</code></p>
+<p><code class="prettyprint">GET https://ldcvia.com/1.0/excel/:database/:collectionname</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
@@ -2352,7 +2376,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET https://example.com/1.0/doclink/:database/:collectionname/:unid/:fieldname</code></p>
+<p><code class="prettyprint">GET https://ldcvia.com/1.0/doclink/:database/:collectionname/:unid/:fieldname</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
@@ -2414,7 +2438,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET https://example.com/1.0/activity</code></p>
+<p><code class="prettyprint">GET https://ldcvia.com/1.0/activity</code></p>
 
 <h2 id="search-logs">Search Logs</h2>
 
@@ -2456,7 +2480,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">POST https://example.com/1.0/activity</code></p>
+<p><code class="prettyprint">POST https://ldcvia.com/1.0/activity</code></p>
 
 <h2 id="get-single-database-logs">Get Single Database Logs</h2>
 
@@ -2507,7 +2531,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET https://example.com/1.0/activity/:database</code></p>
+<p><code class="prettyprint">GET https://ldcvia.com/1.0/activity/:database</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
@@ -2601,7 +2625,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET https://example.com/1.0/activity/:database</code></p>
+<p><code class="prettyprint">GET https://ldcvia.com/1.0/activity/:database</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
@@ -2687,7 +2711,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET https://example.com/1.0/activity/:database/:collectionname</code></p>
+<p><code class="prettyprint">GET https://ldcvia.com/1.0/activity/:database/:collectionname</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
@@ -2785,7 +2809,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET https://example.com/1.0/activity/:database/:collectionname</code></p>
+<p><code class="prettyprint">GET https://ldcvia.com/1.0/activity/:database/:collectionname</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
@@ -2874,7 +2898,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET https://example.com/1.0/activity/:database/:collectionname/:unid</code></p>
+<p><code class="prettyprint">GET https://ldcvia.com/1.0/activity/:database/:collectionname/:unid</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
@@ -2975,7 +2999,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET https://example.com/1.0/activity/:database/:collectionname/:unid</code></p>
+<p><code class="prettyprint">GET https://ldcvia.com/1.0/activity/:database/:collectionname/:unid</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
