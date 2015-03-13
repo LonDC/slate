@@ -606,6 +606,7 @@ $.ajax({
 Parameter | Description
 --------- | -----------
 :database | This is the unique name of the database which can be accessed using the databases service
+:collectionname | The name of the collection to search in
 
 ### Query Parameters
 
@@ -711,7 +712,7 @@ $.ajax({
 ```
 
 ### HTTP Request
-`GET https://example.com/1.0/collections/:database/:collectionname/:unid`
+`GET https://example.com/1.0/document/:database/:collectionname/:unid`
 
 ### URL Parameters
 
@@ -793,7 +794,7 @@ disc.sendNewMainTopic = function(data) {
 > If the document is inserted correctly, the above returns a 200 success code, otherwise you will receive an error
 
 ### HTTP Request
-`PUT https://example.com/1.0/collections/:database/:collectionname/:unid`
+`PUT https://example.com/1.0/document/:database/:collectionname/:unid`
 
 ### URL Parameters
 
@@ -873,7 +874,7 @@ disc.sendMainTopic = function(unid, data) {
 > If the document is updated correctly, the above returns a 200 success code, otherwise you will receive an error
 
 ### HTTP Request
-`POST https://example.com/1.0/collections/:database/:collectionname/:unid`
+`POST https://example.com/1.0/document/:database/:collectionname/:unid`
 
 ### URL Parameters
 
@@ -896,7 +897,7 @@ $.ajax({
   dataType: 'json',
   type: 'DELETE',
   headers: { 'apikey': apikey },
-  url: '/1.0/collections/' + database + '/' + collection + "/" + unid,
+  url: '/1.0/document/' + database + '/' + collection + "/" + unid,
   success: function(res){
     //Do something
   },
@@ -920,7 +921,7 @@ $.ajax({
 ```
 
 ### HTTP Request
-`DELETE https://example.com/1.0/collections/:database/:collectionname/:unid`
+`DELETE https://example.com/1.0/document/:database/:collectionname/:unid`
 
 ### URL Parameters
 
