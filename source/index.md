@@ -1931,8 +1931,6 @@ start | 0 | The starting position in the view
 ## DocLinks
 Given a database, collection, document and field name, this service will parse the field (it must be a rich text field) and return details of any doclinks that are contained within.
 
-The count of the documents have document level security applied to them, so if there are 100 documents in the collection but the user can see only 10, then the count will be 10.
-
 ```java
 //TODO: Add Sample
 ```
