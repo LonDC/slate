@@ -6,7 +6,7 @@ language_tabs:
   - javascript
 
 toc_footers:
-  - <a href='http://ldcvia.com'>Sign Up for a trial account</a>
+  - <a href='http://ldcvia.com'>Find out more about LDC Via</a>
 
 includes:
   - errors
