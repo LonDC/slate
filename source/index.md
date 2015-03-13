@@ -947,11 +947,12 @@ We do have several reserved field names in LDC Via that you should avoid modifyi
 * _files
 * fieldnames appended with the value '__parsed'
 * __role
-* __parentid
 * __readerrole
 * __authorrole
 * __deleted
 * _id
+
+The field __parentid is a field with a specific meaning. If it exists on a document then it makes that document a response to another document within the same database. The only valid value for this field is the __unid of the immediate parent of this document.
 
 # File Attachments
 
