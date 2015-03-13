@@ -1120,12 +1120,13 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 <li>_files</li>
 <li>fieldnames appended with the value &rsquo;__parsed&rsquo;</li>
 <li>__role</li>
-<li>__parentid</li>
 <li>__readerrole</li>
 <li>__authorrole</li>
 <li>__deleted</li>
 <li>_id</li>
 </ul>
+
+<p>The field _<em>parentid is a field with a specific meaning. If it exists on a document then it makes that document a response to another document within the same database. The only valid value for this field is the _</em>unid of the immediate parent of this document.</p>
 
 <h1 id="file-attachments">File Attachments</h1>
 
