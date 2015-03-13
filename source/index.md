@@ -130,7 +130,7 @@ We provide a simple login API to which you can pass a username and password, if 
 
 ```javascript
 var data = {'username': "fred@bloggs.com", 'password': 'SuperSecretPassword'};
-var root = 'https://example.com';
+var root = 'https://ldcvia.com';
   $.ajax({
     dataType: 'json',
     type: 'POST',
@@ -163,7 +163,7 @@ This endpoint retrieves all databases that you have access to.
 
 ### HTTP Request
 
-`POST http://example.com/api/1.0/login`
+`POST http://ldcvia.com/api/1.0/login`
 
 # Databases
 
@@ -219,7 +219,7 @@ private String loadURL(String url) throws ClientProtocolException, IOException {
 ```
 
 ```javascript
-var root = 'https://example.com';
+var root = 'https://ldcvia.com';
   var apikey = 'MYSECRETAPIKEY';
   $.ajax({
     dataType: 'json',
@@ -249,7 +249,7 @@ This endpoint retrieves all databases that you have access to.
 
 ### HTTP Request
 
-`GET http://example.com/api/1.0/databases`
+`GET http://ldcvia.com/api/1.0/databases`
 
 ## Delete Entire Database
 
@@ -287,7 +287,7 @@ $.ajax({
 ```
 
 ### HTTP Request
-`DELETE https://example.com/1.0/collections/:database/:collectionname`
+`DELETE https://ldcvia.com/1.0/collections/:database/:collectionname`
 
 ### URL Parameters
 
@@ -297,6 +297,8 @@ Parameter | Description
 
 
 # Collections
+
+A collection in LDC Via is a group of documents that are all of the same type. In Notes and Domino terms it's very similar to a view. As an example, if we were to migrate a Discussion database from Notes to LDC Via, you would end up with three collections: MainTopic, Response and ResponseToResponse. There is nothing to stop documents in the same collection having different fields on them, but when we maintain meta data at a collection level we assume that all documents in the same collection could have the same fields on them.
 
 ## Get All Collections in a Database
 Given a database name, this method will return a list of all collections in the database along with a count of documents in each collection.
@@ -354,7 +356,7 @@ private String loadURL(String url) throws ClientProtocolException, IOException {
 ```
 
 ```javascript
-var root = 'https://example.com';
+var root = 'https://ldcvia.com';
 var apikey = 'MYSECRETAPIKEY';
 $.ajax({
   dataType: 'json',
@@ -389,7 +391,7 @@ $.ajax({
 
 ### HTTP Request
 
-`GET http://example.com/1.0/collections/:database`
+`GET http://ldcvia.com/1.0/collections/:database`
 
 ### URL Parameters
 
@@ -423,7 +425,7 @@ public JsonJavaArray getDocuments(String dbname, String collection, int position
 ```
 
 ```javascript
-var root = 'https://example.com';
+var root = 'https://ldcvia.com';
 var apikey = 'MYSECRETAPIKEY';
 $.ajax({
   dataType: 'json',
@@ -463,7 +465,7 @@ $.ajax({
 ```
 
 ### HTTP Request
-`GET https://example.com/1.0/collections/:database/:collectionname`
+`GET https://ldcvia.com/1.0/collections/:database/:collectionname`
 
 ### URL Parameters
 
@@ -527,7 +529,7 @@ $.ajax({
 ```
 
 ### HTTP Request
-`DELETE https://example.com/1.0/collections/:database/:collectionname`
+`DELETE https://ldcvia.com/1.0/collections/:database/:collectionname`
 
 ### URL Parameters
 
@@ -599,7 +601,7 @@ $.ajax({
 ```
 
 ### HTTP Request
-`POST https://example.com/1.0/collections/:database/:collectionname`
+`POST https://ldcvia.com/1.0/collections/:database/:collectionname`
 
 ### URL Parameters
 
@@ -626,6 +628,8 @@ rich text fields | when accessed via a collection all formatting is removed and 
 system fields | fields prefixed with __ are system fields that relate to your original Domino data. If the document has file attachments associated with it, the names of the files can be found in the field _files
 
 # Documents
+
+A document is a group of fields that are related to each other. Not all documents the same, but it is a fair assumption that all documents in the same collection will have the same group of fields on them.
 
 ## Get a document
 
@@ -712,7 +716,7 @@ $.ajax({
 ```
 
 ### HTTP Request
-`GET https://example.com/1.0/document/:database/:collectionname/:unid`
+`GET https://ldcvia.com/1.0/document/:database/:collectionname/:unid`
 
 ### URL Parameters
 
@@ -794,7 +798,7 @@ disc.sendNewMainTopic = function(data) {
 > If the document is inserted correctly, the above returns a 200 success code, otherwise you will receive an error
 
 ### HTTP Request
-`PUT https://example.com/1.0/document/:database/:collectionname/:unid`
+`PUT https://ldcvia.com/1.0/document/:database/:collectionname/:unid`
 
 ### URL Parameters
 
@@ -874,7 +878,7 @@ disc.sendMainTopic = function(unid, data) {
 > If the document is updated correctly, the above returns a 200 success code, otherwise you will receive an error
 
 ### HTTP Request
-`POST https://example.com/1.0/document/:database/:collectionname/:unid`
+`POST https://ldcvia.com/1.0/document/:database/:collectionname/:unid`
 
 ### URL Parameters
 
@@ -921,7 +925,7 @@ $.ajax({
 ```
 
 ### HTTP Request
-`DELETE https://example.com/1.0/document/:database/:collectionname/:unid`
+`DELETE https://ldcvia.com/1.0/document/:database/:collectionname/:unid`
 
 ### URL Parameters
 
@@ -930,6 +934,24 @@ Parameter | Description
 :database | This is the unique name of the database which can be accessed using the databases service
 :collectionname | The name of the collection to delete
 :unid | The unid of the document to delete
+
+## Reserved Field Names
+
+We do have several reserved field names in LDC Via that you should avoid modifying (your changes will be ignored), though the fields can be useful when reading data (__unid in particular):
+
+* __heirarchy
+* __unid
+* __form
+* __created
+* __modified
+* _files
+* fieldnames appended with the value '__parsed'
+* __role
+* __parentid
+* __readerrole
+* __authorrole
+* __deleted
+* _id
 
 # File Attachments
 
@@ -942,13 +964,13 @@ Given a database name, collection name, document id and attachment name, you can
 ```
 
 ```javascript
-window.open("https://example.com/1.0/attachment/:database/:collectionname/:unid/:filename");
+window.open("https://ldcvia.com/1.0/attachment/:database/:collectionname/:unid/:filename");
 ```
 
 > If the file exists (and you are allowed to access it), then the file will be sent as a binary stream to the requestor. If the file does not exists (or you are not allowed to access it) then an error will be returned.
 
 ### HTTP Request
-`GET https://example.com/1.0/attachment/:database/:collectionname/:unid/:filename`
+`GET https://ldcvia.com/1.0/attachment/:database/:collectionname/:unid/:filename`
 
 ### URL Parameters
 
@@ -996,7 +1018,7 @@ $.ajax({
 ```
 
 ### HTTP Request
-`DELETE https://example.com/1.0/attachment/:database/:collectionname/:unid/:filename`
+`DELETE https://ldcvia.com/1.0/attachment/:database/:collectionname/:unid/:filename`
 
 ### URL Parameters
 
@@ -1080,7 +1102,7 @@ $.ajax({
 ```
 
 ### HTTP Request
-`GET https://example.com/1.0/metadata/:database/:collectionname`
+`GET https://ldcvia.com/1.0/metadata/:database/:collectionname`
 
 ### URL Parameters
 
@@ -1127,7 +1149,7 @@ $.ajax({
 ```
 
 ### HTTP Request
-`POST https://example.com/1.0/metadata/:database/:collectionname`
+`POST https://ldcvia.com/1.0/metadata/:database/:collectionname`
 
 ### URL Parameters
 
@@ -1169,7 +1191,7 @@ $.ajax({
 ```
 
 ### HTTP Request
-`GET https://example.com/1.0/resetmetadata/:database/:collectionname`
+`GET https://ldcvia.com/1.0/resetmetadata/:database/:collectionname`
 
 ### URL Parameters
 
@@ -1243,7 +1265,7 @@ $.ajax({
 ```
 
 ### HTTP Request
-`GET https://example.com/1.0/userdetails`
+`GET https://ldcvia.com/1.0/userdetails`
 
 ## Get other user's details
 
@@ -1302,7 +1324,7 @@ $.ajax({
 ```
 
 ### HTTP Request
-`GET https://example.com/1.0/userdetails/:email`
+`GET https://ldcvia.com/1.0/userdetails/:email`
 
 ### URL Parameters
 
@@ -1367,7 +1389,7 @@ $.ajax({
 ```
 
 ### HTTP Request
-`POST https://example.com/1.0/users`
+`POST https://ldcvia.com/1.0/users`
 
 
 ## Update Users details
@@ -1411,7 +1433,7 @@ $.ajax({
 ```
 
 ### HTTP Request
-`POST https://example.com/1.0/userdetails/:email`
+`POST https://ldcvia.com/1.0/userdetails/:email`
 
 ### URL Parameters
 
@@ -1448,7 +1470,7 @@ $.ajax({
 ```
 
 ### HTTP Request
-`DELETE https://example.com/1.0/userdetails/:email`
+`DELETE https://ldcvia.com/1.0/userdetails/:email`
 
 ### URL Parameters
 
@@ -1484,7 +1506,7 @@ $.ajax({
 ```
 
 ### HTTP Request
-`GET https://example.com/1.0/groups`
+`GET https://ldcvia.com/1.0/groups`
 
 
 ## Add multiple users to group
@@ -1518,7 +1540,7 @@ $.ajax({
 ```
 
 ### HTTP Request
-`POST https://example.com/1.0/groups`
+`POST https://ldcvia.com/1.0/groups`
 
 ## Add single user to group
 ```java
@@ -1542,7 +1564,7 @@ $.ajax({
 > The above returns 200 Success if the action worked
 
 ### HTTP Request
-`GET https://example.com/1.0/groups/:email/:groupname`
+`GET https://ldcvia.com/1.0/groups/:email/:groupname`
 
 ### URL Parameters
 
@@ -1573,7 +1595,7 @@ $.ajax({
 > The above returns 200 Success if the action worked
 
 ### HTTP Request
-`DELETE https://example.com/1.0/groups/:email/:groupname`
+`DELETE https://ldcvia.com/1.0/groups/:email/:groupname`
 
 ### URL Parameters
 
@@ -1608,7 +1630,7 @@ $.ajax({
 ```
 
 ### HTTP Request
-`GET https://example.com/1.0/groups/:groupname`
+`GET https://ldcvia.com/1.0/groups/:groupname`
 
 ### URL Parameters
 
@@ -1638,7 +1660,7 @@ $.ajax({
 > The above returns 200 Success if the action worked
 
 ### HTTP Request
-`DELETE https://example.com/1.0/groups/:groupname`
+`DELETE https://ldcvia.com/1.0/groups/:groupname`
 
 ### URL Parameters
 
@@ -1672,7 +1694,7 @@ $.ajax({
 ```
 
 ### HTTP Request
-`GET https://example.com/1.0/users`
+`GET https://ldcvia.com/1.0/users`
 
 ## Add user to database
 ```java
@@ -1696,7 +1718,7 @@ $.ajax({
 > The above returns 200 Success if the operation completed successfully
 
 ### HTTP Request
-`GET https://example.com/1.0/userdetails/:email/:database`
+`GET https://ldcvia.com/1.0/userdetails/:email/:database`
 
 ### URL Parameters
 
@@ -1727,7 +1749,7 @@ $.ajax({
 > The above returns 200 Success if the operation completed successfully
 
 ### HTTP Request
-`DELETE https://example.com/1.0/userdetails/:email/:database`
+`DELETE https://ldcvia.com/1.0/userdetails/:email/:database`
 
 ### URL Parameters
 
@@ -1769,7 +1791,7 @@ $.ajax({
 ```
 
 ### HTTP Request
-`GET https://example.com/1.0/list/:database/:collectionname/:fieldname`
+`GET https://ldcvia.com/1.0/list/:database/:collectionname/:fieldname`
 
 ### URL Parameters
 
@@ -1827,7 +1849,7 @@ $.ajax({
 ```
 
 ### HTTP Request
-`GET https://example.com/1.0/responses/:database/:collectionname/:unid`
+`GET https://ldcvia.com/1.0/responses/:database/:collectionname/:unid`
 
 ### URL Parameters
 
@@ -1875,7 +1897,7 @@ $.ajax({
 > The above returns a binary stream of the PDF document
 
 ### HTTP Request
-`GET https://example.com/1.0/pdf/:database/:collectionname/:unid`
+`GET https://ldcvia.com/1.0/pdf/:database/:collectionname/:unid`
 
 ### URL Parameters
 
@@ -1911,7 +1933,7 @@ $.ajax({
 > The above returns a binary stream of the PDF document
 
 ### HTTP Request
-`GET https://example.com/1.0/excel/:database/:collectionname`
+`GET https://ldcvia.com/1.0/excel/:database/:collectionname`
 
 ### URL Parameters
 
@@ -1971,7 +1993,7 @@ $.ajax({
 ```
 
 ### HTTP Request
-`GET https://example.com/1.0/doclink/:database/:collectionname/:unid/:fieldname`
+`GET https://ldcvia.com/1.0/doclink/:database/:collectionname/:unid/:fieldname`
 
 ### URL Parameters
 
@@ -2018,7 +2040,7 @@ $.ajax({
 ```
 
 ### HTTP Request
-`GET https://example.com/1.0/activity`
+`GET https://ldcvia.com/1.0/activity`
 
 ## Search Logs
 If you want to further filter the logs to a specific date range or only contain certain messages, for example, then all of the above methods can also be used with POST requests. The responses will be the same format as above. To restrict the logs you can add all of some of the following criteria in a JSON post.
@@ -2062,7 +2084,7 @@ $.ajax({
 ```
 
 ### HTTP Request
-`POST https://example.com/1.0/activity`
+`POST https://ldcvia.com/1.0/activity`
 
 ## Get Single Database Logs
 
@@ -2116,7 +2138,7 @@ $.ajax({
 ```
 
 ### HTTP Request
-`GET https://example.com/1.0/activity/:database`
+`GET https://ldcvia.com/1.0/activity/:database`
 
 ### URL Parameters
 
@@ -2192,7 +2214,7 @@ $.ajax({
 ```
 
 ### HTTP Request
-`GET https://example.com/1.0/activity/:database`
+`GET https://ldcvia.com/1.0/activity/:database`
 
 ### URL Parameters
 
@@ -2259,7 +2281,7 @@ $.ajax({
 ```
 
 ### HTTP Request
-`GET https://example.com/1.0/activity/:database/:collectionname`
+`GET https://ldcvia.com/1.0/activity/:database/:collectionname`
 
 ### URL Parameters
 
@@ -2335,7 +2357,7 @@ $.ajax({
 ```
 
 ### HTTP Request
-`GET https://example.com/1.0/activity/:database/:collectionname`
+`GET https://ldcvia.com/1.0/activity/:database/:collectionname`
 
 ### URL Parameters
 
@@ -2401,7 +2423,7 @@ $.ajax({
 ```
 
 ### HTTP Request
-`GET https://example.com/1.0/activity/:database/:collectionname/:unid`
+`GET https://ldcvia.com/1.0/activity/:database/:collectionname/:unid`
 
 ### URL Parameters
 
@@ -2477,7 +2499,7 @@ $.ajax({
 ```
 
 ### HTTP Request
-`GET https://example.com/1.0/activity/:database/:collectionname/:unid`
+`GET https://ldcvia.com/1.0/activity/:database/:collectionname/:unid`
 
 ### URL Parameters
 
