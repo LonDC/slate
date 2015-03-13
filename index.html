@@ -693,6 +693,10 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 <td>:database</td>
 <td>This is the unique name of the database which can be accessed using the databases service</td>
 </tr>
+<tr>
+<td>:collectionname</td>
+<td>The name of the collection to search in</td>
+</tr>
 </tbody></table>
 
 <h3 id="query-parameters">Query Parameters</h3>
@@ -830,7 +834,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET https://example.com/1.0/collections/:database/:collectionname/:unid</code></p>
+<p><code class="prettyprint">GET https://example.com/1.0/document/:database/:collectionname/:unid</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
@@ -925,7 +929,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">PUT https://example.com/1.0/collections/:database/:collectionname/:unid</code></p>
+<p><code class="prettyprint">PUT https://example.com/1.0/document/:database/:collectionname/:unid</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
@@ -1017,7 +1021,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">POST https://example.com/1.0/collections/:database/:collectionname/:unid</code></p>
+<p><code class="prettyprint">POST https://example.com/1.0/document/:database/:collectionname/:unid</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
@@ -1050,7 +1054,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
   <span class="na">dataType</span><span class="p">:</span> <span class="s1">'json'</span><span class="p">,</span>
   <span class="na">type</span><span class="p">:</span> <span class="s1">'DELETE'</span><span class="p">,</span>
   <span class="na">headers</span><span class="p">:</span> <span class="p">{</span> <span class="s1">'apikey'</span><span class="p">:</span> <span class="nx">apikey</span> <span class="p">},</span>
-  <span class="na">url</span><span class="p">:</span> <span class="s1">'/1.0/collections/'</span> <span class="o">+</span> <span class="nx">database</span> <span class="o">+</span> <span class="s1">'/'</span> <span class="o">+</span> <span class="nx">collection</span> <span class="o">+</span> <span class="s2">"/"</span> <span class="o">+</span> <span class="nx">unid</span><span class="p">,</span>
+  <span class="na">url</span><span class="p">:</span> <span class="s1">'/1.0/document/'</span> <span class="o">+</span> <span class="nx">database</span> <span class="o">+</span> <span class="s1">'/'</span> <span class="o">+</span> <span class="nx">collection</span> <span class="o">+</span> <span class="s2">"/"</span> <span class="o">+</span> <span class="nx">unid</span><span class="p">,</span>
   <span class="na">success</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">){</span>
     <span class="c1">//Do something</span>
   <span class="p">},</span>
@@ -1075,7 +1079,7 @@ You must replace `INSERTYOURAPIKEYHERE` with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">DELETE https://example.com/1.0/collections/:database/:collectionname/:unid</code></p>
+<p><code class="prettyprint">DELETE https://example.com/1.0/document/:database/:collectionname/:unid</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
