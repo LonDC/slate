@@ -1,6 +1,17 @@
 Slate
 ========
 
+# LDC Via Specific Instructions
+I screwed up the build on my machine, so the process going forwards is:
+
+Modify src\index.md in the master branch (for Matt, this is in Windows!)
+Open Start Command Prompt With Ruby as Administrator
+cd c:\github\slate
+rake build
+Copy contents of build\index.html and paste into index.html in the gh-pages branch
+Push gh-pages to github and the website will be automatically updated
+It is very unlikely that the standard rake publish on Mac will ever work again!
+
 [![Build Status](https://travis-ci.org/tripit/slate.svg?branch=master)](https://travis-ci.org/tripit/slate) [![Dependency Status](https://gemnasium.com/tripit/slate.png)](https://gemnasium.com/tripit/slate)
 
 Slate helps you create beautiful API documentation. Think of it as an intelligent, responsive documentation template for your API.
