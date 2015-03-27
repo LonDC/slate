@@ -239,8 +239,8 @@ var root = 'https://ldcvia.com';
 ```json
 {
   "databases":[
-    "acme-com-discussion1",
-    "acme-com-discussion2"
+    {"name": "acme-com-discussion1", "title": "Discussion 1"},
+    {"name": "acme-com-discussion2", "title": "Discussion 2"}
   ]
 }
 ```
